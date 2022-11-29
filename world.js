@@ -79,6 +79,9 @@ class World {
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     //  draw all of the cells
+    for(let i = 0; i<this.foods.food2.length; i++){
+      this.foods.food2[i].run();
+    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -104,7 +107,7 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
+    this.foods.food2.push(new SBFood2(new JSVector(100, 100), new JSVector(0, 0), 15, this));
    
     
   }//++++++++++++++++++++++++++++  load entities
