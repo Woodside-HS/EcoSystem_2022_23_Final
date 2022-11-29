@@ -1,7 +1,11 @@
 class Food4 extends Entity {
     // properties
     constructor(loc, vel, sz, wrld) {
-        super(loc, vel, sz, wrld)
+        super(loc, vel, sz, wrld);
+        this.loc = loc;
+        this.vel = vel;
+        this.sz = sz;
+        this.wrld = wrld;
         
     
     }
@@ -12,9 +16,28 @@ class Food4 extends Entity {
     }
 
     update() {
+
+
     }
 
     render() {
+        let ctx = this.ctx;
+        ctx.save();
+        ctx.translate(this.loc.x, this.loc.y);
+        ctx.rotate(-Math.PI); //offset 90 degrees
+        ctx.beginPath();
+        ctx.strokeStyle = this.clr;
+        ctx.fillStyle = this.clr;
+        ctx.moveTo(0, -this.size);
+        ctx.lineTo(-this.size, this.size);
+        ctx.lineTo(-this.size/2, this.size/3);
+        ctx.lineTo(0, this.size*2);
+        ctx.lineTo(this.size/2, this.size/3);
+        ctx.lineTo(this.size, this.size);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
        
     }
 

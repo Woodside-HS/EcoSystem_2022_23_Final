@@ -78,6 +78,9 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    for(let i = 0; i<this.creatures.length; i++){
+      this.creatures[i].run();
+    }
     //  draw all of the cells
     this.ctxMain.restore();
 
@@ -104,7 +107,9 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
+    for(let i = 0; i< numEntities; i++){
+      this.entites[i].run();
+    }
    
     
   }//++++++++++++++++++++++++++++  load entities
