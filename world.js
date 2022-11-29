@@ -32,6 +32,9 @@ class World {
       }
     }
 
+    //TEMPORARY ARRAY JUST TO RENDER
+    this.entities = [];
+
     this.creatures = {
       pred1:[],
       pred2:[],
@@ -78,6 +81,9 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+      this.entities[i].run();
+    }
     //  draw all of the cells
     this.ctxMain.restore();
 
@@ -104,8 +110,16 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
-   
-    
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * (this.dims.width-20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height-20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.entities.push(
+          new Food5ParticleSystem(loc,
+          new JSVector(0, 0),
+          6,
+          this)
+      );
+    }
   }//++++++++++++++++++++++++++++  load entities
 }//++++++++++++++++++++++++++++++  end world constructor
