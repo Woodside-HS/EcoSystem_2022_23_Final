@@ -122,7 +122,7 @@ class World {
       let velY = Math.random()*1-.5;
       this.foods.food3.push(new Food6(new JSVector(x,y),new JSVector(velX,velY), 10, this));
     }
-    
+    this.foods.food3.push(new tFood2(new JSVector(100,100), new JSVector(0,0), 10,this));
    
     
   }//++++++++++++++++++++++++++++  load entities

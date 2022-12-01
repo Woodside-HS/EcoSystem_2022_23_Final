@@ -6,7 +6,6 @@ class Food6 extends Entity {
         this.vel = vel;
         this.rad = sz;
         this.ctx = wrld.ctxMain;
-        this.foodParticles = [];
         this.clr = this.getRandomColor();
         this.nurishment = 1000;
         this.fullyEaten = false
