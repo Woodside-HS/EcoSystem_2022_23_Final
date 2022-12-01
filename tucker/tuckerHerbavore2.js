@@ -1,35 +1,32 @@
-class tuckerHerbavore2 extends Creature {
-    constructor(loc,vel,sz, wrld,sttblk,dtblk){
-        super(loc,vel,sz,wrld,sttblk,dtblk)
+class tuckerHerbavore2 {
+    constructor(loc,vel,sz, wrld){
         this.loc = loc;
         this.vel = vel;
         this.clr = this.getRandomColor();
         this.ctx = wrld.ctxMain;
         this.rad = sz;
-        this.statusBlock = sttblk;
-        // this.statusBlock = {
-        //     searchFood:true,
-        //     searchMate:true,
-        //     eating:false,
-        //     sprint:false,
-        //     sleeping:false,
-        //     attack:false,
-        //     deathProc:false
-        //  };
-        // this.dataBlock = {//  status block 
-        //     health: 100,
-        //     isDead: false,
-        //     nourishment: 100,
-        //     lifeSpan:30000,//  miliseconds
-        //     age:0,
-        //     numOffspring:3,
-        //     maxSpeed: 1,
-        //     maxSprintSpeed: 1,
-        //     scentValue: 100,
-        //     sightValue: 100,
-        //     weight:10,
-        //  };
-        this.dataBlock = dtblk;
+        this.statusBlock = {
+            searchFood:true,
+            searchMate:true,
+            eating:false,
+            sprint:false,
+            sleeping:false,
+            attack:false,
+            deathProc:false
+         };
+        this.dataBlock = {//  status block 
+            health: 100,
+            isDead: false,
+            nourishment: 100,
+            lifeSpan:30000,//  miliseconds roughly 30 sec
+            age:0,
+            numOffspring:3,
+            maxSpeed: 1,
+            maxSprintSpeed: 1,
+            scentValue: 100,
+            sightValue: 100,
+            weight:10,
+         };
         this.maxJump = 1;
         this.acc = new JSVector(0,0);
     }
@@ -40,7 +37,9 @@ class tuckerHerbavore2 extends Creature {
 
         // } else
         if(searchFood){
-            world.food.food2
+            for(let i = 0; i<world.foods.food2.length;i++){
+                let sightSq = this.dataBlock.sightValue+this.dataBlock.sightValue;
+            }
         }
 
     }

@@ -79,6 +79,9 @@ class World {
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     //  draw all of the cells
+    for(let i = 0; i<this.foods.food2.length;i++){
+      this.foods.food2[i].run();
+    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -104,7 +107,14 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
+    for(let i = 0; i<numEntities/28;i++){
+      this.creatures.herb2.push(new tuckerHerbavore2(new JSVector(100,100),new JSVector(1,1), 5, this, ))
+    }
+    for(let i = 0; i<numEntities/28;i++){
+      let x = Math.random()*this.dims.width-this.dims.width/2;
+      let y = Math.random()*this.dims.height-this.dims.height/2;
+      this.foods.food2.push(new Food(new JSVector(x,y),new JSVector(0,0),5,this))
+    }
    
     
   }//++++++++++++++++++++++++++++  load entities
