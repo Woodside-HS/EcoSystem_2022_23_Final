@@ -101,11 +101,18 @@ class World {
     this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
     let numEnts = 0;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+
+    for (let i = 0; i < this.foods.length; i++) {//  All food and creatures
+      this.foods[i].run();
+    }
+
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
-   
+    console.log(this.foods)
+    for(let i = 0;i<10;i++){
+      this.foods.pSys2.push(new Food2ParticleSystem(100,100,ctx))
+    }
     
   }//++++++++++++++++++++++++++++  load entities
 }//++++++++++++++++++++++++++++++  end world constructor
