@@ -3,9 +3,10 @@ class Creature5 extends Entity {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
         this.loc = loc;
+        this.vel = new JSVector();
         this.ctx = wrld.ctxMain;
         this.clr = this.getRandomColor();
-        this.size = sz * 3/2;
+        this.rad = 10;
         this.wWidth = wrld.dims.width;
         this.wHeight = wrld.dims.height;
     }
@@ -16,6 +17,7 @@ class Creature5 extends Entity {
     }
 
     update() {
+        this.loc.add(this.vel);
     }
 
     render() {
