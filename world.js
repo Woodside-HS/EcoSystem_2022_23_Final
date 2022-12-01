@@ -83,6 +83,10 @@ class World {
       //this.foods.food1(i).run();
       //this.foods.food2(i).run();
       this.foods.food3[i].run();
+      if(this.foods.food3[i].fullyEaten){
+        this.foods.food3[i].splice();
+        i--;
+      }
       //this.foods.food4(i).run();
       
     }
@@ -111,8 +115,12 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    for(let i =0;i<numEntities;i++){
-      this.foods.food3.push(new Food6(new JSVector(100,100),new JSVector(1,1), 10, this));
+    for(let i =0;i<numEntities/7;i++){
+      let x = Math.random()*this.dims.width-(this.dims.width/2);
+      let y = Math.random()*this.dims.height-(this.dims.height/2);
+      let velX = Math.random()*1-.5;
+      let velY = Math.random()*1-.5;
+      this.foods.food3.push(new Food6(new JSVector(x,y),new JSVector(velX,velY), 10, this));
     }
     
    
