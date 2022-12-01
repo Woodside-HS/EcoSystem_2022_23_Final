@@ -2,17 +2,12 @@ class SBFood2 extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld);
-<<<<<<< HEAD
         this.statBlock.health = 255-Math.random()*30;
         this.lifespan = 0;
         this.clr = ["black", "rgba(39, 196, 220," + this.statBlock.health + ")", "rgba(255, 255, 255," + this.statBlock.health + ")"];
         this.production = [0, 120];
         this.isDead = false;
         
-=======
-        this.clr = "rgba(29, 17.6, 45.5, 255)";
-        this.ctx = wrld.ctxMain;
->>>>>>> ef246f484fa38fbadbff93e2577db064efac0f87
     
     }
     //  methods
@@ -41,7 +36,6 @@ class SBFood2 extends Food {
 
     render() {
         let ctx = this.ctx;
-<<<<<<< HEAD
         for(let i = 1; i<=2; i++){
             ctx.beginPath();
             ctx.save();
@@ -64,12 +58,5 @@ class SBFood2 extends Food {
             ctx.fill();
             ctx.restore();
         }
-=======
-        ctx.beginPath();
-        ctx.fillStyle = this.clr;
-        ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
-        ctx.fill();
-        ctx.closePath();
->>>>>>> ef246f484fa38fbadbff93e2577db064efac0f87
     }
 }
