@@ -30,6 +30,7 @@ class SBFood2 extends Food {
         if(this.lifespan%100 == 0){
             this.statBlock.health--;
         }
+        this.lifespan++;
         this.clr[1] = "rgba(39, 196, 220," + this.statBlock.health + ")";
         this.clr[2] = "rgba(255, 255, 255," + this.statBlock.health + ")";
     }
