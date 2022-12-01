@@ -52,6 +52,7 @@ class World {
       pSys3:[]
     };
 
+    this.entities = [];
     // performance -- change the number of entities to see the effect on framerate
     this.loadEntities(1500, this.ctxMain, this.dims.width, this.dims.height);
     // performance
@@ -78,6 +79,9 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+      this.entities[i].run();
+    }
     //  draw all of the cells
     this.ctxMain.restore();
 
