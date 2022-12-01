@@ -80,16 +80,15 @@ class World {
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     //  draw all of the cells
     for (let i = 0; i < this.foods.food3.length; i++) {
-      //this.foods.food1(i).run();
-      //this.foods.food2(i).run();
       this.foods.food3[i].run();
       if (this.foods.food3[i].fullyEaten) {
         this.foods.food3[i].splice();
         i--;
         this.foods.food3.push(new Food6(new JSVector(x, y), new JSVector(velX, velY), 10, this));
       }
-      //this.foods.food4(i).run();
-
+    }
+    for(let i = 0; i < this.foods.pSys3.length;i++){
+      this.foods.pSys3[i].run();
     }
     this.ctxMain.restore();
 
@@ -126,10 +125,7 @@ class World {
     for (let i = 0; i < numEntities / 56; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
-      this.foods.food3.push(new tFood2(new JSVector(x, y), new JSVector(0, 0), 10, this));
+      this.foods.pSys3.push(new tFood2(new JSVector(x, y), new JSVector(0, 0), 10, this));
     }
-
-
-
   }//++++++++++++++++++++++++++++  load entities
 }//++++++++++++++++++++++++++++++  end world constructor
