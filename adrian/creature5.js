@@ -1,9 +1,12 @@
-class Food5 extends Entity {
+class Creature5 extends Entity {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
-        
-    
+        this.loc = loc;
+        this.ctx = wrld.ctxMain;
+        this.size = sz * 3/2;
+        this.wWidth = wrld.dims.width;
+        this.wHeight = wrld.dims.height;
     }
     //  methods
     run() {
