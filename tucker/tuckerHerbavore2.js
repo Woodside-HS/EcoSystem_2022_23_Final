@@ -36,9 +36,14 @@ class tuckerHerbavore2 {
         // if(sprint){
 
         // } else
-        if(searchFood){
+        if(this.statusBlock.searchFood){
             for(let i = 0; i<world.foods.food2.length;i++){
                 let sightSq = this.dataBlock.sightValue+this.dataBlock.sightValue;
+                if(this.loc.distanceSquared(world.foods.food2[i].loc)<sightSq){
+                    let jmp = JSVector.subGetNew(world.foods.foods[i].loc,this.loc);
+                    jmp.setMagnitude(0.05)
+                    this.acc.add(jmp);
+                }
             }
         }
 
@@ -47,12 +52,22 @@ class tuckerHerbavore2 {
 
     }
     update(){
+        if(this.acc.getMagnitude()>3){
+            this.vel.add(this.acc);
+        }
         this.loc.add(this.vel);
+        if(this.vel.getMagnitude()>0){
+            this.vel.setMagnitude(this.vel.getMagnitude()-0.5);
+        }
+        if(this.vel.getMagnitude()<0){
+            this.vel.setMagnitude(0);
+        }
     }
     render(){
         let ctx = this.ctx;
         ctx.beginPath();
-        ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2)
+        ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
+        ctx.fill();
     }
     getRandomColor() {
         //  List of hex color values for movers

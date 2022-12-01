@@ -79,6 +79,9 @@ class World {
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     //  draw all of the cells
+    for(let i = 0;i<this.creatures.herb2.length;i++){
+      this.creatures.herb2[i].run();
+    }
     for(let i = 0; i<this.foods.food2.length;i++){
       this.foods.food2[i].run();
     }
