@@ -4,6 +4,7 @@ class Creature5 extends Entity {
         super(loc, vel, sz, wrld)
         this.loc = loc;
         this.ctx = wrld.ctxMain;
+        this.clr = this.getRandomColor();
         this.size = sz * 3/2;
         this.wWidth = wrld.dims.width;
         this.wHeight = wrld.dims.height;
@@ -18,7 +19,14 @@ class Creature5 extends Entity {
     }
 
     render() {
-       
+        let ctx = this.ctx;
+        ctx.beginPath();
+        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.strokeStyle = this.clr;
+        ctx.fillStyle = this.clr;
+        ctx.fill();
+        ctx.stroke();
     }
 
     getRandomColor() {
