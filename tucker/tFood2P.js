@@ -41,7 +41,7 @@ class tFood2P {
         ctx.closePath();
         ctx.beginPath();
         ctx.strokeStyle = "#071707FF";
-        ctx.arc(this.loc.x,this.loc.y,this.rad,Math.PI,Math.PI/2);
+        ctx.arc(this.loc.x+this.rad,this.loc.y,this.rad,Math.PI,3*Math.PI/2);
         ctx.stroke();
     }
     checkDist(){

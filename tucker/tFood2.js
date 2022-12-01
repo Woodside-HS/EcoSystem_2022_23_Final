@@ -17,7 +17,7 @@ class tFood2 extends Entity {
         if (this.spawnNew > 10) {
             let velX = Math.random() * 1 - 0.5;
             let velY = Math.random() * 1 - 0.5;
-            this.foodParticleArray.push(new tFood2P(this.loc, new JSVector(velX, velY), 5, this.ctx, Math.random()*20+20));
+            this.foodParticleArray.push(new tFood2P(this.loc, new JSVector(velX, velY), 10, this.ctx, Math.random()*20+20));
             this.spawnNew = 0;
         }
         this.spawnNew++;
