@@ -31,8 +31,18 @@ class tFood2P {
         let ctx = this.ctx;
         ctx.beginPath();
         ctx.fillStyle = this.clr;
-        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
+        ctx.strokeStyle = "#07170700";
+        //ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
+        ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);
+        ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);
+        ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)
         ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.strokeStyle = "#071707FF";
+        ctx.arc(this.loc.x,this.loc.y,this.rad,Math.PI,Math.PI/2);
+        ctx.stroke();
     }
     checkDist(){
         if(this.loc.distanceSquared(this.bushLoc)>this.distance){
