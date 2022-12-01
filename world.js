@@ -1,4 +1,3 @@
-//All creatures and food items are added to entities array
 class World {
   //  Commit 1: 221109
   constructor() {
@@ -31,6 +30,9 @@ class World {
         this.grid[row][col] = new Cell(this, this.ctxMain, row, col);
       }
     }
+
+    this.entities = [];
+
 
     this.creatures = {
       pred1:[],
@@ -78,13 +80,19 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+      this.entities[i].run();
+      
+    }
+  
+    
     //  draw all of the cells
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
     this.ctxMain.save();
       this.ctxMain.translate(this.cnvMainLoc.x * (-1), this.cnvMainLoc.y * (-1));
-      //bounds of the world in cnvMain
+      
       this.ctxMain.strokeStyle = "rgba(0, 140, 240, 1)"
       this.ctxMain.beginPath();
       this.ctxMain.lineWidth = 12;
@@ -92,7 +100,7 @@ class World {
       this.ctxMain.stroke();
     this.ctxMain.restore();
 
-    // // performance  show framerate
+    // framerate
     this.ctxMain.font = "20px  bold";
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS";  // frames per second
@@ -102,10 +110,20 @@ class World {
     let numEnts = 0;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
   }
-  //Load mover array
+  
   loadEntities(numEntities, ctx, w, h) {
+    for (let i = 0; i < 1000; i++) {
+      let x = Math.random() * (this.dims.width-20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height-20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.entities.push(new Food4(loc,new JSVector(0, 0), 6,this));
+    }
 
-   
+
     
   }//++++++++++++++++++++++++++++  load entities
+
+
+
+
 }//++++++++++++++++++++++++++++++  end world constructor
