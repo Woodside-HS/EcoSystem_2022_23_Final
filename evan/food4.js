@@ -7,7 +7,7 @@ class Food4 extends Entity {
         this.size = sz;
         this.wWidth = wrld.dims.width;
         this.wHeight = wrld.dims.height;
-        let clrr = this.getRandomColor();
+        this.clrr = this.getRandomColor();
         this.statBlock = {
         };
     }
@@ -17,8 +17,6 @@ class Food4 extends Entity {
     }
 
     render() {
-        let clrr = this.getRandomColor();
-
         let ctx = this.ctx;
         ctx.save();
         ctx.translate(this.loc.x, this.loc.y);
