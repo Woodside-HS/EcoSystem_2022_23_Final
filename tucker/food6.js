@@ -12,11 +12,10 @@ class Food6 extends Entity {
     }
     //  methods
     run() {
-        //console.log("gah");
         this.update();
         this.render();
         this.bounce();
-        if (this.nurishment <= 0) {
+        if (this.nurishment <= 0) {//Fruits dont have lifespan so once they have been fully eaten they commit dead
             this.fullyEaten = true;
         }
     }
@@ -29,8 +28,7 @@ class Food6 extends Entity {
         let ctx = this.ctx;
         ctx.beginPath();
         ctx.fillStyle = this.clr;
-        //ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
-        ctx.moveTo(this.loc.x, this.loc.y);
+        ctx.moveTo(this.loc.x, this.loc.y);//makes the fruit look like a heart
         ctx.lineTo(this.loc.x + (this.rad / 2), this.loc.y - (this.rad / 2));
         ctx.lineTo(this.loc.x + this.rad, this.loc.y);
         ctx.lineTo(this.loc.x, this.loc.y + this.rad);
@@ -40,7 +38,7 @@ class Food6 extends Entity {
         ctx.fill();
     }
 
-    bounce() {
+    bounce() {//bounces the fruit off of the edges
         if (this.loc.x < world.dims.left) {
             this.vel.x = -this.vel.x;
         }

@@ -22,7 +22,7 @@ class tFood2P {
         this.life--;
         if (this.life < 0) {
             this.isDead = true;
-        }
+        }//have to check if lifespan is up or if nurishment is left over
         if(this.nurishment < 0){
             this.isDead = true;
         }
@@ -32,21 +32,21 @@ class tFood2P {
         ctx.beginPath();
         ctx.fillStyle = this.clr;
         ctx.strokeStyle = "#07170700";
-        //ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
-        ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);
-        ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);
-        ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)
+        //renders that cherry with 3 half circles
+        ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);//bottom of the chrry
+        ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);//top right of the cherry
+        ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)//top left of the cherry
         ctx.fill();
         ctx.stroke();
-        ctx.closePath();
+        ctx.closePath();//have to close the path so that the stroke style doesn't overlap
         ctx.beginPath();
         ctx.strokeStyle = "#071707FF";
-        ctx.arc(this.loc.x+this.rad,this.loc.y,this.rad,Math.PI,3*Math.PI/2);
+        ctx.arc(this.loc.x+this.rad,this.loc.y,this.rad,Math.PI,3*Math.PI/2);//renders the stem
         ctx.stroke();
     }
     checkDist(){
         if(this.loc.distanceSquared(this.bushLoc)>this.distance){
-            this.vel.setMagnitude(0);
+            this.vel.setMagnitude(0);//keeps the cherries from moving too far from the bush
         }
     }
     getRandomColor() {
