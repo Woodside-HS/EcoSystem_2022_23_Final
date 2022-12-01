@@ -32,6 +32,7 @@ class World {
     }
 
     this.entities = [];
+    this.foodItems = [];
 
     this.creatures = {
       pred1:[],
@@ -81,6 +82,11 @@ class World {
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
       this.entities[i].run();
+      
+    }
+    for (let i = 0; i < this.foodItems.length; i++) {//  All food and creatures
+      this.foodItems[i].run();
+      
     }
     //  draw all of the cells
     this.ctxMain.restore();
@@ -112,7 +118,7 @@ class World {
       let x = Math.random() * (this.dims.width-20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height-20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
-      this.entities.push(new Food4(loc,new JSVector(0, 0), 6,this));
+      this.foodItems.push(new Food4(loc,new JSVector(0, 0), 6,this));
     }
 
     for (let i = 0; i < 50; i++) {

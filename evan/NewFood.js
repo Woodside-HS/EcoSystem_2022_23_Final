@@ -57,7 +57,7 @@ class NewFood {
         ctx.lineTo(this.size/2*(this.deathMultiplier), 0);
         ctx.lineTo(0, this.size*2.5*(this.deathMultiplier));
         ctx.lineTo(-this.size/6*(this.deathMultiplier), 0);
-        ctx.lineTo(-this.size*(this.deathMultiplier), this.size*1.6)*(this.deathMultiplier);
+        ctx.lineTo(-this.size*(this.deathMultiplier), this.size*1.6*(this.deathMultiplier));
         ctx.closePath();
         ctx.stroke();
         ctx.fill();
