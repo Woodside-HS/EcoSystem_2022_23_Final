@@ -4,6 +4,8 @@ class tuckerHerbavore2 extends Creature {
         this.loc = loc;
         this.vel = vel;
         this.clr = this.getRandomColor();
+        this.ctx = wrld.ctxMain;
+        this.rad = sz;
         this.statusBlock = sttblk;
         // this.statusBlock = {
         //     searchFood:true,
@@ -13,7 +15,6 @@ class tuckerHerbavore2 extends Creature {
         //     sleeping:false,
         //     attack:false,
         //     deathProc:false
-            
         //  };
         // this.dataBlock = {//  status block 
         //     health: 100,
@@ -33,13 +34,26 @@ class tuckerHerbavore2 extends Creature {
         this.acc = new JSVector(0,0);
     }
     run(){
+        this.render();
+        this.update();
+        // if(sprint){
+
+        // } else
+        if(searchFood){
+            world.food.food2
+        }
+
+    }
+    sprint(predLoc){//predator will activate this 
 
     }
     update(){
-
+        this.loc.add(this.vel);
     }
     render(){
-
+        let ctx = this.ctx;
+        ctx.beginPath();
+        ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2)
     }
     getRandomColor() {
         //  List of hex color values for movers
