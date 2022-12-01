@@ -16,7 +16,7 @@ class Food6 extends Entity {
         this.update();
         this.render();
         this.bounce();
-        if(this.nurishment <= 0){
+        if (this.nurishment <= 0) {
             this.fullyEaten = true;
         }
     }
@@ -30,28 +30,28 @@ class Food6 extends Entity {
         ctx.beginPath();
         ctx.fillStyle = this.clr;
         //ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
-        ctx.moveTo(this.loc.x,this.loc.y);
-        ctx.lineTo(this.loc.x+(this.rad/2),this.loc.y-(this.rad/2));
-        ctx.lineTo(this.loc.x+this.rad,this.loc.y);
-        ctx.lineTo(this.loc.x,this.loc.y+this.rad);
-        ctx.lineTo(this.loc.x-this.rad,this.loc.y);
-        ctx.lineTo(this.loc.x-(this.rad/2),this.loc.y-(this.rad/2))
+        ctx.moveTo(this.loc.x, this.loc.y);
+        ctx.lineTo(this.loc.x + (this.rad / 2), this.loc.y - (this.rad / 2));
+        ctx.lineTo(this.loc.x + this.rad, this.loc.y);
+        ctx.lineTo(this.loc.x, this.loc.y + this.rad);
+        ctx.lineTo(this.loc.x - this.rad, this.loc.y);
+        ctx.lineTo(this.loc.x - (this.rad / 2), this.loc.y - (this.rad / 2))
         ctx.closePath();
         ctx.fill();
     }
 
     bounce() {
-        if(this.loc.x<world.dims.left){
+        if (this.loc.x < world.dims.left) {
             this.vel.x = -this.vel.x;
         }
-        if(this.loc.x>world.dims.right){
+        if (this.loc.x > world.dims.right) {
             this.vel.x = -this.vel.x;
         }
-        if(this.loc.y>world.dims.bottom){
+        if (this.loc.y > world.dims.bottom) {
             this.vel.y = -this.vel.y;
         }
-        if(this.loc.y<world.dims.top){
-            this.vel.y= -this.vel.y
+        if (this.loc.y < world.dims.top) {
+            this.vel.y = -this.vel.y
         }
     }
     getRandomColor() {

@@ -1,28 +1,31 @@
-class tFood2P { 
-    constructor(loc,vel,sz,wrld,dist){
+class tFood2P {
+    constructor(loc, vel, sz, wrld, dist) {
         this.loc = loc.copy;
         this.vel = vel.copy;
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.distance = dist;
-        this.life = Math.random()*300+100;
+        this.life = Math.random() * 300 + 100;
         this.nurishment = 1000;
-        this.isDeadLmaoSMH4headCringInnitBruv = false;
+        this.isDead = false;
         this.ctx = wrld;
         this.clr = this.getRandomColor();
     }
-    run(){
+    run() {
         this.update();
         this.render();
     }
-    update(){
-
+    update() {
+        this.life--;
+        if (this.life < 0) {
+            this.isDead = true;
+        }
     }
-    render(){
+    render() {
         let ctx = this.ctx;
         ctx.beginPath();
         ctx.fillStyle = this.clr;
-        ctx.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
+        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
         ctx.fill();
     }
     getRandomColor() {
