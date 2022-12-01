@@ -16,7 +16,7 @@ class NewFood {
     }
 
     update() {
-        this.loc.add(this.vel);
+        //this.loc.add(this.vel);
         if(this.deathdisplacement >= 0) {
             this.deathdisplacement--;
         } else {
@@ -28,6 +28,7 @@ class NewFood {
             this.sz = this.initSize;
         }
         this.checkLife();
+        this.deathMultiplier = this.life/this.initlife;
     }
 
     checkLife() {
@@ -50,13 +51,13 @@ class NewFood {
         ctx.beginPath();
         ctx.strokeStyle = this.clr;
         ctx.fillStyle = this.clr;
-        ctx.moveTo(-this.size*(deathMultiplier), 0*(deathMultiplier));
-        ctx.lineTo(this.size*(deathMultiplier), 0*(deathMultiplier));
-        ctx.lineTo(this.size*(deathMultiplier), this.size*(deathMultiplier));
-        ctx.lineTo(this.size/2*(deathMultiplier), 0*(deathMultiplier));
-        ctx.lineTo(0*(deathMultiplier), this.size*2.5*(deathMultiplier));
-        ctx.lineTo(-this.size/6*(deathMultiplier), 0*(deathMultiplier));
-        ctx.lineTo(-this.size*(deathMultiplier), this.size*1.6)*(deathMultiplier);
+        ctx.moveTo(-this.size*(this.deathMultiplier), 0);
+        ctx.lineTo(this.size*(this.deathMultiplier), 0);
+        ctx.lineTo(this.size*(this.deathMultiplier), this.size*(this.deathMultiplier));
+        ctx.lineTo(this.size/2*(this.deathMultiplier), 0);
+        ctx.lineTo(0, this.size*2.5*(this.deathMultiplier));
+        ctx.lineTo(-this.size/6*(this.deathMultiplier), 0);
+        ctx.lineTo(-this.size*(this.deathMultiplier), this.size*1.6)*(this.deathMultiplier);
         ctx.closePath();
         ctx.stroke();
         ctx.fill();

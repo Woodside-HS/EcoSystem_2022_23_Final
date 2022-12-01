@@ -9,7 +9,7 @@ class NewFoodPS extends Entity {
         this.rad =  15;
         this.clr = this.getTrueRandomColor();
         this.particles = [];
-        this.loadParticles(10);
+        this.loadParticles(5);
     }
     //  methods
     run() {
@@ -21,14 +21,14 @@ class NewFoodPS extends Entity {
             this.particles[i].run();
             if(!this.particles[i].alive) {
               this.particles.splice(i, 1);
-              this.particles.push(new NewFood(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx))
+              this.particles.push(new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx))
             }
         }
     }
 
     loadParticles(n) {
         for(let i = 0; i < n; i++) {
-            this.particles[i] = new NewFood(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx);
+            this.particles[i] = new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx);
         }
     }
 
@@ -59,5 +59,11 @@ class NewFoodPS extends Entity {
         let rdm = Math.random() * (max - min) + min;
         return rdm;
     } 
+
+
+
+
+
+    
 
 }
