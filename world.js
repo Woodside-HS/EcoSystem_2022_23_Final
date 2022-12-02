@@ -104,31 +104,32 @@ class World {
     this.ctxMain.fillText(fps, 20, this.cnvMain.height - 105);
     this.ctxMain.fillText("Rows = " + this.numRows, 20, this.cnvMain.height - 130);
     this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
-    let numEnts = 0;
+    let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     let c = this.creatures;
-    for( let i = 0; i < numEntities; i++){
-    let x = Math.random()*this.cnvMain.width;
-    let y = Math.random()*this.cnvMain.height
-    let loc = new JSVector(x, y);
-    let dx = Math.random()*4-2;
-    let dy = Math.random()*4-2
-    let vel = new JSVector(dx, dy);
-     c.pred1.push(new Creature(loc, vel, 12, this));
+    
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.cnvMain.width;
+      let y = Math.random() * this.cnvMain.height
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      c.pred1.push(new Creature(loc, vel, 12, this));
     }
 
-    for( let i = 0; i < numEntities; i++){
-      let x = Math.random()*this.cnvMain.width;
-      let y = Math.random()*this.cnvMain.height
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.cnvMain.width;
+      let y = Math.random() * this.cnvMain.height
       let loc = new JSVector(x, y);
-      let dx = Math.random()*4-2;
-      let dy = Math.random()*4-2
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-       c.pred2.push(new Creature(loc, vel, 3, this));
-      }
+      c.pred2.push(new Creature(loc, vel, 3, this));
+    }
 
 
   }//++++++++++++++++++++++++++++  load entities
@@ -137,17 +138,18 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      if (c.pred1[i].dataBlock.isDead) {
-        c.pred1[i].splice(i, 1);
-      }
       c.pred1[i].run();
+      if (c.pred1[i].dataBlock.isDead) {
+        c.pred1.splice(i, 1);
+      }
+
     }
 
-    for (let i = 0; i < c.pred2.length; i++) {
-      if (c.pred2[i].dataBlock.isDead) {
-        c.pred2[i].splice(i, 1);
-      }
+    for (let i = c.pred2.length - 1; i >= 0; i--) {
       c.pred2[i].run();
+      if (c.pred2[i].dataBlock.isDead) {
+        c.pred2.splice(i, 1);
+      }
     }
     for (let i = 0; i < c.pred3.length; i++) {
 
