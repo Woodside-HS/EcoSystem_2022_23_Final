@@ -5,7 +5,6 @@ class SBFood2 extends Food {
         this.statBlock.health = 255-Math.random()*30;
         this.lifespan = 0;
         this.clr = ["black", "rgba(39, 196, 220," + this.statBlock.health + ")", "rgba(255, 255, 255," + this.statBlock.health + ")"];
-        this.production = [0, 120];
         this.isDead = false;
         this.world = wrld;
         
@@ -22,22 +21,15 @@ class SBFood2 extends Food {
     update() {
         if(this.statBlock.health <= 1){
             this.isDead = true;
+            this.loc = new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height+this.dims.top);
+            this.dataBlock.health = 100;
+            this.dataBlock.nourishment = 100; 
         }
-        if(this.production[0]%this.production[1]==0){
-            let x = Math.random()*world.dims.width-world.dims.left;
-            let y = Math.random()*world.dims.height-world.dims.top;
-            let nloc = new JSVector(x, y);
-            let nvel = new JSVector(0, 0);
-            let nsize = 15;
-            let rWorld = this.world;
-            //world.foods.food2.push(new SBFood2(nloc, nvel, nsize, world));
-        }
-        this.production[0]++;
         if(this.lifespan%100 == 0){
             this.statBlock.health--;
         }
         this.lifespan++;
-        this.clr[1] = "rgba(39, 196, 220," + this.statBlock.health + ")";
+        this.clr[1] = "rgba(39, 196, 220, " + this.statBlock.health + ")";
         this.clr[2] = "rgba(255, 255, 255," + this.statBlock.health + ")";
     }
 
