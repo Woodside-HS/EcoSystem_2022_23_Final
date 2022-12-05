@@ -7,7 +7,13 @@ class Food6 extends Entity {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.clr = this.getRandomColor();
-        this.nurishment = 1000;
+        this.statBlock = {//  properties 
+            health: 100,
+            nourishment: 100,
+            lifeSpan:30000,
+            opacity:1.0,
+            foodPts:100
+        };
         this.fullyEaten = false
     }
     //  methods
@@ -15,7 +21,7 @@ class Food6 extends Entity {
         this.update();
         this.render();
         this.bounce();
-        if (this.nurishment <= 0) {//Fruits dont have lifespan so once they have been fully eaten they commit dead
+        if (this.statBlock.nurishment <= 0) {//Fruits dont have lifespan so once they have been fully eaten they commit dead
             this.fullyEaten = true;
         }
     }
