@@ -43,6 +43,7 @@ class Herbivore extends Entity {
        this.update();
        this.checkEdges();
        this.render();
+       this.checkEating();
     }
     update() {
        this.vel.add(this.acc);
@@ -65,6 +66,9 @@ class Herbivore extends Entity {
        ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
        ctx.fill();
        //  render balls in mini map
+    }
+    checkEating(){
+        v1= JSVector.subGetNew(this.loc, )
     }
  
     getRandomColor() {
