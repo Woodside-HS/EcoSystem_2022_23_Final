@@ -106,12 +106,17 @@ class World {
       this.foods[i].run();
     }
 
+    for(let i = 0;i<1;i++){
+      this.foods.pSys1[i].run();
+    }
+
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    console.log(this.foods)
-    for(let i = 0;i<10;i++){
-      this.foods.pSys2.push(new Food2ParticleSystem(100,100,ctx))
+    for(let i = 0;i<1;i++){
+      let loc = new JSVector(100,200);
+      let vel = new JSVector(Math.random()*4-2, Math.random()*4-2)
+      this.foods.pSys1.push(new MParticleSystem1(loc,vel,10,this,this.ctxMain));
     }
     
   }//++++++++++++++++++++++++++++  load entities

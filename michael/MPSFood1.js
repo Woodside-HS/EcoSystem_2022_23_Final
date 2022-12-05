@@ -1,20 +1,21 @@
-class Food2{
+class MPSFood1{
     // properties
-    constructor(loc, ctx) {
+    constructor(loc, vel, rad, ctx) {
+        console.log("hello");
         this.loc = new JSVector(loc.x,loc.y);
         this.vel = new JSVector(Math.random()*1-.5,Math.random()*1-.5);
         this.acc = new JSVector(0, .05);
         this.ctx = ctx;
         this.death = 1;
         this.isDead = false;
-        this.rad = 15;
+        this.rad = rad;
     }
     //  methods
     run() {
         this.update();
         this.life();
         this.render();
-        this.checkEdges();
+        this.checkEdges;
     }
 
     update() {
@@ -52,20 +53,6 @@ class Food2{
           if(this.loc.y < world.dims.bottom){
             this.vel.y = -this.vel.y;
           }
-    }
-
-    getRandomColor() {
-        //  List of hex color values for movers
-        let colors = [
-            "#25AA34",
-            "#18CC2e",
-            "#389925",
-            "#11AA99",
-            "#99CC00",
-            "#11FF65"
-        ];
-        let index = Math.floor(Math.random() * colors.length);
-        return colors[index];
     }
 
 }
