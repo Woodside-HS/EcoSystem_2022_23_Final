@@ -110,10 +110,11 @@ class World {
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     let c = this.creatures;
-    
+    let f = this.foods;
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height
+      let y = Math.random() * this.cnvMain.height;
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
@@ -123,14 +124,31 @@ class World {
 
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height
+      let y = Math.random() * this.cnvMain.height;
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
-
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this,));
+    }
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      f.food2.push(new Food(loc, vel, 5, this));
+    }
 
   }//++++++++++++++++++++++++++++  load entities
 
@@ -138,7 +156,7 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      c.pred1[i].run();
+      //c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
       }
@@ -146,7 +164,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      c.pred2[i].run();
+      //c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -158,7 +176,10 @@ class World {
 
     }
     for (let i = 0; i < c.herb2.length; i++) {
-
+      c.herb2[i].run();
+      if (c.herb2[i].dataBlock.isDead) {
+        c.herb2.splice(i, 1);
+      }
     }
     for (let i = 0; i < c.herb3.length; i++) {
 
@@ -169,6 +190,22 @@ class World {
   }
 
   runFood() {
+    let f = this.foods;
+    for (let i = f.food1.length - 1; i >= 0; i--) {
 
+    }
+    for (let i = f.food2.length - 1; i >= 0; i--) {
+      f.food2[i].run();
+      if (f.food2[i].statBlock.nourishment <= 0) {
+        f.food2.splice(i, 1);
+        let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+        let loc = new JSVector(x, y);
+        let dx = Math.random() * 4 - 2;
+        let dy = Math.random() * 4 - 2
+        let vel = new JSVector(dx, dy);
+        this.foods.food2.push(new Food(loc, vel, 5, this));
+      }
+    }
   }
 }//++++++++++++++++++++++++++++++  end world constructor

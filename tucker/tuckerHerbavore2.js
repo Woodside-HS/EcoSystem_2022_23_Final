@@ -10,7 +10,6 @@ class tuckerHerbavore2 {
 
         this.ctx = wrld.ctxMain;
         this.foodEat = null;
-
         this.statusBlock = {
             searchFood: true,
             searchMate: true,
@@ -87,7 +86,8 @@ class tuckerHerbavore2 {
 
     }
     update() {
-        if (this.acc.getMagnitude() > 3 && this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
+        if ( this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
+            //this.acc.getMagnitude() > 3 &&
             this.vel.add(this.acc);
             this.jmpCooldown = 0;
             this.acc = new JSVector(0, 0);//have to reset the acc jsvector
