@@ -9,6 +9,9 @@ class Creature5 extends Entity {
         this.rad = 10;
         this.wWidth = wrld.dims.width;
         this.wHeight = wrld.dims.height;
+        this.size = 5;
+        this.sizeFactor = 1;
+        this.rotation = 0;
     }
     //  methods
     run() {
@@ -23,6 +26,7 @@ class Creature5 extends Entity {
     }
 
     update() {
+        this.rotation++;
         this.loc.add(this.vel);
     }
 
@@ -43,13 +47,28 @@ class Creature5 extends Entity {
 
     render() {
         let ctx = this.ctx;
+        ctx.save();
+        ctx.translate(this.loc.x, this.loc.y);
         ctx.beginPath();
-        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
-        ctx.closePath();
+        ctx.rotate(Math.PI/360 * this.rotation);
         ctx.strokeStyle = this.clr;
         ctx.fillStyle = this.clr;
-        ctx.fill();
+        ctx.moveTo(-this.size * this.sizeFactor, 0);
+        ctx.lineTo(this.size * this.sizeFactor, 0);
+        ctx.lineTo(this.size * this.sizeFactor, 5);
+        ctx.lineTo(this.size * this.sizeFactor + 10, 0);
+        ctx.lineTo(this.size * this.sizeFactor, -5);
+        ctx.lineTo(0, -this.size * this.sizeFactor - 10);
+        ctx.lineTo(-this.size * this.sizeFactor, -5);
+        ctx.lineTo(-this.size * this.sizeFactor - 10, 0);
+        ctx.lineTo(-this.size * this.sizeFactor, 5);
+        ctx.lineTo(0, this.size * this.sizeFactor + 10);
+        ctx.lineTo(this.size * this.sizeFactor, 5);
+        ctx.lineTo(this.size * this.sizeFactor, 0);
+        ctx.closePath();
         ctx.stroke();
+        ctx.fill();
+        ctx.restore();
     }
 
     getRandomColor() {
