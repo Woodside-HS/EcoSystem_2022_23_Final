@@ -12,13 +12,34 @@ class Creature5 extends Entity {
     }
     //  methods
     run() {
+        this.interaction();
         this.update();
         this.render();
+        this.checkEdges();
+    }
+
+    interaction() {
+        
     }
 
     update() {
         this.loc.add(this.vel);
     }
+
+    checkEdges() {
+        if(this.loc.x<world.dims.left){
+          this.vel.x = -this.vel.x;
+        }
+        if(this.loc.x>world.dims.right){
+          this.vel.x = -this.vel.x;
+        }
+        if(this.loc.y>world.dims.top){
+          this.vel.y = -this.vel.y;
+        }
+        if(this.loc.y<world.dims.bottom){
+          this.vel.y = -this.vel.y;
+        }
+      }
 
     render() {
         let ctx = this.ctx;
