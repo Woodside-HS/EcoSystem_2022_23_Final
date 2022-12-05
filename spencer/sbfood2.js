@@ -1,4 +1,4 @@
-class SBFood2 extends Food {
+class SBFood2 extends Food {  //
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld);
@@ -30,7 +30,7 @@ class SBFood2 extends Food {
             let nvel = new JSVector(0, 0);
             let nsize = 15;
             let rWorld = this.world;
-            //world.foods.food2.push(new SBFood2(nloc, nvel, nsize, world));
+            //world.foods.food2.push(new SBFood2(nloc, nvel, nsize, rWorld));
         }
         this.production[0]++;
         if(this.lifespan%100 == 0){

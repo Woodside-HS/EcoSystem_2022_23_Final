@@ -82,8 +82,11 @@ class World {
     for(let i = 0; i<this.foods.food2.length; i++){
       this.foods.food2[i].run();
     }
-    for(let i = 0; i<this.foods.pSys1.length; i++){
-      this.foods.pSys1[i].run();
+    for(let i = 0; i<this.foods.pSys2.length; i++){
+      this.foods.pSys2[i].run();
+    }
+    for(let i = 0; i<this.creatures.herb3.length; i++){
+      this.creatures.herb3[i].run();
     }
     this.ctxMain.restore();
 
@@ -110,10 +113,13 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    for(let i = 0; i<500; i++){
+    for(let i = 0; i<100; i++){
       this.foods.food2.push(new SBFood2(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height+this.dims.top), new JSVector(0, 0), 15, this));
     }
-    this.foods.pSys1.push(new SBPSystem(new JSVector(400, 300), new JSVector(0, 0), 15, this, 100));
+    for(let i = 0; i<100; i++){
+      this.creatures.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height+this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 15, this));
+    }
+    this.foods.pSys2.push(new SBPSystem(new JSVector(400, 300), new JSVector(0,0), 15, this, 100));
    
     
   }//++++++++++++++++++++++++++++  load entities
