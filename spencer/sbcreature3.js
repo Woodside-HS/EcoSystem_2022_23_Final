@@ -94,7 +94,6 @@ class SBCreature3 extends Creature {
         this.ctx.fill(); 
         this.ctx.stroke(); 
         this.ctx.closePath();
-    
     }
     
     bounce(){
