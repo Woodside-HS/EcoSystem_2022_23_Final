@@ -18,11 +18,17 @@ class Food4 extends Entity {
         this.initSize = this.sz;
         this.health = 1000;
       
-        
+        beingEaten = false;
         this.alive = true;
-        this.statBlock = {
-
-        };
+        // this.statBlock = {
+        //  searchFood:true,
+        //  searchMate:true,
+        //  eating:false,
+        //  sprint:false,
+        //  sleeping:false,
+        //  attack:false,
+        //  deathProc:false
+        // };
     }
 
     run() {
@@ -34,13 +40,25 @@ class Food4 extends Entity {
 
     update(){
         this.checkLife();
+        this.isBeingEaten();
+        for(let i = world.entities.length-1; i>0; i--){
+            if(world.entites[i].alive == false){
+                world.entites.splice(i,1);
+            }
+           
+        }
+
+
+        
     }
 
     checkLife() {
-        if (this.life <= 0) {
+        if (this.health <= 0) {
           this.alive = false;
         }
     }
+
+    
     
     render() {
         let ctx = this.ctx;
