@@ -47,15 +47,21 @@ class tuckerHerbavore2 {
             let i = this.foodEat;
             this.dataBlock.nourishment++;
             if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
-                if (world.foods.food2[i].statBlock.nourishment >= 0) {//sometimes it just doens't exist - I think its cause of some splicng error
+                if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
                     //current theory: item has been spliced out of the array, everything moves back and now it dont exist
                     world.foods.food2[i].statBlock.nourishment--;
-                } else {
+                } else if(world.foods.food2[i].statBlock.nourishment == 0) {
+                    world.foods.food2[i].statBlock.nourishment--;
+                    this.statusBlock.eating = false;
+                    this.statusBlock.searchFood = true;
+                    this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
+                }
+                else {
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
                 }// I need some way to restart movement after eating something
-            } else {
+            } else {//should be checking to make sure that it goes back to check eat wont ever be run because it new thing is created
                 this.statusBlock.eating = false;
                 this.statusBlock.searchFood = true;
                 this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5)
@@ -86,7 +92,7 @@ class tuckerHerbavore2 {
 
     }
     update() {
-        if ( this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
+        if (this.acc.getMagnitude() > 1 && this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
             //this.acc.getMagnitude() > 3 &&
             this.vel.add(this.acc);
             this.jmpCooldown = 0;
