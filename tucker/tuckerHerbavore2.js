@@ -40,20 +40,27 @@ class tuckerHerbavore2 {
     run() {
         this.render();
         this.update();
+        //this.bounce(); this doesnt work and I dont care why
         // if(sprint){
 
         // } else
         if (this.statusBlock.eating == true) {
             let i = this.foodEat;
             this.dataBlock.nourishment++;
-            if (world.foods.food2[i].statBlock.nourishment >= 0) {//sometimes it just doens't exist - I think its cause of some splicng error
-                world.foods.food2[i].statBlock.nourishment--; 
+            if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
+                if (world.foods.food2[i].statBlock.nourishment >= 0) {//sometimes it just doens't exist - I think its cause of some splicng error
+                    //current theory: item has been spliced out of the array, everything moves back and now it dont exist
+                    world.foods.food2[i].statBlock.nourishment--;
+                } else {
+                    this.statusBlock.eating = false;
+                    this.statusBlock.searchFood = true;
+                    this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
+                }// I need some way to restart movement after eating something
             } else {
                 this.statusBlock.eating = false;
                 this.statusBlock.searchFood = true;
-                this.vel.x=.1;
-                this.vel.y=.1
-            }// I need some way to restart movement after eating something
+                this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5)
+            }
         } else if (this.foodEat != null) {
             this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
         }
@@ -62,7 +69,7 @@ class tuckerHerbavore2 {
                 let sightSq = this.dataBlock.sightValue + this.dataBlock.sightValue;
                 if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
                     let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
-                    jmp.setMagnitude(0.05)
+                    jmp.setMagnitude(0.05);
                     this.acc.add(jmp);
                     if (this.loc.distanceSquared(world.foods.food2[i].loc) < 100) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
                         this.vel.setMagnitude(0);
@@ -87,8 +94,8 @@ class tuckerHerbavore2 {
         }
         this.jmpCooldown++;
         this.loc.add(this.vel);
-        if (this.vel.getMagnitude() > 0) {
-            this.vel.setMagnitude(this.vel.getMagnitude() - 0.5);
+        if (this.vel.getMagnitude() > 0) {//slows the frog down
+            this.vel.setMagnitude(this.vel.getMagnitude() - 0.0005);
         }
         if (this.vel.getMagnitude() < 0) {
             this.vel.setMagnitude(0);
@@ -105,6 +112,20 @@ class tuckerHerbavore2 {
         ctx.lineTo(this.loc.x + (this.acc.x * 4), this.loc.y + (this.acc.y * 4));
         ctx.strokeStyle = "blue";
         ctx.stroke();
+    }
+    bounce() {
+        if (this.loc.x > world.dims.width) {
+            this.vel.x = -this.vel.x;
+        }
+        if (this.loc.x < 0) {
+            this.vel.x = -this.vel.x;
+        }
+        if (this.loc.y > world.dims.height) {
+            this.vel.y = -this.vel.y;
+        }
+        if (this.loc.y < 0) {
+            this.vel.y = -this.vel.y;
+        }
     }
     getRandomColor() {
         //  List of hex color values for movers
