@@ -131,6 +131,8 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
+    this.foods.pSys2.push(new SBPSystem(new JSVector(400, 400), new JSVector(0,0), 15, this, 225));
+
 
   }//++++++++++++++++++++++++++++  load entities
 
@@ -169,6 +171,9 @@ class World {
   }
 
   runFood() {
+    for(let i = 0; i<this.foods.pSys2.length; i++){
+      this.foods.pSys2[i].run();
+    }
 
   }
 }//++++++++++++++++++++++++++++++  end world constructor
