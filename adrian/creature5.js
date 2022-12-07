@@ -1,7 +1,7 @@
-class Creature5 extends Entity {
+class Creature5 extends Creature {
     // properties
     constructor(loc, vel, sz, wrld) {
-        super(loc, vel, sz, wrld)
+        super(loc, vel, sz, wrld);
         this.loc = loc;
         this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1)
         this.ctx = wrld.ctxMain;
