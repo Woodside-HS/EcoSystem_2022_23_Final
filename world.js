@@ -131,6 +131,13 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
+    for(let i = 0; i<numEntities/2; i++){
+      c.herb3.push(new SBCreature3(new JSVector(400, 300), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
+    }
+    for(let i = 0; i<numEntities/2; i++){
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 17, this));
+    }
+
 
   }//++++++++++++++++++++++++++++  load entities
 
@@ -161,6 +168,7 @@ class World {
 
     }
     for (let i = 0; i < c.herb3.length; i++) {
+        c.herb3[i].run();
 
     }
     for (let i = 0; i < c.flocks.length; i++) {
@@ -169,6 +177,9 @@ class World {
   }
 
   runFood() {
+    for (let i = 0; i < this.foods.food2.length; i++) {
+      this.foods.food2[i].run();
 
+    }
   }
 }//++++++++++++++++++++++++++++++  end world constructor
