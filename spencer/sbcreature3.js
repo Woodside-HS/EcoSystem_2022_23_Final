@@ -30,7 +30,7 @@ class SBCreature3 extends Creature {
     run() {
         //console.log(this.vel);
         if(this.statusBlock.eating){
-            this.eat();
+            this.eating();
         }
         else{
             this.search();
@@ -106,30 +106,32 @@ class SBCreature3 extends Creature {
     }
 
     search(){
-        for(let i = 0; i<this.world.foods.food2; i++){
+        for(let i = 0; i<this.world.foods.food2.length; i++){
             let check = this.world.foods.food2;
             if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>20 && !check[i].isDead){
                 this.acc = JSVector.subGetNew(check[i].loc, this.loc);
-                this.acc.normalize.mulitply(0.05);
+                this.acc.normalize();
+                this.acc.multiply(0.05);
                 console.log("a");
             }
             else if(this.loc.distance(check[i].loc)<20){
                 console.log("b");
                 this.statusBlock.search = false;
                 this.statusBlock.eating = true;
-                this.food = check[i].foodList[j];
+                this.food = check[i]; //j not defined
             }
          }
             
         
         
-        for(let i = 0; i<this.world.foods.pSys2; i++){
+        for(let i = 0; i<this.world.foods.pSys2.length; i++){
             let check2 = this.world.foods.pSys2;
             if(this.loc.distance(check2[i].loc)<600){
                 for(let j = 0; j<check2[i].foodList.length; j++){
                     if(this.loc.distance(check2[i].foodList[j]) <150 && this.loc.distance(check2[i].foodList[j])>20){
                         this.acc = JSVector.subGetNew(check2[i].loc, this.loc);
-                        this.acc.normalize.mulitply(0.05);
+                        this.acc.normalize();
+                        this.acc.multiply(0.05);
                         console.log("c");
                     }
                     else if(this.loc.distance(check2[i].foodList[j])<20){
