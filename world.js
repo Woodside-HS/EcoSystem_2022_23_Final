@@ -174,7 +174,7 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      //c.pred1[i].run();
+      c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
       }
@@ -182,7 +182,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      //c.pred2[i].run();
+      c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }

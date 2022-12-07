@@ -1,4 +1,4 @@
-class Food6 extends Entity {
+class Food6 extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
@@ -7,13 +7,6 @@ class Food6 extends Entity {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.clr = this.getRandomColor();
-        this.statBlock = {//  properties 
-            health: 100,
-            nourishment: 100,
-            lifeSpan:30000,
-            opacity:1.0,
-            foodPts:100
-        };
         this.fullyEaten = false
     }
     //  methods
