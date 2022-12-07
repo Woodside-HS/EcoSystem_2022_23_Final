@@ -1,11 +1,12 @@
 class MMHerb2 {
-  constructor(loc, size, wrld) {
+  constructor(loc, vel, sz, wrld) {
+    // super(loc, vel, sz, wrld);
     // this.loc = loc;
     this.loc = new JSVector(300, 300);
     this.vX = Math.random() * (0.5 - -0.5) + -0.5;
     this.vY = Math.random() * (0.5 - -0.5) + -0.5;
     this.vel = new JSVector(this.vX, this.vY);
-    this.size = size;
+    this.size = sz;
     this.world = wrld;
     this.isDead = false;
     this.hp = 100;
@@ -52,26 +53,26 @@ class MMHerb2 {
   eatFood() {
     let desiredDist = 50;
 
-    for (let i = 0; i < world.foods.food2.length; i++) {
+    for (let i = 0; i < world.foods.food3.length; i++) {
       // start of food 2
-      let food2 = world.foods.food2[i]; //! temp value that ill del later
-      let dist = this.loc.distance(food2.loc);
+      let food3 = world.foods.food3[i]; //! temp value that ill del later
+      let dist = this.loc.distance(food3.loc);
       if (dist < desiredDist) {
-        let diff = JSVector.subGetNew(food2.loc, this.loc);
+        let diff = JSVector.subGetNew(food3.loc, this.loc);
         diff.normalize();
         this.vel.add(diff);
         this.vel.limit(2);
         if (dist < 10) {
-          food2.vel = new JSVector(0, 0);
+          food3.vel = new JSVector(0, 0);
           this.vel = new JSVector(0, 0);
           // this.vel.multiply(0.1);
-          this.hp = this.hp + food2.hp;
-          food2.hp = 0;
+          this.hp = this.hp + food3.hp;
+          food3.hp = 0;
           this.vel.x = this.vX;
           this.vel.y = this.vY;
         }
       }
-    } // end of food2
+    } // end of food3
 
     for (let i = 0; i < world.foods.pSys1.length; i++) {
       for (let j = 0; j < world.foods.pSys1[i].mmParticles.length; j++) {

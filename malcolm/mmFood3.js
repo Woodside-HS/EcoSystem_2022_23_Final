@@ -1,4 +1,4 @@
-class MMFood2 extends Food {
+class MMFood3 extends Food {
   // properties
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
@@ -10,9 +10,17 @@ class MMFood2 extends Food {
     this.size = sz;
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
-    this.hp = 100;
+    this.hp = Math.floor(Math.random() * (100 - 60) + 60);
     this.isDead = false;
     this.count = 0;
+    //! temp stat block to look at
+    //   this.statBlock = {//  properties
+    //     health: 100,
+    //     nourishment: 100,
+    //     lifeSpan:30000,
+    //     opacity:1.0,
+    //     foodPts:100
+    // };
   }
   //  methods
   run() {

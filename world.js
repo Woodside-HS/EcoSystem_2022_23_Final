@@ -120,31 +120,12 @@ class World {
     );
     let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
-
-    for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-      if (this.foods.food2[i].isDead) {
-        this.foods.food2.splice(i, 1);
-      }
-    }
-    for (let i = 0; i < this.foods.pSys1.length; i++) {
-      this.foods.pSys1[i].run();
-      if (this.foods.pSys1[i].isDead) {
-        this.foods.pSys1.splice(i, 1);
-      }
-    }
-    for (let i = 0; i < this.creatures.herb2.length; i++) {
-      this.creatures.herb2[i].run();
-      if (this.creatures.herb2[i].isDead) {
-        this.creatures.herb2.splice(i, 1);
-      }
-    }
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     for (let i = 0; i < 10; i++) {
-      this.foods.food2.push(
-        new MMFood2(new JSVector(100, 100), new JSVector(0, 0), 10, this)
+      this.foods.food3.push(
+        new MMFood3(new JSVector(100, 100), new JSVector(0, 0), 10, this)
       );
     }
     for (let i = 0; i < 1; i++) {
@@ -192,6 +173,26 @@ class World {
 
   runCreatures() {
     let c = this.creatures;
+    let f = this.foods;
+
+    for (let i = 0; i < f.food3.length; i++) {
+      f.food3[i].run();
+      if (f.food3[i].isDead) {
+        f.food3.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < f.pSys1.length; i++) {
+      f.pSys1[i].run();
+      if (f.pSys1[i].isDead) {
+        f.pSys1.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < c.herb2.length; i++) {
+      c.herb2[i].run();
+      if (c.herb2[i].isDead) {
+        c.herb2.splice(i, 1);
+      }
+    }
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
       c.pred1[i].run();
