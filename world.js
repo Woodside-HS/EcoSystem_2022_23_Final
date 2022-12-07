@@ -52,6 +52,7 @@ class World {
       pSys3: [],
     };
 
+    //this.entities = [];
     // performance -- change the number of entities to see the effect on framerate
     this.loadEntities(150, this.ctxMain, this.dims.width, this.dims.height);
     // performance
@@ -75,6 +76,9 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    // for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+    //   this.entities[i].run();
+    // }
     //  draw all of the cells
     //run all of the entities
 
@@ -150,6 +154,17 @@ class World {
     }
     for (let i = 0; i < 4; i++) {
       this.creatures.herb2.push(new MMHerb2(new JSVector(300, 300), 20, this));
+    }
+
+    for (let i = 0; i < 500; i++) {
+      let x =
+        Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y =
+        Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.creatures.herb1.push(
+        new Creature5(loc, new JSVector(0, 0), 6, this)
+      ); //  Added to creatures object
     }
 
     let c = this.creatures;
