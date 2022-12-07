@@ -3,6 +3,7 @@ class Creature5 extends Creature {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld);
         this.loc = loc;
+        this.acc = new JSVector(0, 0);
         this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1)
         this.ctx = wrld.ctxMain;
         this.clr = this.getRandomColor();
@@ -12,21 +13,27 @@ class Creature5 extends Creature {
         this.size = 5;
         this.sizeFactor = 1;
         this.rotation = 0;
+        this.maxSpeed = 2;
     }
     //  methods
-    run() {
-        this.interaction();
+    run(c) {
+        this.interaction(c);
         this.update();
         this.render();
         this.checkEdges();
     }
 
-    interaction() {
-        
+    interaction(c) {
+      let netForce = new JSVector(0,0);
+      let coh = this.cohesion(c);
+      netForce.add(coh);
+      this.acc.add(netForce);
     }
 
     update() {
         this.rotation++;
+        this.vel.add(this.acc);
+        this.vel.limit(1);
         this.loc.add(this.vel);
     }
 
@@ -69,6 +76,32 @@ class Creature5 extends Creature {
         ctx.stroke();
         ctx.fill();
         ctx.restore();
+    }
+
+    cohesion(c) {
+      let neighbordist = 50;
+      let sum = new JSVector(0, 0);
+      let count = 0;
+      let steeringForce = new JSVector(0, 0);
+      for (let other = 0; other < c.length; other++) {
+        let d = this.loc.distanceSquared(c[other].loc);
+        if ((d > 0) && (d < neighbordist)) {
+          sum.add(c[other].loc);
+          count++;
+        }
+      }
+    
+      if (count > 0) {
+        sum.divide(count);
+        sum.normalize();
+        sum.multiply(this.maxSpeed);
+        let steer = JSVector.subGetNew(sum, this.vel);
+        steeringForce = steer;
+      } else {
+        steeringForce = new JSVector(0, 0);
+      }
+    
+      return steeringForce;
     }
 
     getRandomColor() {

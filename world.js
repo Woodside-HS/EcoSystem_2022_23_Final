@@ -166,7 +166,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      c.herb1[i].run(c.herb1);
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
