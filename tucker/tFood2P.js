@@ -1,4 +1,4 @@
-class tFood2P {
+class tFood2P  {
     constructor(loc, vel, sz, wrld, dist) {
         this.bushLoc = loc.copy();
         this.loc = loc.copy();
@@ -6,11 +6,16 @@ class tFood2P {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.distance = dist*dist;
-        this.life = Math.random() * 300 + 100;
-        this.nurishment = 1000;
         this.isDead = false;
         this.ctx = wrld;
         this.clr = this.getRandomColor();
+        this.statBlock = {//  properties 
+            health: 100,
+            nourishment: 100,
+            lifeSpan:30000,
+            opacity:1.0,
+            foodPts:100
+        };
     }
     run() {
         this.update();
@@ -19,11 +24,11 @@ class tFood2P {
     }
     update() {
         this.loc.add(this.vel)
-        this.life--;
-        if (this.life < 0) {
+        this.statBlock.lifeSpan--;
+        if (this.statBlock.lifeSpan < 0) {
             this.isDead = true;
         }//have to check if lifespan is up or if nurishment is left over
-        if(this.nurishment < 0){
+        if(this.statBlock.lifeSpan < 0){
             this.isDead = true;
         }
     }

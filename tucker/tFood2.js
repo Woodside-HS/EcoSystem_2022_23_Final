@@ -1,6 +1,5 @@
-class tFood2 extends Entity {
+class tFood2 {
     constructor(loc, vel, sz, wrld) {
-        super(loc, vel, sz, wrld);
         this.loc = loc;
         this.vel = vel;
         this.rad = sz;
