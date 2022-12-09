@@ -27,7 +27,7 @@ class Creature extends Entity {
          health: 100,
          isDead: false,
          nourishment: 100,
-         lifeSpan:30000,//  miliseconds
+         lifeSpan:Math.random()*3000,//  miliseconds
          age:0,
          numOffspring:3,
          maxSpeed: 1,
@@ -45,6 +45,9 @@ class Creature extends Entity {
       this.render();
    }
    update() {
+      if(this.dataBlock.lifeSpan-- <= 0){
+         this.dataBlock.isDead = true;
+      }
       this.vel.add(this.acc);
       this.vel.limit(this.maxSpeed);
       this.loc.add(this.vel);
@@ -70,16 +73,25 @@ class Creature extends Entity {
    getRandomColor() {
       //  List of hex color values for movers
       let colors = [
-         "#7102AB",
+         // "#7102AB",
          "#ab0256",
          "#0285ab",
          "#02ab1a",
          "#ab5302",
          "#773e26",
          "#ab0256",
-         "#257874",
-         "#78254e",
-         "#787725"
+         // "#257874",
+         // "#78254e",
+         // "#787725",
+         // "#1102AB",
+         // "#000256",
+         "#0200ab",
+         // "#02ab00",
+         // "#AAAA02",
+         // "#77FFFF",
+         // "#ab0006",
+         // "#000874",
+         // "#782000"
       ];
       let index = Math.floor(Math.random() * colors.length);
       return colors[index];
