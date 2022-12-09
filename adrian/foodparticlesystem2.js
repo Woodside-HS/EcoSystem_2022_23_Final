@@ -1,4 +1,4 @@
-class Food5ParticleSystem extends Entity {
+class FoodParticleSystem2BigBalls extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
