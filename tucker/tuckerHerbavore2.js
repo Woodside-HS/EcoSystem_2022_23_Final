@@ -9,7 +9,7 @@ class tuckerHerbavore2 {
         //various movement variable above
 
         this.ctx = wrld.ctxMain;
-        this.foodEat = null;
+        this.foodEat = null;//which thing to eat
         this.statusBlock = {
             searchFood: true,
             searchMate: true,
@@ -47,18 +47,21 @@ class tuckerHerbavore2 {
             let i = this.foodEat;
             this.dataBlock.nourishment++;
             if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
-                if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
-                    //current theory: item has been spliced out of the array, everything moves back and now it dont exist
-                    world.foods.food2[i].statBlock.nourishment--;
-                } else if(world.foods.food2[i].statBlock.nourishment == 0) {
+                if(world.foods.food2[i].statBlock.nourishment == 1) {
+                    //this needs to go before the others so that it checks this forst
+                    //hopefully this should fix it -- It did not -- Wait it did
                     world.foods.food2[i].statBlock.nourishment--;
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
-                }
-                else {
+                    this.foodEat = null;
+                } else if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
+                    //What I think is happening: After it eats a guy, it doesnt sawp away fast enough so it just easts the gy that is the same index but in a different location
+                    world.foods.food2[i].statBlock.nourishment--;
+                } else {
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
+                    this.foodEat = null;
                     this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
                 }// I need some way to restart movement after eating something
             } else {//should be checking to make sure that it goes back to check eat wont ever be run because it new thing is created
@@ -100,7 +103,7 @@ class tuckerHerbavore2 {
         }
         this.jmpCooldown++;
         this.loc.add(this.vel);
-        if (this.vel.getMagnitude() > 0) {//slows the frog down
+        if (this.vel.getMagnitude() > 0.1) {//slows the frog down but never stops it
             this.vel.setMagnitude(this.vel.getMagnitude() - 0.0005);
         }
         if (this.vel.getMagnitude() < 0) {
