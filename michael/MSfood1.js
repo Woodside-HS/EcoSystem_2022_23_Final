@@ -1,9 +1,10 @@
-class MSFood1 extends Food {
+class MSFood2 extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
         this.statBlock.health = Math.random()*1+.05;
-        this.clr = "green"
+        this.clr = "red"
+        this.clr2 = "green"
         this.isDead = false;
 
         
@@ -18,11 +19,13 @@ class MSFood1 extends Food {
     update() {
         this.statBlock.health = this.statBlock.health-.0001;
         if(this.statBlock.health <= .1){
-            this.clr = "darkbrown"
+            this.clr = "brown"
+            this.clr2 = "darkgreen"
         }
 
         if(this.statBlock.health <= .05){
             this.clr = "black"
+            this.clr2 = "brown"
         }
 
         if(this.statBlock.health <= 0){
@@ -32,22 +35,23 @@ class MSFood1 extends Food {
 
     render() {
        this.ctx.beginPath();
-       this.ctx.moveTo(this.loc.x,this.loc.y);
-       this.ctx.lineTo(this.loc.x,this.loc.y-30);
+       this.ctx.moveTo(this.loc.x,this.loc.y-7);
+       this.ctx.lineTo(this.loc.x+10,this.loc.y-10);
+       this.ctx.lineTo(this.loc.x+20,this.loc.y);
+       this.ctx.lineTo(this.loc.x,this.loc.y+25);
+       this.ctx.lineTo(this.loc.x-20,this.loc.y);
+       this.ctx.lineTo(this.loc.x-10,this.loc.y-10);
+       this.ctx.lineTo(this.loc.x,this.loc.y-7);
        this.ctx.strokeStyle = this.clr;
         this.ctx.stroke();
        this.ctx.closePath();
+
        this.ctx.beginPath();
-       //ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise)
-       this.ctx.ellipse(this.loc.x,this.loc.y-10,5,15,0,.6,Math.PI);
-       this.ctx.strokeStyle = this.clr;
+       this.ctx.moveTo(this.loc.x-2,this.loc.y-7);
+       this.ctx.lineTo(this.loc.x+5,this.loc.y-15);
+       this.ctx.strokeStyle = this.clr2;
         this.ctx.stroke();
-        this.ctx.closePath();
-        this.ctx.beginPath();
-       this.ctx.arc(this.loc.x,this.loc.y-25,5,5,Math.PI/2,1);
-       this.ctx.strokeStyle = this.clr;
-        this.ctx.stroke();
-        this.ctx.closePath();
+       this.ctx.closePath();
     }
 
     isDead(){
