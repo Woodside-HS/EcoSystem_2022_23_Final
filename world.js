@@ -18,11 +18,11 @@ class World {
     this.numCols = 120;
     this.rowHeight = this.dims.height / this.numRows;
     this.colWidth = this.dims.width / this.numCols;
-   //  calculate the rows and cols of the grid that we want to render
-    this.cnvMainRow = (this.cnvMainLoc.y -  this.dims.top)/this.rowHeight;
-    this.cnvMainCol = (this.cnvMainLoc.x -  this.dims.left)/this.colWidth;
-    this.rowRange = Math.floor(this.cnvMain.height/this.rowHeight);
-    this.colRange = Math.floor(this.cnvMain.width/this.colWidth);;
+    //  calculate the rows and cols of the grid that we want to render
+    this.cnvMainRow = (this.cnvMainLoc.y - this.dims.top) / this.rowHeight;
+    this.cnvMainCol = (this.cnvMainLoc.x - this.dims.left) / this.colWidth;
+    this.rowRange = Math.floor(this.cnvMain.height / this.rowHeight);
+    this.colRange = Math.floor(this.cnvMain.width / this.colWidth);;
 
     this.grid = [];
     for (let row = 0; row < this.numRows; row++) {
@@ -33,23 +33,23 @@ class World {
     }
 
     this.creatures = {
-      pred1:[],
-      pred2:[],
-      pred3:[],
-      herb1:[],
-      herb2:[],
-      herb3:[],
-      flocks:[],
+      pred1: [],
+      pred2: [],
+      pred3: [],
+      herb1: [],
+      herb2: [],
+      herb3: [],
+      flocks: [],
     };
 
     this.foods = {
-      food1:[],
-      food2:[],
-      food3:[],
-      food4:[],
-      pSys1:[],
-      pSys2:[],
-      pSys3:[]
+      food1: [],
+      food2: [],
+      food3: [],
+      food4: [],
+      pSys1: [],
+      pSys2: [],
+      pSys3: []
     };
 
     // performance -- change the number of entities to see the effect on framerate
@@ -83,13 +83,13 @@ class World {
 
     // // translate cnvMain according to the location of the canvas in the world
     this.ctxMain.save();
-      this.ctxMain.translate(this.cnvMainLoc.x * (-1), this.cnvMainLoc.y * (-1));
-      //bounds of the world in cnvMain
-      this.ctxMain.strokeStyle = "rgba(0, 140, 240, 1)"
-      this.ctxMain.beginPath();
-      this.ctxMain.lineWidth = 12;
-      this.ctxMain.strokeRect(this.dims.left, this.dims.top, this.dims.width, this.dims.height);
-      this.ctxMain.stroke();
+    this.ctxMain.translate(this.cnvMainLoc.x * (-1), this.cnvMainLoc.y * (-1));
+    //bounds of the world in cnvMain
+    this.ctxMain.strokeStyle = "rgba(0, 140, 240, 1)"
+    this.ctxMain.beginPath();
+    this.ctxMain.lineWidth = 12;
+    this.ctxMain.strokeRect(this.dims.left, this.dims.top, this.dims.width, this.dims.height);
+    this.ctxMain.stroke();
     this.ctxMain.restore();
 
     // // performance  show framerate
@@ -106,18 +106,18 @@ class World {
       this.foods[i].run();
     }
 
-    for(let i = 0;i<1;i++){
+    for (let i = 0; i < 1; i++) {
       this.foods.pSys1[i].run();
     }
 
-  }
+  } z
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    for(let i = 0;i<1;i++){
-      let loc = new JSVector(100,200);
-      let vel = new JSVector(Math.random()*4-2, Math.random()*4-2)
-      this.foods.pSys1.push(new MParticleSystem1(loc,vel,10,this,this.ctxMain));
+    for (let i = 0; i < 1; i++) {
+      let loc = new JSVector(100, 200);
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }
-    
+
   }//++++++++++++++++++++++++++++  load entities
 }//++++++++++++++++++++++++++++++  end world constructor

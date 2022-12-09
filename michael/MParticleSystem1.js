@@ -1,11 +1,9 @@
-class MParticleSystem1{
-    constructor(loc,vel,sz,wrld,ctx) {     
-        this.loc = loc;
-        this.vel = vel;
+class MParticleSystem1 extends Food{
+    constructor(loc,vel,sz,wrld) {   
+        super(loc,vel,sz,wrld)  
         this.rad = 15;
         this.particles = [];
         this.count = 1000;
-        this.ctx = ctx;
     }
 
     addParticle(){
@@ -19,7 +17,7 @@ class MParticleSystem1{
         }
         this.isDead();
         if(++this.count%50 === 0 &&  this.particles.length < 10){
-            this.addParticle(this.loc, this.ctx); // new particle each time
+            this.addParticle(); 
             this.count = 0;
         }
     }
