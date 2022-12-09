@@ -2,7 +2,7 @@ class SBPSystem extends Food {
     // properties
     constructor(loc, vel, sz, wrld, death) {
         super(loc, vel, sz, wrld)
-        this.death = death;
+        this.statBlock.lifeSpan = death;
         this.vel.multiply(0);
         this.foodList = [];
         this.addParticle = 0;
@@ -11,7 +11,7 @@ class SBPSystem extends Food {
     //  methods
     run() {
         if(this.addParticle % 100 == 0){
-            this.foodList.push(new PSystemFoodSB(this.loc, this.death, this.ctx, this.size));
+            this.foodList.push(new PSystemFoodSB(this.loc, this.statBlock.lifeSpan, this.ctx, this.size));
         }
         this.addParticle++;
         this.pdeath();
