@@ -88,6 +88,9 @@ class World {
     this.runCreatures();
     this.runFood();
 
+    for (let i = 0; i < this.foods.food2.length; i++) {
+      this.foods.food2[i].run();
+    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -113,6 +116,11 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    for (let i = 0; i < numEntities; i++) {
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
+    }
+
+    // }//++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < 500; i++) {
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
@@ -145,6 +153,8 @@ class World {
   }
 
 
+
+
   runCreatures() {
     let c = this.creatures;
 
@@ -171,7 +181,7 @@ class World {
         c.herb1.splice(i, 1);
       }
     }
-    
+
     for (let i = 0; i < c.herb2.length; i++) {
 
     }
@@ -184,6 +194,9 @@ class World {
   }
 
   runFood() {
+    for (let i = 0; i < this.foods.food2.length; i++) {
+      this.foods.food2[i].run();
+    }
 
   }
 
