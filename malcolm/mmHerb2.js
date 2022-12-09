@@ -1,5 +1,6 @@
-class MMHerb2 {
+class MMHerb2 extends Creature {
   constructor(loc, vel, sz, wrld) {
+    super(loc, vel, sz, wrld);
     // this.loc = loc;
     this.loc = new JSVector(300, 300);
     this.vX = Math.random() * (0.5 - -0.5) + -0.5;

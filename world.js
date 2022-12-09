@@ -131,18 +131,35 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    //Malcolms food3
     for (let i = 0; i < 100; i++) {
-      this.foods.food3.push(
-        new MMFood3(new JSVector(100, 100), new JSVector(0, 0), 10, this)
-      );
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.food3.push(new MMFood3(loc, vel, 10, this));
     }
+    //Malcolms MMPSystem1
     for (let i = 0; i < 1; i++) {
-      this.foods.pSys1.push(
-        new MMPSystem1(new JSVector(200, 100), new JSVector(0, 0), 10, this)
-      );
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.pSys1.push(new MMPSystem1(loc, vel, 10, this));
     }
+    //Malcolms herb2
     for (let i = 0; i < 4; i++) {
-      this.creatures.herb2.push(new MMHerb2(new JSVector(300, 300), 20, this));
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.creatures.herb2.push(new MMHerb2(loc, vel, 10, this));
     }
 
     for (let i = 0; i < numEntities; i++) {
