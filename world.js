@@ -142,6 +142,12 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
+    for(let i = 0;i<100;i++){
+      let loc = new JSVector(Math.random() * this.cnvMain.width, Math.random() * this.cnvMain.height)
+      let vel = new JSVector(Math.random() * .5 - .25,Math.random() * .5 - .25)
+      this.foods.food1.push(new MSFood1(loc, vel,10,this))
+    }
+
   }
 
 
@@ -184,6 +190,9 @@ class World {
   }
 
   runFood() {
+    for(let i = 0;i<this.foods.food1.length;i++){
+      this.foods.food1[i].run();
+    }
 
   }
 

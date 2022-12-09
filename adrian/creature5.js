@@ -17,7 +17,7 @@ class Creature5 extends Creature {
     run() {
         this.interaction();
         this.update();
-        this.render();
+        //this.render();
         this.checkEdges();
     }
 
