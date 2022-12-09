@@ -39,6 +39,9 @@ class MMFood3 extends Food {
     if (this.hp <= 0) {
       this.isDead = true;
     }
+    if (this.statBlock.lifeSpan <= 0) {
+      this.isDead = true;
+    }
   }
 
   render() {

@@ -7,7 +7,7 @@ class MMPSystem1 extends Food {
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
     this.mmParticles = [];
-    this.loadParticles(5);
+    this.loadParticles(50);
   }
   run() {
     this.render();

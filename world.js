@@ -123,7 +123,7 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
       this.foods.food3.push(
         new MMFood3(new JSVector(100, 100), new JSVector(0, 0), 10, this)
       );

@@ -1,6 +1,5 @@
 class MMHerb2 {
   constructor(loc, vel, sz, wrld) {
-    // super(loc, vel, sz, wrld);
     // this.loc = loc;
     this.loc = new JSVector(300, 300);
     this.vX = Math.random() * (0.5 - -0.5) + -0.5;
