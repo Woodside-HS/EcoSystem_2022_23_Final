@@ -7,9 +7,9 @@ class tuckerHerbavore2 {
         this.jmpCooldownMax = 100;
         this.jmpCooldown = 0;
         //various movement variable above
-
         this.ctx = wrld.ctxMain;
         this.foodEat = null;//which thing to eat
+        this.predatorsLocation = new JSVector(0,0);
         this.statusBlock = {
             searchFood: true,
             searchMate: true,
@@ -73,7 +73,7 @@ class tuckerHerbavore2 {
             this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
         }
         if (this.statusBlock.searchFood) {//makes sure that the creature is actuawlly searching for food
-            for (let i = 0; i < world.foods.food2.length; i++) {//only gos thru food2 rn
+            for (let i = 0; i < world.foods.food2.length; i++) {//only gos thru food2 rn should be pretty easily be able to modify to work with particle sytstems
                 let sightSq = this.dataBlock.sightValue + this.dataBlock.sightValue;
                 if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
                     let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
@@ -91,7 +91,8 @@ class tuckerHerbavore2 {
         }
 
     }
-    sprint(predLoc) {//predator will activate this 
+    sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
+
 
     }
     update() {
