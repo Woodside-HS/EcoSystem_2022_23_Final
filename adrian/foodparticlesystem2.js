@@ -8,7 +8,7 @@ class FoodParticleSystem2BigBalls extends Food {
         this.world = wrld;
         this.rad =  this.randomNumber(10, 10);
         this.clr = this.getTrueRandomColor();
-        this.particles = [];
+        this.foodList = [];
         this.loadParticles(10);
     }
     //  methods
@@ -17,18 +17,18 @@ class FoodParticleSystem2BigBalls extends Food {
     }
 
     update() {
-        for (let i = this.particles.length - 1; i > 0; i--) {
-            this.particles[i].run();
-            if(!this.particles[i].alive) {
-              this.particles.splice(i, 1);
-              this.particles.push(new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx    ))
+        for (let i = this.foodList.length - 1; i > 0; i--) {
+            this.foodList[i].run();
+            if(!this.foodList[i].alive) {
+              this.foodList.splice(i, 1);
+              this.foodList.push(new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx    ))
             }
         }
     }
 
     loadParticles(n) {
         for(let i = 0; i < n; i++) {
-            this.particles[i] = new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx);
+            this.foodList[i] = new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx);
           }
     }
 
