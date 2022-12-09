@@ -156,7 +156,7 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
-    for(let i = 0; i< numEntities; i++){
+    for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
       let loc = new JSVector(x, y);
@@ -165,7 +165,8 @@ class World {
       let vel = new JSVector(dx, dy);
       f.food2.push(new Food6(loc, vel, 5, this));
     }
-    for(let i = 0; i< numEntities;i++){
+    //  Tucker heart Food
+    for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
       let loc = new JSVector(x, y);
@@ -173,6 +174,16 @@ class World {
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       f.pSys2.push(new tFood2(loc, vel, 7, this));
+    }
+    //  Adrain Food2Grass
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
     }
 
   }
@@ -192,7 +203,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-     // c.pred2[i].run();
+      // c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -227,13 +238,14 @@ class World {
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food2[i].run();
-      if(f.food2[i].statBlock.nourishment <= 0){
-        f.food2.splice(i,1);
+      if (f.food2[i].statBlock.nourishment <= 0) {
+        f.food2.splice(i, 1);
       }
     }
-        for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-    }
+
+    // for (let i = 0; i < this.foods.food2.length; i++) {
+    //   this.foods.food2[i].run();
+    // }
 
     for (let i = f.food3.length - 1; i >= 0; i--) {
 
