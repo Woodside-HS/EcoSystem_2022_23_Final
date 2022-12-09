@@ -89,9 +89,7 @@ class World {
     this.runCreatures();
     this.runFood();
 
-    for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-    }
+    
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -130,7 +128,7 @@ class World {
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }
 
-  }//++++++++++++++++++++++++++++  load entities
+  //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
     }
@@ -195,8 +193,8 @@ class World {
       let vel = new JSVector(dx, dy);
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
     }
-
   }
+
 
 
 
@@ -245,6 +243,10 @@ class World {
     //for (let i = c.food1.length - 1; i >= 0; i--) {
 
     //}
+
+    for(let i = 0;i<1;i++){
+      f.pSys1[i].run();
+    }
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food2[i].run();
