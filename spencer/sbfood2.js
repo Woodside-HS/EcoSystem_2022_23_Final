@@ -11,7 +11,6 @@ class SBFood2 extends Food {  //
     }
     //  methods
     run() {
-        console.log(this.statBlock.health);
         this.update();
         this.render();
     }
