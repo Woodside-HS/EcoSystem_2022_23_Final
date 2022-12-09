@@ -129,12 +129,23 @@ class tuckerHerbavore2 extends Creature{
     render() {
         let ctx = this.ctx;
         ctx.beginPath();
-        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
+        ctx.save();
+        ctx.translate(this.loc.x,this.loc.y);
+        //ctx.rotate(this.jmpCooldown);
+        ctx.moveTo(0,0);
+        ctx.lineTo(-this.rad,this.rad);
+        ctx.lineTo(this.rad,this.rad);
+        ctx.lineTo(this.rad,-this.rad);
+        ctx.lineTo(-this.rad,-this.rad);
+        ctx.restore();
+        ctx.closePath();//idunno why its spinning
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(this.loc.x, this.loc.y);//this is the jump line so it is outside of the restore and rotation, is 4x the acc
+        ctx.lineTo(this.loc.x + (this.acc.x * 4), this.loc.y + (this.acc.y * 4));
         ctx.fill();
         ctx.closePath();
         ctx.beginPath();
-        ctx.moveTo(this.loc.x, this.loc.y);
-        ctx.lineTo(this.loc.x + (this.acc.x * 4), this.loc.y + (this.acc.y * 4));
         ctx.strokeStyle = "blue";
         ctx.stroke();
     }
