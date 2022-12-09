@@ -143,7 +143,7 @@ class World {
     }
 
     for(let i = 0; i<numEntities/2; i++){
-      c.herb3.push(new SBCreature3(new JSVector(400, 300), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
+      c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
     }
     for(let i = 0; i<numEntities/2; i++){
       this.foods.food2.push(new SBFood2(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 17, this));
@@ -155,7 +155,7 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      c.pred1[i].run();
+      //c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
       }
@@ -163,7 +163,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      c.pred2[i].run();
+      //c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -172,7 +172,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
