@@ -8,7 +8,7 @@ class MParticleSystem1 extends Food{
 
     addParticle(){
         
-        this.particles.push(new MPSFood1(this.loc,this.vel,this.rad,this.ctx));
+        this.particles.push(new MPSFood1(this.loc,this.rad,this.ctx));
     }
 
     run(){

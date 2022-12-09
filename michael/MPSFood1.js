@@ -1,8 +1,7 @@
 class MPSFood1{
     // properties
-    constructor(loc, vel, rad, ctx) {
-        console.log("hello");
-        this.loc = new JSVector(loc.x,loc.y);
+    constructor(loc, rad, ctx) {
+        this.loc = new JSVector(300,100);
         this.vel = new JSVector(Math.random()*1-.5,Math.random()*1-.5);
         this.acc = new JSVector(0, .05);
         this.ctx = ctx;
@@ -37,22 +36,11 @@ class MPSFood1{
         this.ctx.fillStyle = "rgba(230,50,100, " + this.death + ")";
         this.ctx.fill();
         this.ctx.stroke()
-        this.ctx.closePath();
+
     }
 
     checkEdges(){
-        if(this.loc.x > world.dims.left){
-            this.vel.x = -this.vel.x;
-          }
-          if(this.loc.x < world.dims.right){
-            this.vel.x = -this.vel.x;
-          }
-          if(this.loc.y > world.dims.top){
-            this.vel.y = -this.vel.y;
-          }
-          if(this.loc.y < world.dims.bottom){
-            this.vel.y = -this.vel.y;
-          }
+        
     }
 
 }

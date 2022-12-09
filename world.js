@@ -79,6 +79,9 @@ class World {
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
     //  draw all of the cells
+    for (let i = 0; i < 1; i++) {
+      this.foods.pSys1[i].run();
+    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -106,15 +109,13 @@ class World {
       this.foods[i].run();
     }
 
-    for (let i = 0; i < 1; i++) {
-      this.foods.pSys1[i].run();
-    }
+    
 
-  } z
+  }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     for (let i = 0; i < 1; i++) {
-      let loc = new JSVector(100, 200);
+      let loc = new JSVector(100,100);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }
