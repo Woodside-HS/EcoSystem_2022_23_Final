@@ -52,6 +52,7 @@ class World {
       pSys3: []
     };
 
+    //this.entities = [];
     // performance -- change the number of entities to see the effect on framerate
     this.loadEntities(150, this.ctxMain, this.dims.width, this.dims.height);
     // performance
@@ -78,6 +79,9 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    // for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+    //   this.entities[i].run();
+    // }
     //  draw all of the cells
     //run all of the entities
 
@@ -109,6 +113,13 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    for (let i = 0; i < 500; i++) {
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.creatures.herb1.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }
+
     let c = this.creatures;
     let f = this.foods;
 
@@ -150,7 +161,8 @@ class World {
       f.food2.push(new Food(loc, vel, 5, this));
     }
 
-  }//++++++++++++++++++++++++++++  load entities
+  }//end of load entities
+
 
   runCreatures() {
     let c = this.creatures;
@@ -172,9 +184,13 @@ class World {
     for (let i = 0; i < c.pred3.length; i++) {
 
     }
-    for (let i = 0; i < c.herb1.length; i++) {
-
+    for (let i = c.herb1.length - 1; i >= 0; i--) {
+      c.herb1[i].run();
+      if (c.herb1[i].dataBlock.isDead) {
+        c.herb1.splice(i, 1);
+      }
     }
+    
     for (let i = 0; i < c.herb2.length; i++) {
       c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
@@ -208,4 +224,6 @@ class World {
       }
     }
   }
+
+
 }//++++++++++++++++++++++++++++++  end world constructor
