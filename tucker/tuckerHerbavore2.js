@@ -1,37 +1,38 @@
-class tuckerHerbavore2 {
+class tuckerHerbavore2 extends Creature{
     constructor(loc, vel, sz, wrld) {
+        super(loc,vel,sz,wrld)
         this.loc = loc;
         this.vel = vel;
         this.maxJump = 1;//the max acc's magnitude can be before it jumps
         this.acc = new JSVector(0, 0);
-        this.jmpCooldownMax = 100;
+        this.jmpCooldownMax = 20;
         this.jmpCooldown = 0;
         //various movement variable above
         this.ctx = wrld.ctxMain;
         this.foodEat = null;//which thing to eat
         this.predatorsLocation = new JSVector(0,0);
-        this.statusBlock = {
-            searchFood: true,
-            searchMate: true,
-            eating: false,
-            sprint: false,
-            sleeping: false,
-            attack: false,
-            deathProc: false
-        };
-        this.dataBlock = {//  status block 
-            health: 100,
-            isDead: false,
-            nourishment: 100,
-            lifeSpan: 30000,//  miliseconds roughly 30 sec
-            age: 0,
-            numOffspring: 3,
-            maxSpeed: 1,
-            maxSprintSpeed: 1,
-            scentValue: 100,
-            sightValue: 1000,
-            weight: 10,
-        };
+        // this.statusBlock = { this is just for reference for me
+        //     searchFood: true,
+        //     searchMate: true,
+        //     eating: false,
+        //     sprint: false,
+        //     sleeping: false,
+        //     attack: false,
+        //     deathProc: false
+        // };
+        // this.dataBlock = {//  status block 
+        //     health: 100,
+        //     isDead: false,
+        //     nourishment: 100,
+        //     lifeSpan: 30000,//  miliseconds roughly 30 sec
+        //     age: 0,
+        //     numOffspring: 3,
+        //     maxSpeed: 1,
+        //     maxSprintSpeed: 1,
+        //     scentValue: 100,
+        //     sightValue: 100,
+        //     weight: 10,
+        // };
         this.clr = this.getRandomColor();
         this.rad = sz;
         //creature info variable
@@ -44,10 +45,20 @@ class tuckerHerbavore2 {
 
         // } else
         if (this.statusBlock.eating == true) {
-            let i = this.foodEat;
+            this.consuming();
+        } else if (this.foodEat != null) {
+            this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
+        }
+        if (this.statusBlock.searchFood) {
+            this.searchingForFood();
+        }
+
+    }
+    consuming(){
+        let i = this.foodEat;
             this.dataBlock.nourishment++;
             if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
-                if(world.foods.food2[i].statBlock.nourishment == 1) {
+                if(world.foods.food2[i].statBlock.nourishment <= 2) {
                     //this needs to go before the others so that it checks this forst
                     //hopefully this should fix it -- It did not -- Wait it did
                     world.foods.food2[i].statBlock.nourishment--;
@@ -56,7 +67,6 @@ class tuckerHerbavore2 {
                     this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5);
                     this.foodEat = null;
                 } else if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
-                    //What I think is happening: After it eats a guy, it doesnt sawp away fast enough so it just easts the gy that is the same index but in a different location
                     world.foods.food2[i].statBlock.nourishment--;
                 } else {
                     this.statusBlock.eating = false;
@@ -69,32 +79,29 @@ class tuckerHerbavore2 {
                 this.statusBlock.searchFood = true;
                 this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5)
             }
-        } else if (this.foodEat != null) {
-            this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
-        }
-        if (this.statusBlock.searchFood) {//makes sure that the creature is actuawlly searching for food
-            //normal foods below
-            for (let i = 0; i < world.foods.food3.length; i++) {//only gos thru food3 rn should be pretty easily be able to modify to work with particle sytstems
-                let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
-                if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
-                    let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
-                    jmp.setMagnitude(0.05);
-                    this.acc.add(jmp);
-                    if (this.loc.distanceSquared(world.foods.food2[i].loc) < 100) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
-                        this.vel.setMagnitude(0);
-                        this.acc.setMagnitude(0);
-                        this.statusBlock.searchFood = false;
-                        this.statusBlock.eating = true;
-                        this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
-                    }
+    }
+    searchingForFood(){//makes sure that the creature is actuawlly searching for food
+        //normal foods below
+        for (let i = 0; i < world.foods.food3.length; i++) {//only gos thru food3 rn should be pretty easily be able to modify to work with particle sytstems
+            let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+            if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
+                let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
+                jmp.setMagnitude(0.05);
+                this.acc.add(jmp);
+                if (this.loc.distanceSquared(world.foods.food2[i].loc) < 100) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
+                    this.vel.setMagnitude(0);
+                    this.acc.setMagnitude(0);
+                    this.statusBlock.searchFood = false;
+                    this.statusBlock.eating = true;
+                    this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
                 }
             }
-            //particle system below
-            for(let i = 0;i<world.foods.pSys2.length;i++){
-                let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
-                if(this.loc.distanceSquared(world.foods.pSys2[i].loc) < sightSq) {
-                    //console.log("pSys spotted");
-                }
+        }
+        //particle system below
+        for(let i = 0;i<world.foods.pSys2.length;i++){
+            let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+            if(this.loc.distanceSquared(world.foods.pSys2[i].loc) < sightSq) {
+                //console.log("pSys spotted");
             }
         }
 

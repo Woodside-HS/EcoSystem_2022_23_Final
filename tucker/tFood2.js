@@ -17,7 +17,7 @@ class tFood2 {
         this.render();
     }
     update() {
-        if(this.foodList.length<25){
+        if(this.foodList.length<10){
             if (this.spawnNew > this.spawnNewMax) {
                 let velX = Math.random() * 1 - 0.5;
                 let velY = Math.random() * 1 - 0.5;
