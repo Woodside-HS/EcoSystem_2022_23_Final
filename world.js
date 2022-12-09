@@ -47,9 +47,14 @@ class World {
       food2: [],
       food3: [],
       food4: [],
+      food5: [],
+      food6: [],
       pSys1: [],
       pSys2: [],
-      pSys3: []
+      pSys3: [],
+      pSys4: [],
+      pSys5: [],
+      pSys6: []
     };
 
     //this.entities = [];
@@ -88,6 +93,9 @@ class World {
     this.runCreatures();
     this.runFood();
 
+    for (let i = 0; i < this.foods.food2.length; i++) {
+      this.foods.food2[i].run();
+    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -113,6 +121,11 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    for (let i = 0; i < numEntities; i++) {
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
+    }
+
+    // }//++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < 500; i++) {
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
@@ -142,26 +155,8 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2
-      let vel = new JSVector(dx, dy);
-      c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this,));
-    }
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2
-      let vel = new JSVector(dx, dy);
-      f.food2.push(new Food(loc, vel, 5, this));
-    }
 
-  }//end of load entities
+  }
 
 
   runCreatures() {
@@ -176,7 +171,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      //c.pred2[i].run();
+      c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -190,7 +185,7 @@ class World {
         c.herb1.splice(i, 1);
       }
     }
-    
+
     for (let i = 0; i < c.herb2.length; i++) {
       c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
@@ -206,23 +201,7 @@ class World {
   }
 
   runFood() {
-    let f = this.foods;
-    for (let i = f.food1.length - 1; i >= 0; i--) {
 
-    }
-    for (let i = f.food2.length - 1; i >= 0; i--) {
-      f.food2[i].run();
-      if (f.food2[i].statBlock.nourishment <= 0) {
-        f.food2.splice(i, 1);
-        let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-        let loc = new JSVector(x, y);
-        let dx = Math.random() * 4 - 2;
-        let dy = Math.random() * 4 - 2
-        let vel = new JSVector(dx, dy);
-        this.foods.food2.push(new Food(loc, vel, 5, this));
-      }
-    }
   }
 
 
