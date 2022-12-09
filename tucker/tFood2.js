@@ -8,7 +8,7 @@ class tFood2 {
         this.spawnNewMax = Math.random()*150+50;
         this.foodParticleArray = [];
         //adds a beginner particle to kick off the array
-        this.foodParticleArray.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
+        this.foodList.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
         this.trunkClr = this.getRandomColor();
         this.leaveClr = this.LgetRandomColor();
     }
