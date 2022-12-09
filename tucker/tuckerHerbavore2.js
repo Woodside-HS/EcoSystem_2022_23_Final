@@ -73,8 +73,9 @@ class tuckerHerbavore2 {
             this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
         }
         if (this.statusBlock.searchFood) {//makes sure that the creature is actuawlly searching for food
-            for (let i = 0; i < world.foods.food2.length; i++) {//only gos thru food2 rn should be pretty easily be able to modify to work with particle sytstems
-                let sightSq = this.dataBlock.sightValue + this.dataBlock.sightValue;
+            //normal foods below
+            for (let i = 0; i < world.foods.food3.length; i++) {//only gos thru food3 rn should be pretty easily be able to modify to work with particle sytstems
+                let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
                 if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
                     let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
                     jmp.setMagnitude(0.05);
@@ -86,6 +87,13 @@ class tuckerHerbavore2 {
                         this.statusBlock.eating = true;
                         this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
                     }
+                }
+            }
+            //particle system below
+            for(let i = 0;i<world.foods.pSys2.length;i++){
+                let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+                if(this.loc.distanceSquared(world.foods.pSys2[i].loc) < sightSq) {
+                    //console.log("pSys spotted");
                 }
             }
         }

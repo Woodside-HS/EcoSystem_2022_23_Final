@@ -6,9 +6,9 @@ class tFood2 {
         this.ctx = wrld.ctxMain;
         this.spawnNew = 0;
         this.spawnNewMax = Math.random()*150+50;
-        this.foodParticleArray = [];
+        this.foodList = [];
         //adds a beginner particle to kick off the array
-        this.foodParticleArray.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
+        this.foodList.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
         this.trunkClr = this.getRandomColor();
         this.leaveClr = this.LgetRandomColor();
     }
@@ -17,18 +17,21 @@ class tFood2 {
         this.render();
     }
     update() {
-        if (this.spawnNew > this.spawnNewMax) {
-            let velX = Math.random() * 1 - 0.5;
-            let velY = Math.random() * 1 - 0.5;
-            //I could get some way to get the things to be pushed out in a rotating pattern but I am lazy
-            this.foodParticleArray.push(new tFood2P(this.loc, new JSVector(velX, velY), 3, this.ctx, 20));//Math.random()*20+20));
-            this.spawnNew = 0;//resets the span new integer so a new cherry is spawned every 10 frames as of now
+        if(this.foodList.length<25){
+            if (this.spawnNew > this.spawnNewMax) {
+                let velX = Math.random() * 1 - 0.5;
+                let velY = Math.random() * 1 - 0.5;
+                //I could get some way to get the things to be pushed out in a rotating pattern but I am lazy
+                this.foodList.push(new tFood2P(this.loc, new JSVector(velX, velY), 3, this.ctx, 20));//Math.random()*20+20));
+                this.spawnNew = 0;//resets the span new integer so a new cherry is spawned every 10 frames as of now
+            }
         }
+        
         this.spawnNew++;
-        for (let i = this.foodParticleArray.length-1; i > 0; i--) {
-            this.foodParticleArray[i].run();
-            if (this.foodParticleArray[i].isDead == true) {//cuts out any dead particles
-                this.foodParticleArray.splice(i, 1);
+        for (let i = this.foodList.length-1; i > 0; i--) {
+            this.foodList[i].run();
+            if (this.foodList[i].isDead == true) {//cuts out any dead particles
+                this.foodList.splice(i, 1);
             }
         }
     }

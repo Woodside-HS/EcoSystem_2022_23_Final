@@ -182,8 +182,7 @@ class World {
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       f.food2.push(new Food6(loc, vel, 5, this));
-    }
-    //  Tucker heart Food
+    } //  Tucker heart Food
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
@@ -192,7 +191,7 @@ class World {
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       f.pSys2.push(new tFood2(loc, vel, 7, this));
-    }
+    } // Tucker Cherry Food Particle System
     //  Adrain Food2Grass
     for (let i = 0; i < 50; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
@@ -260,7 +259,7 @@ class World {
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food2[i].run();
-      if (f.food2[i].statBlock.nourishment <= 0) {
+      if (f.food2[i].statBlock.nourishment <= 0) {//cuts the food from the array if it is dead
         f.food2.splice(i, 1);
       }
     }
