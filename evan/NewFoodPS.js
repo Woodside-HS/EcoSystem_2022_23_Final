@@ -1,4 +1,4 @@
-class NewFoodPS extends Entity {
+class Food4PlantPS extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)

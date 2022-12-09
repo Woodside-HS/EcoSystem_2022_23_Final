@@ -1,4 +1,4 @@
-class Food4 extends Entity {
+class Food4Plant extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
