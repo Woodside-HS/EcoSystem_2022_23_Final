@@ -79,7 +79,7 @@ class Creature5 extends Creature {
     }
 
     cohesion(c) {
-      let neighbordist = 50;
+      let neighbordist = 300;
       let sum = new JSVector(0, 0);
       let count = 0;
       let steeringForce = new JSVector(0, 0);
