@@ -60,6 +60,7 @@ class tuckerHerbavore2 extends Creature {
 
         // } else
         if(this.statusBlock.nourishment>=400){
+            console.log("babeifying time");//temporary thing
             this.statusBlock.searchFood = false;
             this.statusBlock.searchMate = true;
         } else {
@@ -87,19 +88,22 @@ class tuckerHerbavore2 extends Creature {
         let i = this.foodEat;
         this.dataBlock.nourishment++;//already know that we are consuming because eating must be true bc the stuff that is happening
         if(this.PSfoodEat.pSys != null){
-            if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1){//for some reason it doenst recognize statblock
-                //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
-                world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
-                this.statusBlock.eating = false;
-                this.statusBlock.searchFood = true;
-                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
-                this.PSfoodEat = {
-                    pSys : null,
-                    item : null
+            if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment){
+                if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1){//for some reason it doenst recognize statblock
+                    //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
+                    this.statusBlock.eating = false;
+                    this.statusBlock.searchFood = true;
+                    this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+                    this.PSfoodEat = {
+                        pSys : null,
+                        item : null
+                    }
+                } else if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1){
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;// i dont think this doenst actually work but idc
                 }
-            } else if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1){
-                world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;// i dont think this doenst actually work but idc
-            }
+            }//end of existence if statement
+            
         }
         if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
             if (world.foods.food2[i].statBlock.nourishment <= 2) {
