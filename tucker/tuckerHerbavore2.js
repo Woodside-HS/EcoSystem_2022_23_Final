@@ -10,6 +10,11 @@ class tuckerHerbavore2 extends Creature {
         //various movement variable above
         this.ctx = wrld.ctxMain;
         this.foodEat = null;//which thing to eat
+        this.PSfoodEat = {//I have to use two variables because I hate myself
+            pSys : null,
+            item : null
+        }
+        this.hungy = false;
         this.predatorsLocation = new JSVector(0, 0);
         // this.statusBlock = { this is just for reference for me
         //     searchFood: true,
@@ -38,13 +43,32 @@ class tuckerHerbavore2 extends Creature {
         //creature info variable
     }
     run() {
+        this.dataBlock.age++;
+        if(this.hungy){//I am making it so that nourishment only decreaces every other so that it can actually gain it
+            this.dataBlock.nourishment--;
+            this.hungy = false;
+        } else if(!this.hungy) {
+            this.hungy = true;
+        }
+        if(this.dataBlock.lifeSpan<=this.dataBlock.age || this.dataBlock.health <=0 || this.dataBlock.nourishment){
+            //this.dataBlock.isDead = true;//murderozer
+        }
         this.render();
         this.update();
         //this.warpEdges(); doesnt work and I literally do not care
-        //this.bounce(); this doesnt work and I dont care why
         // if(sprint){
 
         // } else
+        if(this.statusBlock.nourishment>=400){
+            this.statusBlock.searchFood = false;
+            this.statusBlock.searchMate = true;
+        } else {
+            this.statusBlock.searchFood = true;
+            this.statusBlock.searchMate = false;
+        }
+        if(this.statusBlock.searchMate){
+            this.mateifying();
+        }
         if (this.statusBlock.eating == true) {
             this.consuming();
         } else if (this.foodEat != null) {
@@ -55,9 +79,28 @@ class tuckerHerbavore2 extends Creature {
         }
 
     }
+    mateifying(){
+        this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);//resets the vel to make sure it gets unstuck
+    }
     consuming() {
+        //PSfoodEat
         let i = this.foodEat;
-        this.dataBlock.nourishment++;
+        this.dataBlock.nourishment++;//already know that we are consuming because eating must be true bc the stuff that is happening
+        if(this.PSfoodEat.pSys != null){
+            if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1){//for some reason it doenst recognize statblock
+                //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
+                world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = true;
+                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+                this.PSfoodEat = {
+                    pSys : null,
+                    item : null
+                }
+            } else if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1){
+                world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;// i dont think this doenst actually work but idc
+            }
+        }
         if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
             if (world.foods.food2[i].statBlock.nourishment <= 2) {
                 //this needs to go before the others so that it checks this forst
@@ -100,36 +143,35 @@ class tuckerHerbavore2 extends Creature {
         }
         //particle system below
         //IMPORTANT REMEMNBER THAT THIS IS A THING
-        let runPS = false;//test code so that I can see how it works with and without PS working
+        let runPS = true;//test code so that I can see how it works with and without PS working
         if (runPS) {
             for (let i = 0; i < world.foods.pSys2.length; i++) {
                 let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
                 if (this.loc.distanceSquared(world.foods.pSys2[i].loc) < sightSq) {
                     let pS = world.foods.pSys2[i].foodList;//goes directly to the food list
                     if (pS.length > 1) {
-                        let maxNourish = pS[0].statBlock.nourishment;//will search for the one with the highest rotation so that it doesn't panic trying to go to every one
-                        for (let j = 0; j<pS.length; j++) {//this for loop breaks it - causes the page to go unresponsive and idk why
-                            let jmp = JSVector.subGetNew(pS[i].loc,this.loc);
+                        let maxNourish = pS[0].statBlock.nourishment;//will search for the one with the highest noruishment so that it doesn't panic trying to go to every one
+                        for (let j = 0; j<pS.length; j++) {
+                            let jmp = JSVector.subGetNew(pS[j].loc,this.loc);// this doesnt work AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
                             jmp.setMagnitude(0.05);
                             this.acc.add(jmp);
-                            if (this.loc.distanceSquared(pS[i].loc) < 400) {//
+                            if (this.loc.distanceSquared(pS[j].loc) < 100) {
                                 this.vel.setMagnitude(0);
                                 this.acc.setMagnitude(0);
                                 this.statusBlock.searchFood = false;
                                 this.statusBlock.eating = true;
-                                //this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from to Do: Figure out how to eat the particle systems
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-
+                                this.PSfoodEat = {
+                                    pSys : i,//this is the exact particle system
+                                    item : j//this the location within food eat
+                                }
+                            }//end of eat if statement
+                        }//end of todo max nourish for loop
+                    }//end of PS length if statement
+                }//end of sightSq if statement
+            }//end of main for loop
+        }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
-
-
     }
     warpEdges() {
         if (this.loc.x > world.dims.right) {
@@ -146,7 +188,7 @@ class tuckerHerbavore2 extends Creature {
         }
     }
     update() {
-        if (this.acc.getMagnitude() > 1 && this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
+        if (this.acc.getMagnitude() > this.dataBlock.maxSpeed && this.jmpCooldown >= this.jmpCooldownMax) {//makes sure there is already some momentum in the jump and that jump isnt on cooldown
             //this.acc.getMagnitude() > 3 &&
             this.vel.add(this.acc);
             this.jmpCooldown = 0;
@@ -184,20 +226,6 @@ class tuckerHerbavore2 extends Creature {
         ctx.fill();
         ctx.closePath();//closes just the line
         ctx.stroke();
-    }
-    bounce() {
-        if (this.loc.x > world.dims.width) {
-            this.vel.x = -this.vel.x;
-        }
-        if (this.loc.x < 0) {
-            this.vel.x = -this.vel.x;
-        }
-        if (this.loc.y > world.dims.height) {
-            this.vel.y = -this.vel.y;
-        }
-        if (this.loc.y < 0) {
-            this.vel.y = -this.vel.y;
-        }
     }
     getRandomColor() {
         //  List of hex color values for movers

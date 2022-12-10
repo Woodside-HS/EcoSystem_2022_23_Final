@@ -5,7 +5,7 @@ class tFood2 {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.spawnNew = 0;
-        this.spawnNewMax = Math.random()*150+50;
+        this.spawnNewMax = Math.random()*500+150;
         this.foodList = [];
         //adds a beginner particle to kick off the array
         this.foodList.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
