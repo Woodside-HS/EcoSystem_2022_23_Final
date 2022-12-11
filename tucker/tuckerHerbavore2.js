@@ -11,8 +11,8 @@ class tuckerHerbavore2 extends Creature {
         this.ctx = wrld.ctxMain;
         this.foodEat = null;//which thing to eat
         this.PSfoodEat = {//I have to use two variables because I hate myself
-            pSys : null,
-            item : null
+            pSys: null,
+            item: null
         }
         this.hungy = false;
         this.predatorsLocation = new JSVector(0, 0);
@@ -44,22 +44,19 @@ class tuckerHerbavore2 extends Creature {
     }
     run() {
         this.dataBlock.age++;
-        if(this.hungy){//I am making it so that nourishment only decreaces every other so that it can actually gain it
+        if (this.hungy) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
             this.dataBlock.nourishment--;
             this.hungy = false;
-        } else if(!this.hungy) {
+        } else if (!this.hungy) {//this if statement is confirmed to work
             this.hungy = true;
         }
-        if(this.dataBlock.lifeSpan<=this.dataBlock.age || this.dataBlock.health <=0 || this.dataBlock.nourishment){
-            //this.dataBlock.isDead = true;//murderozer
+        if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment) {
+            //this.dataBlock.isDead = true;//murderizer
         }
         this.render();
         this.update();
         //this.warpEdges(); doesnt work and I literally do not care
-        // if(sprint){
-
-        // } else
-        if(this.statusBlock.nourishment>=400){
+        if (this.statusBlock.nourishment >= 101) {
             console.log("babeifying time");//temporary thing
             this.statusBlock.searchFood = false;
             this.statusBlock.searchMate = true;
@@ -67,8 +64,8 @@ class tuckerHerbavore2 extends Creature {
             this.statusBlock.searchFood = true;
             this.statusBlock.searchMate = false;
         }
-        if(this.statusBlock.searchMate){
-            this.mateifying();
+        if (this.statusBlock.searchMate) {
+            this.searchMate();
         }
         if (this.statusBlock.eating == true) {
             this.consuming();
@@ -80,30 +77,30 @@ class tuckerHerbavore2 extends Creature {
         }
 
     }
-    mateifying(){
+    searchMAte() {
         this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);//resets the vel to make sure it gets unstuck
     }
     consuming() {
         //PSfoodEat
         let i = this.foodEat;
         this.dataBlock.nourishment++;//already know that we are consuming because eating must be true bc the stuff that is happening
-        if(this.PSfoodEat.pSys != null){
-            if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment){
-                if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1){//for some reason it doenst recognize statblock
+        if (this.PSfoodEat.pSys != null) {
+            if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment) {//only checks that it exists
+                if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
                     //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
                     world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
                     this.PSfoodEat = {
-                        pSys : null,
-                        item : null
+                        pSys: null,
+                        item: null
                     }
-                } else if(world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1){
-                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;// i dont think this doenst actually work but idc
+                } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;//confirmed to work
                 }
             }//end of existence if statement
-            
+
         }
         if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
             if (world.foods.food2[i].statBlock.nourishment <= 2) {
@@ -155,21 +152,26 @@ class tuckerHerbavore2 extends Creature {
                     let pS = world.foods.pSys2[i].foodList;//goes directly to the food list
                     if (pS.length > 1) {
                         let maxNourish = pS[0].statBlock.nourishment;//will search for the one with the highest noruishment so that it doesn't panic trying to go to every one
-                        for (let j = 0; j<pS.length; j++) {
-                            let jmp = JSVector.subGetNew(pS[j].loc,this.loc);// this doesnt work AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-                            jmp.setMagnitude(0.05);
-                            this.acc.add(jmp);
-                            if (this.loc.distanceSquared(pS[j].loc) < 100) {
-                                this.vel.setMagnitude(0);
-                                this.acc.setMagnitude(0);
-                                this.statusBlock.searchFood = false;
-                                this.statusBlock.eating = true;
-                                this.PSfoodEat = {
-                                    pSys : i,//this is the exact particle system
-                                    item : j//this the location within food eat
-                                }
-                            }//end of eat if statement
-                        }//end of todo max nourish for loop
+                        let max = 0;
+                        for (let j = 1; j < pS.length; j++) {
+                            if (pS[j].statBlock.nourishment > maxNourish) {
+                                maxNourish = pS[j].statBlock.nourishment
+                                let max = j;
+                            }
+                        }//end of max nourish for loop
+                        let jmp = JSVector.subGetNew(pS[max].loc, this.loc);// this doesnt work AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+                        jmp.setMagnitude(0.05);
+                        this.acc.add(jmp);
+                        if (this.loc.distanceSquared(pS[max].loc) < 100) {
+                            this.vel.setMagnitude(0);
+                            this.acc.setMagnitude(0);
+                            this.statusBlock.searchFood = false;
+                            this.statusBlock.eating = true;
+                            this.PSfoodEat = {
+                                pSys: i,//this is the exact particle system
+                                item: max//this the location within food eat
+                            }//end of food eat if statement
+                        }//end of eat if statement
                     }//end of PS length if statement
                 }//end of sightSq if statement
             }//end of main for loop

@@ -16,6 +16,7 @@ class tFood2 {
         this.update();
         this.render();
     }
+    
     update() {
         if(this.foodList.length<10){
             if (this.spawnNew > this.spawnNewMax) {
@@ -31,6 +32,7 @@ class tFood2 {
         for (let i = this.foodList.length-1; i > 0; i--) {
             this.foodList[i].run();
             if (this.foodList[i].isDead == true) {//cuts out any dead particles
+                console.log("should splice");
                 this.foodList.splice(i, 1);
             }
         }
