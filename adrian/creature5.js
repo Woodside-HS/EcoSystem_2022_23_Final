@@ -14,6 +14,9 @@ class Creature5 extends Creature {
         this.sizeFactor = 1;
         this.rotation = 0;
         this.maxSpeed = 2;
+        this.desiredSep = 25;
+        this.maxSpeed = 2;
+        this.maxForce = 1;
     }
     //  methods
     run(c) {
@@ -26,8 +29,13 @@ class Creature5 extends Creature {
     interaction(c) {
       let netForce = new JSVector(0,0);
       let coh = this.cohesion(c);
+      let sep = this.seperate(c);
       netForce.add(coh);
+      netForce.add(sep)
       this.acc.add(netForce);
+      if (this.searchForFood) {
+        this.searchForFood();
+      }
     }
 
     update() {
@@ -102,6 +110,71 @@ class Creature5 extends Creature {
       }
     
       return steeringForce;
+    }
+
+    seperate(c) {
+      // A vector for average of separation forces
+      let sum = new JSVector(0, 0);
+      let ds = this.desiredSep*this.desiredSep;
+      let steer = new JSVector(0, 0); 
+      let count = 0;
+      for (let other = 0; other < c.length; other++) {
+        let d = this.loc.distanceSquared(c[other].loc);
+        if(d < ds && d > 0){
+          let diff = JSVector.subGetNew( this.loc, c[other].loc);
+          diff.normalize();
+          sum.add(diff);
+          count++;
+        }
+      }
+      
+      if(count !== 0){
+        sum.divide(count);
+        sum.normalize();
+        sum.multiply(this.maxSpeed);
+        steer = JSVector.subGetNew(sum, this.vel);
+        steer.limit(this.maxForce)
+      }
+      let separationForce = steer;
+      return separationForce;
+    }
+
+    searchForFood() {
+      for (let food = 0; food < world.foods.food2.length; food++) {
+        let dist = this.loc.distance(world.foods.food2[food].loc);
+        if (dist < 200 && dist >= world.foods.food2[food].size + this.size) {
+          this.seek(world.foods.food2[food]);
+          this.eating = false;
+        }
+        else if (dist < world.foods.food2[food].size + this.size) {
+          this.eat(world.foods.food2[food]);
+          this.eating = true;
+        }
+      }
+    }
+
+    seek(target) {
+      let desired = JSVector.subGetNew(target.loc, this.loc);
+      desired.normalize();
+      desired.multiply(this.maxSpeed);
+      let steer = JSVector.subGetNew(desired, this.vel);
+      steer.limit(this.maxForce);
+      this.applyForce(steer);
+    }
+
+    applyForce(force) {
+      this.acc.add(force);
+    }
+
+    eat(foodEaten) {
+      this.acc.normalize();
+      if(this.nourishment > 0) {
+        this.nourishment--;
+        foodEaten.size = foodEaten.size * (this.nourishment/100);
+      }
+      else {
+      }
+
     }
 
     getRandomColor() {
