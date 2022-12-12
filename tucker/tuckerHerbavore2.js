@@ -14,6 +14,7 @@ class tuckerHerbavore2 extends Creature {
             pSys: null,
             item: null
         }
+        this.mateId= null;
         this.hungy = false;
         this.predatorsLocation = new JSVector(0, 0);
         // this.statusBlock = { this is just for reference for me
@@ -56,8 +57,7 @@ class tuckerHerbavore2 extends Creature {
         this.render();
         this.update();
         //this.warpEdges(); doesnt work and I literally do not care
-        if (this.statusBlock.nourishment >= 101) {
-            console.log("babeifying time");//temporary thing
+        if (this.dataBlock.nourishment >= 150 && !mating) {
             this.statusBlock.searchFood = false;
             this.statusBlock.searchMate = true;
         } else {
@@ -77,8 +77,9 @@ class tuckerHerbavore2 extends Creature {
         }
 
     }
-    searchMAte() {
+    searchMate() {
         this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);//resets the vel to make sure it gets unstuck
+        
     }
     consuming() {
         //PSfoodEat
@@ -144,7 +145,7 @@ class tuckerHerbavore2 extends Creature {
         }
         //particle system below
         //IMPORTANT REMEMNBER THAT THIS IS A THING
-        let runPS = true;//test code so that I can see how it works with and without PS working
+        let runPS = false;//test code so that I can see how it works with and without PS working
         if (runPS) {
             for (let i = 0; i < world.foods.pSys2.length; i++) {
                 let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
