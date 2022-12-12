@@ -10,8 +10,10 @@ class SBPSystem extends Food {
     }
     //  methods
     run() {
-        if(this.addParticle % 100 == 0){
+        if(this.addParticle % 1000 == 0){
+            if(this.foodList.length <50){
             this.foodList.push(new PSystemFoodSB(this.loc, this.statBlock.lifeSpan, this.ctx, this.size));
+            }
         }
         this.addParticle++;
         this.pdeath();
