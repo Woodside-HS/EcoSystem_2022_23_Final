@@ -1,20 +1,20 @@
-class tFood2P  {
+class tFood2P {
     constructor(loc, vel, sz, wrld, dist) {
         this.bushLoc = loc.copy();
         this.loc = loc.copy();
         this.vel = vel.copy();
         this.rad = sz;
         this.ctx = wrld.ctxMain;
-        this.distance = dist*dist;
+        this.distance = dist * dist;
         this.isDead = false;
         this.ctx = wrld;
         this.clr = this.getRandomColor();
         this.statBlock = {//  properties 
             health: 100,
             nourishment: 100,
-            lifeSpan:30000,
-            opacity:1.0,
-            foodPts:100
+            lifeSpan: 30000,
+            opacity: 1.0,
+            foodPts: 100
         };
     }
     run() {
@@ -24,12 +24,16 @@ class tFood2P  {
         this.update();
         this.render();
         this.checkDist();
-        
     }
     update() {
         this.loc.add(this.vel)
         this.statBlock.lifeSpan--;
-        
+        if (this.statBlock.lifeSpan < 0) {
+            this.isDead = true;
+        }//have to check if lifespan is up or if nurishment is left over
+        if(this.statBlock.lifeSpan < 0){
+            this.isDead = true;
+        }
     }
     render() {
         let ctx = this.ctx;
@@ -37,19 +41,19 @@ class tFood2P  {
         ctx.fillStyle = this.clr;
         ctx.strokeStyle = "#07170700";
         //renders that cherry with 3 half circles
-        ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);//bottom of the chrry
-        ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);//top right of the cherry
-        ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)//top left of the cherry
+        ctx.arc(this.loc.x, this.loc.y, this.rad, 0, -Math.PI);//bottom of the chrry
+        ctx.arc(this.loc.x + this.rad / 2, this.loc.y, this.rad / 2, Math.PI, Math.PI * 2);//top right of the cherry
+        ctx.arc(this.loc.x - this.rad / 2, this.loc.y, this.rad / 2, Math.PI, Math.PI * 2)//top left of the cherry
         ctx.fill();
         ctx.stroke();
         ctx.closePath();//have to close the path so that the stroke style doesn't overlap
         ctx.beginPath();
         ctx.strokeStyle = "#071707FF";
-        ctx.arc(this.loc.x+this.rad,this.loc.y,this.rad,Math.PI,3*Math.PI/2);//renders the stem
+        ctx.arc(this.loc.x + this.rad, this.loc.y, this.rad, Math.PI, 3 * Math.PI / 2);//renders the stem
         ctx.stroke();
     }
-    checkDist(){
-        if(this.loc.distanceSquared(this.bushLoc)>this.distance){
+    checkDist() {
+        if (this.loc.distanceSquared(this.bushLoc) > this.distance) {
             this.vel.setMagnitude(0);//keeps the cherries from moving too far from the bush
         }
     }
