@@ -21,16 +21,18 @@ class tFood2P  {
         this.update();
         this.render();
         this.checkDist();
+        if(this.statBlock.nourishment <50){
+            console.log("im dead lmao");
+        }
+        if (this.statBlock.nourishment < 2) {
+            console.log("im dead lmao");
+            this.isDead = true;
+        }//have to check if lifespan is up or if nurishment is left over
     }
     update() {
         this.loc.add(this.vel)
         this.statBlock.lifeSpan--;
-        if (this.statBlock.lifeSpan < 0) {
-            this.isDead = true;
-        }//have to check if lifespan is up or if nurishment is left over
-        if(this.statBlock.lifeSpan < 0){
-            this.isDead = true;
-        }
+        
     }
     render() {
         let ctx = this.ctx;
