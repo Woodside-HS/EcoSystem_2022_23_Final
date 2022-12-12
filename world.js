@@ -153,7 +153,7 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
-    for(let i = 0;i<100;i++){
+    for(let i = 0;i<200;i++){
       let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top)
       let vel = new JSVector(Math.random() * .5 - .25,Math.random() * .5 - .25)
       this.foods.food1.push(new MSFood1(loc, vel,10,this))
@@ -237,7 +237,7 @@ class World {
 
     for (let i = f.food1.length - 1; i >= 0; i--) {
       f.food1[i].run();
-      if (f.food1[i].statBlock.nourishment <= 0) {
+      if (f.food1[i].statBlock.health <= 0) {
         f.food1.splice(i, 1);
       }
     }
