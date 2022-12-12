@@ -43,6 +43,9 @@ class SBCreature3 extends Creature {
     
     
     update() {
+        if(this.counter%60 == 0){
+        this.dataBlock.health--;
+        }
         this.vel.add(this.acc);
         this.vel.limit(2);
         this.loc.add(this.vel);
@@ -61,6 +64,9 @@ class SBCreature3 extends Creature {
                 this.segments[i].sub(temp); 
             }
             ploc = this.segments[i];
+        }
+        if(this.dataBlock.health <2){
+            this.statusBlock.deathProc = true;
         }
     }
     
@@ -158,14 +164,14 @@ class SBCreature3 extends Creature {
         }
         this.food.statBlock.health--;
         this.dataBlock.health++;
+        this.food.statBlock.nourishment--;
         this.counter++;
-        if(this.counter%30){
-            // let vel2 = new JSVector(this.vel.x, this.vel.y);
-            // vel2.setMagnitude(this.segLength);
-            // console.log(this.sengments[this.segments.length-1]);
-            // let vec = JSVector.subGetNew(this.sengments[this.segments.length-1], vel2);
-            // this.segments.push(vec);
-            // this.size++;
+        if(this.counter%1000 == 0){
+            let vel2 = new JSVector(this.vel.x, this.vel.y);
+            vel2.setMagnitude(this.segLength);
+            let vec = JSVector.subGetNew(this.segments[this.segments.length-1], vel2);
+            this.segments.push(vec);
+            this.size++;
             
         }
         
