@@ -93,9 +93,6 @@ class World {
     this.runCreatures();
     this.runFood();
 
-    for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-    }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -157,9 +154,9 @@ class World {
     }
 
     for(let i = 0;i<100;i++){
-      let loc = new JSVector(Math.random() * this.cnvMain.width, Math.random() * this.cnvMain.height)
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top)
       let vel = new JSVector(Math.random() * .5 - .25,Math.random() * .5 - .25)
-      this.foods.food2.push(new MSFood2(loc, vel,10,this))
+      this.foods.food1.push(new MSFood1(loc, vel,10,this))
       
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
@@ -192,6 +189,7 @@ class World {
     }
 
   }
+}
 
 
 
@@ -217,7 +215,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
@@ -235,17 +233,17 @@ class World {
   }
 
   runFood() {
-    for(let i = 0;i<this.foods.food2.length;i++){
-      this.foods.food2[i].run();
-    }
     let f = this.foods;
 
-    //for (let i = c.food1.length - 1; i >= 0; i--) {
-
-    //}
+    for (let i = f.food1.length - 1; i >= 0; i--) {
+      f.food1[i].run();
+      if (f.food1[i].statBlock.nourishment <= 0) {
+        f.food1.splice(i, 1);
+      }
+    }
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
-      f.food2[i].run();
+      //f.food2[i].run();
       if (f.food2[i].statBlock.nourishment <= 0) {
         f.food2.splice(i, 1);
       }
@@ -276,7 +274,7 @@ class World {
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
-      f.pSys2[i].run();
+      //f.pSys2[i].run();
     }
 
     for (let i = f.pSys3.length - 1; i >= 0; i--) {
