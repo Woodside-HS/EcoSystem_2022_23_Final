@@ -131,7 +131,7 @@ class World {
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
       this.creatures.herb1.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
-    }
+    }//adrains creatures
 
     let c = this.creatures;
     let f = this.foods;
@@ -241,7 +241,7 @@ class World {
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
       }
-    }
+    }//tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
 
     }

@@ -14,7 +14,6 @@ class tuckerHerbavore2 extends Creature {
             pSys: null,
             item: null
         }
-        this.mateId= null;
         this.hungy = false;
         this.predatorsLocation = new JSVector(0, 0);
         // this.statusBlock = { this is just for reference for me
@@ -57,7 +56,7 @@ class tuckerHerbavore2 extends Creature {
         this.render();
         this.update();
         //this.warpEdges(); doesnt work and I literally do not care
-        if (this.dataBlock.nourishment >= 150 && !mating) {
+        if (this.dataBlock.nourishment >= 110) {
             this.statusBlock.searchFood = false;
             this.statusBlock.searchMate = true;
         } else {
@@ -78,7 +77,26 @@ class tuckerHerbavore2 extends Creature {
 
     }
     searchMate() {
-        this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);//resets the vel to make sure it gets unstuck
+        let c = world.creatures.herb2;
+        let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+        for (let i = 0; i < c.length; i++) {//checks the distance of every single 
+            if(this != c[i] && c[i]){
+                if (this.loc.distanceSquared(c[i].loc) < sightSq && c[i].statusBlock.searchMate == true) {
+                    let jmp = JSVector.subGetNew(c[i].loc, this.loc);
+                    jmp.setMagnitude(0.05);
+                    this.acc.add(jmp);
+                }
+                if (this.loc.distanceSquared(c[i].loc) < 16) {
+                    let x = Math.random() * world.dims.width - world.dims.width / 2;
+                    let y = Math.random() * world.dims.height - world.dims.height / 2;
+                    let dx = Math.random() * 4 - 2;
+                    let dy = Math.random() * 4 - 2
+                    world.creatures.herb2.push(new JSVector(x, y), new JSVector(dx, dy), 5, this);
+                    this.statusBlock.nourishment -=50;
+                }
+            }
+            
+        }
         
     }
     consuming() {
@@ -179,6 +197,7 @@ class tuckerHerbavore2 extends Creature {
         }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
+        this.statusBlock.searchMate = false;
     }
     warpEdges() {
         if (this.loc.x > world.dims.right) {
