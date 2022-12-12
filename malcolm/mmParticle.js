@@ -5,16 +5,21 @@ class MMParticle extends Food {
     //   Math.random() * wrld.dims.width - wrld.dims.width / 2,
     //   Math.random() * wrld.dims.height - wrld.dims.height / 2
     // );
-    this.loc = loc;
+    // this.loc = loc;
+    this.loc = new JSVector(
+      Math.random() * (500 - 100) + 100,
+      Math.random() * (500 - 100) + 100
+    );
     //console.log(this.loc);
     // console.log(this.loc);
-    // this.vX = Math.random() * (0.1 - -0.1) + -0.1;
-    // this.vY = Math.random() * (0.1 - -0.1) + -0.1;
-    // this.vel = new JSVector(this.vX, this.vY);
-    this.vel = vel;
+    this.vX = Math.random() * (1.1 - -0.1) + -0.1;
+    this.vY = Math.random() * (1.1 - -0.1) + -0.1;
+    this.vel = new JSVector(this.vX, this.vY);
+    // this.vel = vel;
     this.size = sz;
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
+    // this.statBlock = statBlock;
 
     this.count = 0;
     this.isDead = false;
@@ -45,11 +50,12 @@ class MMParticle extends Food {
     if (this.statBlock.health <= 0) {
       this.isDead = true;
     }
-    if (this.count++ >= Math.random() * (300 - 20) + 20) {
-      this.statBlock.health--;
+    if (this.count++ >= 100) {
+      this.statBlock.health = this.statBlock.health - 1;
       this.count = 0;
     }
-    // this.loc.add(this.vel);
+    this.loc.add(this.vel);
+    console.log(this.loc);
     // console.log(this.loc);
   }
   checkEdges() {

@@ -7,7 +7,7 @@ class MMPSystem1 {
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
     this.mmParticles = [];
-    this.loadParticles(30);
+    this.loadParticles(6);
   }
   run() {
     this.render();
@@ -20,9 +20,11 @@ class MMPSystem1 {
   }
   addParticles() {
     this.mmParticles.push(new MMParticle(this.loc, this.vel, 10, this.world));
-    if (this.mmParticles.length < 3) {
-      this.mmParticles.push(new MMParticle(this.loc, this.vel, 10, this.world));
-    }
+    // if (this.mmParticles.length < 3) {
+    //   this.mmParticles.push(
+    //     new MMParticle(this.loc, this.vel, 10, this.world)
+    //   );
+    // }
   }
 
   render() {
