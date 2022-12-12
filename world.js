@@ -122,8 +122,8 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    for (let i = 0; i < 1; i++) {
-      let loc = new JSVector(100,100);
+    for (let i = 0; i < 25; i++) {
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }
@@ -211,7 +211,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      // c.pred2[i].run();
+      //c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -220,7 +220,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
@@ -244,20 +244,13 @@ class World {
 
     //}
 
-    for(let i = 0;i<1;i++){
-      f.pSys1[i].run();
-    }
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
-      f.food2[i].run();
+      //f.food2[i].run();
       if (f.food2[i].statBlock.nourishment <= 0) {
         f.food2.splice(i, 1);
       }
     }
-
-    // for (let i = 0; i < this.foods.food2.length; i++) {
-    //   this.foods.food2[i].run();
-    // }
 
     for (let i = f.food3.length - 1; i >= 0; i--) {
 
@@ -276,11 +269,11 @@ class World {
     }
 
     for (let i = f.pSys1.length - 1; i >= 0; i--) {
-
+      f.pSys1[i].run();
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
-      f.pSys2[i].run();
+      //f.pSys2[i].run();
     }
 
     for (let i = f.pSys3.length - 1; i >= 0; i--) {
