@@ -15,8 +15,11 @@ class tuckerHerbavore2 extends Creature {
             pSys: null,
             item: null
         }
+        this.stuck = 0;
+        this.cooldown = 0;
         this.hungy = false;
         this.predatorsLocation = new JSVector(0, 0);
+        this.statusBlock.lifeSpan = Math.random() * 3000 + 500
         // this.statusBlock = { this is just for reference for me
         //     searchFood: true,
         //     searchMate: true,
@@ -45,47 +48,53 @@ class tuckerHerbavore2 extends Creature {
     }
     run() {
         this.dataBlock.age++;
-        if (this.hungy) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
-            this.dataBlock.nourishment--;
-            this.hungy = false;
-        } else if (!this.hungy) {//this if statement is confirmed to work
-            this.hungy = true;
-        }
-        if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment) {
-            //this.dataBlock.isDead = true;//murderizer
-        }
         this.render();
         this.update();
         this.warpEdges();
-        if (this.dataBlock.nourishment >= 110) {
-            this.statusBlock.searchFood = false;
-            this.statusBlock.searchMate = true;
-        } else {
-            this.statusBlock.searchFood = true;
-            this.statusBlock.searchMate = false;
+        if (this.cooldown > 20) {
+            if (this.dataBlock.age >= this.dataBlock.lifeSpan) {
+                this.dataBlock.isDead = true;
+            }
+            if (this.hungy && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
+                this.dataBlock.nourishment--;
+                this.hungy = false;
+            } else if (!this.hungy) {//this if statement is confirmed to work
+                this.hungy = true;
+            }
+            if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment <= 0) {
+                this.dataBlock.isDead = true;//murderizer
+            }
+            if (this.dataBlock.nourishment >= 200 && this.dataBlock.age >= 100) {
+                this.statusBlock.searchFood = false;
+                this.statusBlock.searchMate = true;
+            } else {
+                this.statusBlock.searchFood = true;
+                this.statusBlock.searchMate = false;
+            }
+            if (this.statusBlock.searchMate) {
+                this.searchMate();
+            }
+            if (this.statusBlock.eating == true) {
+                this.consuming();
+            } else if (this.foodEat != null) {
+                this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
+            }
+            if (this.statusBlock.searchFood) {
+                this.searchingForFood();
+            }
         }
-        if (this.statusBlock.searchMate) {
-            this.searchMate();
-        }
-        if (this.statusBlock.eating == true) {
-            this.consuming();
-        } else if (this.foodEat != null) {
-            this.foodEat = null;//returns the foodEat variable to null if it has finished eating and it is not already set to null
-        }
-        if (this.statusBlock.searchFood) {
-            this.searchingForFood();
-        }
-        if(this.statusBlock.sprint == false){//I have to call this before it is returned to false that if there isnt a call to do this by a predator then it will not be sprinting
+        this.cooldown++;
+        if (this.statusBlock.sprint == false) {//I have to call this before it is returned to false that if there isnt a call to do this by a predator then it will not be sprinting
             this.statusBlock.searchFood = true;
         }
         this.statusBlock.sprint = false;
     }
     searchMate() {
         let c = world.creatures.herb2;
-        let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+        let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;//*3;//they got superhuman sight for mates I guess
         for (let i = 0; i < c.length; i++) {//checks the distance of every single 
             if (this != c[i] && c[i].loc && c[i].id) {//still need someway to check that this is a me type creature
-                if(c[i].id = this.id){//creature type checking code, makes sure that they have the same "id"
+                if (c[i].id = this.id) {//creature type checking code, makes sure that they have the same "id"
                     if (this.loc.distanceSquared(c[i].loc) < sightSq && c[i].statusBlock.searchMate == true) {
                         let jmp = JSVector.subGetNew(c[i].loc, this.loc);
                         jmp.setMagnitude(0.05);
@@ -96,7 +105,10 @@ class tuckerHerbavore2 extends Creature {
                         let y = Math.random() * world.dims.height - world.dims.height / 2;
                         let dx = Math.random() * 4 - 2;
                         let dy = Math.random() * 4 - 2
-                        world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                        let currentNumOffspring = Math.floor(Math.random() * this.dataBlock.numOffspring)
+                        for (let i = 0; i < currentNumOffspring; i++) {
+                            world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                        }
                         this.statusBlock.nourishment -= 50;
                     }
                 }
@@ -169,7 +181,7 @@ class tuckerHerbavore2 extends Creature {
         }
         //particle system below
         //IMPORTANT REMEMNBER THAT THIS IS A THING
-        let runPS = false;//test code so that I can see how it works with and without PS working
+        let runPS = true;//test code so that I can see how it works with and without PS working
         if (runPS) {
             for (let i = 0; i < world.foods.pSys2.length; i++) {
                 let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
@@ -200,6 +212,13 @@ class tuckerHerbavore2 extends Creature {
                     }//end of PS length if statement
                 }//end of sightSq if statement
             }//end of main for loop
+            this.stuck++;
+            if (this.stuck > 100) {
+                this.vel.x = Math.random() * 1 - 0.5;
+                this.vel.y = Math.random() * 1 - 0.5;
+                this.stuck = 0;//the creature tends to get stuck near particle systems so hopefully this will "unstick them" every once and a while
+                this.cooldown = 0;
+            }
         }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
@@ -213,8 +232,8 @@ class tuckerHerbavore2 extends Creature {
         //resets the status block so that it focuses solely on runing away
         let loc = predLoc.copy();
         let dist = this.loc.distanceSquared(loc);
-        let jmp = new JSVector(0,0);
-        if(dist<100){//10 pixels away
+        let jmp = new JSVector(0, 0);
+        if (dist < 100) {//10 pixels away
             jmp = JSVector.subGetNew(loc);
             jmp.setMagnitude(0.2);
             this.acc.add(jmp);
@@ -265,12 +284,12 @@ class tuckerHerbavore2 extends Creature {
         ctx.strokeStyle = "blue";
         ctx.save();
         ctx.translate(this.loc.x, this.loc.y);
-        ctx.rotate(this.vel.getDirection()-(3*Math.PI/2));
+        ctx.rotate(this.vel.getDirection() - (3 * Math.PI / 2));
         ctx.moveTo(0, 0);
         ctx.lineTo(-this.rad, this.rad);//bottom left
         ctx.lineTo(this.rad, this.rad);//bottom right
         ctx.lineTo(this.rad, -this.rad);//top right
-        ctx.lineTo(0,-1*(this.vel.getMagnitude()));
+        ctx.lineTo(0, -1 * (this.vel.getMagnitude()));
         ctx.lineTo(-this.rad, -this.rad);//top left
         ctx.lineTo(-this.rad, this.rad);
         ctx.restore();

@@ -118,6 +118,7 @@ class World {
     this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
     let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+    this.ctxMain.fillText("Tucker's Creatures = " + this.creatures.herb2.length,20,this.cnvMain.height-65);
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
@@ -156,7 +157,7 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
-    for (let i = 0; i < numEntities; i++) {
+    for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
@@ -237,9 +238,7 @@ class World {
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
-      if(c.herb2[i]){
         c.herb2[i].run();
-      }
       
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
