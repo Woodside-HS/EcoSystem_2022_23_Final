@@ -6,7 +6,7 @@ class MMParticle extends Food {
     //   Math.random() * wrld.dims.height - wrld.dims.height / 2
     // );
     this.loc = loc;
-    console.log(this.loc);
+    //console.log(this.loc);
     // console.log(this.loc);
     // this.vX = Math.random() * (0.1 - -0.1) + -0.1;
     // this.vY = Math.random() * (0.1 - -0.1) + -0.1;
