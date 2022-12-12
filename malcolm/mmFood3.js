@@ -32,11 +32,12 @@ class MMFood3 extends Food {
   update() {
     this.loc.add(this.vel);
 
-    if (this.count++ >= 30) {
-      this.hp--;
+    if (this.count++ >= Math.floor(Math.random() * (100 - 20) + 30)) {
+      this.statBlock.health--;
       this.count = 0;
     }
-    if (this.hp <= 0) {
+    if (this.statBlock.health <= 0) {
+      // this.dataBlock.isDead = true;
       this.isDead = true;
     }
     if (this.statBlock.lifeSpan <= 0) {
@@ -48,7 +49,7 @@ class MMFood3 extends Food {
     this.ctxMain.save();
     this.ctxMain.beginPath();
     this.ctxMain.translate(this.loc.x, this.loc.y);
-    this.ctxMain.fillText(this.hp, -10, -20);
+    this.ctxMain.fillText(this.statBlock.health, -10, -20);
     this.ctxMain.arc(0, 0, this.size, 0, 2 * Math.PI, false);
     this.ctxMain.closePath();
     this.ctxMain.fillStyle = "black";

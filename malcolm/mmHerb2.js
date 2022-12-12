@@ -11,9 +11,33 @@ class MMHerb2 extends Creature {
     this.isDead = false;
     this.hp = 100;
     this.count = 0;
+    // this.clrR = "red";
+    // this.clrG = "green";
+    this.clr = "green";
+    // this.statusBlock = { //! using this for refrence
+    //     searchFood:true,
+    //     searchMate:true,
+    //     eating:false,
+    //     sprint:false,
+    //     sleeping:false,
+    //     attack:false,
+    //     deathProc:false
+    //  };
+    //  this.dataBlock = {//  status block
+    //     health: 100,
+    //     isDead: false,
+    //     nourishment: 100,
+    //     lifeSpan:Math.random()*3000,//  miliseconds
+    //     age:0,
+    //     numOffspring:3,
+    //     maxSpeed: 1,
+    //     maxSprintSpeed: 1,
+    //     scentValue: 100,
+    //     sightValue: 100,
+    //     weight:10,
+    //  };
   }
   run() {
-    // console.log("here");
     this.render();
     this.update();
 
@@ -30,7 +54,7 @@ class MMHerb2 extends Creature {
     ctxMain.lineTo(10, 10);
     ctxMain.lineTo(-10, 10);
     ctxMain.closePath();
-    ctxMain.fillStyle = "yellow";
+    ctxMain.fillStyle = this.clr;
     ctxMain.strokeStyle = "black";
     ctxMain.fill();
     ctxMain.stroke();
@@ -62,15 +86,18 @@ class MMHerb2 extends Creature {
         diff.normalize();
         this.vel.add(diff);
         this.vel.limit(2);
+        this.clr = "red";
         if (dist < 10) {
           food3.vel = new JSVector(0, 0);
           this.vel = new JSVector(0, 0);
-          // this.vel.multiply(0.1);
-          this.hp = this.hp + food3.hp;
-          food3.hp = 0;
+          //   this.vel.multiply(0.1);
+          this.hp = this.hp + food3.statBlock.health;
+          food3.statBlock.health = 0;
           this.vel.x = this.vX;
           this.vel.y = this.vY;
         }
+      } else {
+        this.clr = "green";
       }
     } // end of food3
 
@@ -83,15 +110,18 @@ class MMHerb2 extends Creature {
           diff.normalize();
           this.vel.add(diff);
           this.vel.limit(2);
+          this.clr = "red";
           if (dist < 10) {
             particle.vel = new JSVector(0, 0);
             this.vel = new JSVector(0, 0);
             // this.vel.multiply(0.1);
-            this.hp = this.hp + particle.hp;
-            particle.hp = 0;
+            this.hp = this.hp + particle.statBlock.health;
+            particle.statBlock.health = 0;
             this.vel.x = this.vX;
             this.vel.y = this.vY;
           }
+        } else {
+          this.clr = "green";
         }
       }
     }

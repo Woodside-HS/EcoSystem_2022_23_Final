@@ -1,13 +1,13 @@
-class MMPSystem1 extends Food {
+class MMPSystem1 {
   constructor(loc, vel, sz, wrld) {
-    super(loc, vel, sz, wrld);
+    // super(loc, vel, sz, wrld);
     this.loc = loc;
     this.vel = vel;
     this.size = sz;
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
     this.mmParticles = [];
-    this.loadParticles(50);
+    this.loadParticles(30);
   }
   run() {
     this.render();
@@ -32,9 +32,9 @@ class MMPSystem1 extends Food {
   }
   update() {
     for (let i = 0; i < this.mmParticles.length; i++) {
-      if (this.mmParticles[i].hp == 50) {
+      if (this.mmParticles[i].statBlock.health == 50) {
         this.addParticles();
-        this.mmParticles[i].hp--;
+        this.mmParticles[i].statBlock.health--;
       }
     }
     for (let i = 0; i < this.mmParticles.length; i++) {

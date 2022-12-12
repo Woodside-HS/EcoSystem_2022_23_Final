@@ -1,20 +1,21 @@
 class MMParticle extends Food {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
-    this.loc = new JSVector(
-      Math.random() * (700 - 100) + 100,
-      Math.random() * (600 - 100) + 100
-    );
-    // this.loc = loc;
-    this.vX = Math.random() * (0.1 - -0.1) + -0.1;
-    this.vY = Math.random() * (0.1 - -0.1) + -0.1;
-    this.vel = new JSVector(this.vX, this.vY);
-    // this.vel = vel;
+    // this.loc = new JSVector(
+    //   Math.random() * wrld.dims.width - wrld.dims.width / 2,
+    //   Math.random() * wrld.dims.height - wrld.dims.height / 2
+    // );
+    this.loc = loc;
+    console.log(this.loc);
+    // console.log(this.loc);
+    // this.vX = Math.random() * (0.1 - -0.1) + -0.1;
+    // this.vY = Math.random() * (0.1 - -0.1) + -0.1;
+    // this.vel = new JSVector(this.vX, this.vY);
+    this.vel = vel;
     this.size = sz;
     this.world = wrld;
     this.ctxMain = wrld.ctxMain;
-    this.hp = Math.floor(Math.random() * (100 - 60) + 60);
-    // this.hp = 55;
+
     this.count = 0;
     this.isDead = false;
   }
@@ -27,7 +28,7 @@ class MMParticle extends Food {
     this.ctxMain.save();
     this.ctxMain.beginPath();
     this.ctxMain.translate(this.loc.x, this.loc.y);
-    this.ctxMain.fillText(this.hp, -10, -20);
+    this.ctxMain.fillText(this.statBlock.health, -10, -20);
     // this.ctxMain.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
     this.ctxMain.moveTo(0, 0);
     this.ctxMain.lineTo(20, 20);
@@ -41,15 +42,21 @@ class MMParticle extends Food {
     this.ctxMain.restore();
   }
   update() {
-    if (this.hp <= 0) {
+    if (this.statBlock.health <= 0) {
       this.isDead = true;
     }
     if (this.count++ >= Math.random() * (300 - 20) + 20) {
-      this.hp--;
+      this.statBlock.health--;
       this.count = 0;
     }
-    this.loc.add(this.vel);
+    // this.loc.add(this.vel);
     // console.log(this.loc);
   }
-  checkEdges() {}
+  checkEdges() {
+    let dims = this.world.dims;
+    if (this.loc.x > dims.right) this.vel.x = -this.vel.x;
+    if (this.loc.x < dims.left) this.vel.x = -this.vel.x;
+    if (this.loc.y > dims.bottom) this.vel.y = -this.vel.y;
+    if (this.loc.y < dims.top) this.vel.y = -this.vel.y;
+  }
 }

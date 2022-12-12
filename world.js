@@ -132,7 +132,7 @@ class World {
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     //Malcolms food3
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 400; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
@@ -146,8 +146,8 @@ class World {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
+      let dx = Math.random() * 2 - 1;
+      let dy = Math.random() * 2 - 1;
       let vel = new JSVector(dx, dy);
       this.foods.pSys1.push(new MMPSystem1(loc, vel, 10, this));
     }
