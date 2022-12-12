@@ -1,9 +1,8 @@
 class Food5Particle {
     constructor(x, y, rad, clr, ctx) {
         this.loc = new JSVector(x, y);
-        this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1);
-        this.initrad = rad;
-        this.rad = rad;
+        this.vel = new JSVector(Math.random() * 1 - 1/2, Math.random() * 1 - 1/2);
+        this.rad = this.randomNumber(6, 10);
         this.initrad = this.rad;
         this.clr = clr;
         this.life = Math.floor(this.randomNumber(250, 1000));
@@ -44,6 +43,7 @@ class Food5Particle {
     render() {
         let ctx = this.ctx;
         ctx.beginPath();
+        ctx.rotate(Math.PI);
         ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);//bottom of the chrry
         ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);//top right of the cherry
         ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)//top left of the cherry
@@ -53,6 +53,11 @@ class Food5Particle {
         ctx.fill();
         ctx.stroke();
     }
+
+    randomNumber(min, max) { 
+        let rdm = Math.random() * (max - min) + min;
+        return rdm;
+    } 
 
     randomNumber(min, max) { 
         let rdm = Math.random() * (max - min) + min;

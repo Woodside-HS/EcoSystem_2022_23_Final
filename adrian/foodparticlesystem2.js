@@ -6,7 +6,7 @@ class FoodParticleSystem2BigBalls extends Food {
         this.vel = vel;
         this.size = sz;
         this.world = wrld;
-        this.rad =  this.randomNumber(10, 10);
+        this.rad =  this.randomNumber(2, 10);
         this.clr = this.getTrueRandomColor();
         this.foodList = [];
         this.loadParticles(10);
