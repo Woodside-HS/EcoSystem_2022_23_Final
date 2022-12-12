@@ -1,6 +1,7 @@
 class tuckerHerbavore2 extends Creature {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
+        this.id = "tHerb2";
         this.loc = loc;
         this.vel = vel;
         this.maxJump = 1;//the max acc's magnitude can be before it jumps
@@ -55,7 +56,7 @@ class tuckerHerbavore2 extends Creature {
         }
         this.render();
         this.update();
-        //this.warpEdges(); doesnt work and I literally do not care
+        this.warpEdges();
         if (this.dataBlock.nourishment >= 110) {
             this.statusBlock.searchFood = false;
             this.statusBlock.searchMate = true;
@@ -74,30 +75,35 @@ class tuckerHerbavore2 extends Creature {
         if (this.statusBlock.searchFood) {
             this.searchingForFood();
         }
-
+        if(this.statusBlock.sprint == false){//I have to call this before it is returned to false that if there isnt a call to do this by a predator then it will not be sprinting
+            this.statusBlock.searchFood = true;
+        }
+        this.statusBlock.sprint = false;
     }
     searchMate() {
         let c = world.creatures.herb2;
         let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
         for (let i = 0; i < c.length; i++) {//checks the distance of every single 
-            if(this != c[i] && c[i]){
-                if (this.loc.distanceSquared(c[i].loc) < sightSq && c[i].statusBlock.searchMate == true) {
-                    let jmp = JSVector.subGetNew(c[i].loc, this.loc);
-                    jmp.setMagnitude(0.05);
-                    this.acc.add(jmp);
-                }
-                if (this.loc.distanceSquared(c[i].loc) < 16) {
-                    let x = Math.random() * world.dims.width - world.dims.width / 2;
-                    let y = Math.random() * world.dims.height - world.dims.height / 2;
-                    let dx = Math.random() * 4 - 2;
-                    let dy = Math.random() * 4 - 2
-                    world.creatures.herb2.push(new JSVector(x, y), new JSVector(dx, dy), 5, this);
-                    this.statusBlock.nourishment -=50;
+            if (this != c[i] && c[i].loc && c[i].id) {//still need someway to check that this is a me type creature
+                if(c[i].id = this.id){//creature type checking code, makes sure that they have the same "id"
+                    if (this.loc.distanceSquared(c[i].loc) < sightSq && c[i].statusBlock.searchMate == true) {
+                        let jmp = JSVector.subGetNew(c[i].loc, this.loc);
+                        jmp.setMagnitude(0.05);
+                        this.acc.add(jmp);
+                    }
+                    if (this.loc.distanceSquared(c[i].loc) < 16) {
+                        let x = Math.random() * world.dims.width - world.dims.width / 2;
+                        let y = Math.random() * world.dims.height - world.dims.height / 2;
+                        let dx = Math.random() * 4 - 2;
+                        let dy = Math.random() * 4 - 2
+                        world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                        this.statusBlock.nourishment -= 50;
+                    }
                 }
             }
-            
+
         }
-        
+
     }
     consuming() {
         //PSfoodEat
@@ -197,20 +203,43 @@ class tuckerHerbavore2 extends Creature {
         }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
+        //currently untested
         this.statusBlock.searchMate = false;
+        this.statusBlock.searchFood = false;
+        this.statusBlock.eating = false;
+        this.statusBlock.sprint = true;
+        this.statusBlock.sleeping = false;
+        this.statusBlock.attack = false;
+        //resets the status block so that it focuses solely on runing away
+        let loc = predLoc.copy();
+        let dist = this.loc.distanceSquared(loc);
+        let jmp = new JSVector(0,0);
+        if(dist<100){//10 pixels away
+            jmp = JSVector.subGetNew(loc);
+            jmp.setMagnitude(0.2);
+            this.acc.add(jmp);
+        } else if (dist < 2500) {//50 pixels away
+            jmp = JSVector.subGetNew(loc);
+            jmp.setMagnitude(0.1);
+            this.acc.add(jmp);
+        } else if (dist < 10000) {//100 pixels away
+            jmp = JSVector.subGetNew(loc);
+            jmp.setMagnitude(0.1);
+            this.acc.add(jmp);
+        }
     }
     warpEdges() {
         if (this.loc.x > world.dims.right) {
             this.loc.x = world.dims.left;
         }
-        if (this.loc.x < 0) {
-            this.loc.x = world.dims.width;
+        if (this.loc.x < world.dims.left) {
+            this.loc.x = world.dims.right;
         }
-        if (this.loc.y > world.dims.height) {
-            this.loc.y = 0;
+        if (this.loc.y > world.dims.bottom) {
+            this.loc.y = world.dims.top;
         }
-        if (this.loc.y < 0) {
-            this.loc.y = world.dims.height;
+        if (this.loc.y < world.dims.top) {
+            this.loc.y = world.dims.bottom;
         }
     }
     update() {
@@ -232,17 +261,20 @@ class tuckerHerbavore2 extends Creature {
     render() {
         let ctx = this.ctx;
         ctx.beginPath();
+        ctx.fillStyle = this.clr;
         ctx.strokeStyle = "blue";
         ctx.save();
         ctx.translate(this.loc.x, this.loc.y);
-        ctx.rotate(this.acc.getDirection());
+        ctx.rotate(this.vel.getDirection()-(3*Math.PI/2));
         ctx.moveTo(0, 0);
         ctx.lineTo(-this.rad, this.rad);//bottom left
         ctx.lineTo(this.rad, this.rad);//bottom right
         ctx.lineTo(this.rad, -this.rad);//top right
+        ctx.lineTo(0,-1*(this.vel.getMagnitude()));
         ctx.lineTo(-this.rad, -this.rad);//top left
         ctx.lineTo(-this.rad, this.rad);
         ctx.restore();
+
         ctx.closePath();//closes the square, to be fabulized at a later date of which is not confirmed yet.
         ctx.fill();
         ctx.beginPath();
