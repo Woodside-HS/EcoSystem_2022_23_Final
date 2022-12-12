@@ -1,4 +1,4 @@
-class Herbivore extends Entity {
+class Herbivore3 extends Entity {
     constructor(loc, vel, sz, wrld) {
        super(loc, vel, sz, wrld)
        //mover properties
@@ -63,7 +63,7 @@ class Herbivore extends Entity {
        let ctx = this.ctx;
        ctx.beginPath();
        ctx.fillStyle = this.clr;
-       ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
+       ctx.arc(this.loc.x, this.loc.y, 20, 0, 2 * Math.PI, false);
        ctx.fill();
        //  render balls in mini map
     }

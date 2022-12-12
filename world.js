@@ -170,6 +170,16 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
+      c.herb3.push(new Creature(loc, vel, 12, this));
+    }
+
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.cnvMain.width;
+      let y = Math.random() * this.cnvMain.height;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
@@ -237,10 +247,12 @@ class World {
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
+      
+      
 
     }
     for (let i = 0; i < c.herb3.length; i++) {
-
+      c.herb3[i].run;
     }
     for (let i = 0; i < c.flocks.length; i++) {
 
