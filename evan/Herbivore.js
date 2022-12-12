@@ -68,7 +68,17 @@ class Herbivore extends Entity {
        //  render balls in mini map
     }
     checkEating(){
-        v1= JSVector.subGetNew(this.loc, )
+      let dx = this.loc.x;
+      let dy = this.loc.y;
+      for(let i = 0; i<foods.food2.length; i++){
+         
+         if(this.loc.distance(world.foods.food2[i])<100){
+            v1 = JSVector.subGetNew(this.loc, world.foods.food2[i]);
+            this.vel.setDirection(world.foods.foods.food2[i]);
+            
+         }
+      }
+        
     }
  
     getRandomColor() {
