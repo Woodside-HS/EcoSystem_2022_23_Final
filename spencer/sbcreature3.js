@@ -121,12 +121,12 @@ class SBCreature3 extends Creature {
     search(){
         let check = this.world.foods.food2;
         for(let i = 0; i<check.length; i++){
-            if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>20 && !check[i].isDead){
+            if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>16 && !check[i].isDead){
                 this.acc = JSVector.subGetNew(check[i].loc, this.loc);
                 this.acc.normalize();
                 this.acc.multiply(0.05);
             }
-            else if(this.loc.distance(check[i].loc)<30){
+            else if(this.loc.distance(check[i].loc)<16){
                 this.statusBlock.search = false;
                 this.statusBlock.eating = true;
                 this.food = check[i]; //j not defined
