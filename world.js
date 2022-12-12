@@ -136,6 +136,12 @@ class World {
     let c = this.creatures;
     let f = this.foods;
 
+    for(let i = 0;i<100;i++){
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
+      let vel = new JSVector(Math.random()*4-2,Math.random()*4-2);
+      c.herb1.push(new MSHerbivore1(loc, vel, 15,this));
+    }
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
       let y = Math.random() * this.cnvMain.height;
