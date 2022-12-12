@@ -17,7 +17,7 @@ class PSystemFoodSB {
   }
   
   update() {
-    if(this.life<=0){
+    if(this.life<=1){
       this.isDead = true;
     }
     else{
@@ -46,15 +46,6 @@ class PSystemFoodSB {
     if(this.loc.y>world.dims.bottom || this.loc.y<world.dims.top || this.loc.x>world.dims.right || this.loc.x<world.dims.left){
       this.isDead = true;
     }
-  }
-
-  die(){
-    this.clr = "black";
-    if(!this.dying){
-      this.life = this.sz;
-      this.dying = true;
-    }
-    this.sz = this.life;
   }
 
 }
