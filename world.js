@@ -121,8 +121,9 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    //  spencer Food 2
     for (let i = 0; i < numEntities; i++) {
-      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
     }
 
     // }//++++++++++++++++++++++++++++  load entities
