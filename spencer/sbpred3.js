@@ -19,7 +19,7 @@ class SBPred3 extends Creature {
         }
   }
   
-  run(){
+  run(){ //change color to red when in attack mode
     this.render();
     this.update();
     for(let i = 0; i<this.orbs.length; i++){
@@ -97,6 +97,13 @@ class SBPred3 extends Creature {
   }
 
   preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
+    this.food.clr = "white";
+    this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);  //following lines might cause error
+    this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
+    this.ctx.fillStyle = "red"; 
+    this.ctx.stroke();
+    this.ctx.fill();
+    this.ctx.closePath();
 
   }
 
