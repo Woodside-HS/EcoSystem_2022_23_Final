@@ -73,7 +73,7 @@ class SBPred3 extends Creature {
 
 
   eating(){ 
-
+    
   }
 
   preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
