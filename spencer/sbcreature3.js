@@ -12,11 +12,12 @@ class SBCreature3 extends Creature {
         this.hrad = 14;
         this.world = wrld;
         this.counter = 0;
+        this.counter2 = 0;
         this.food;
         this.dataBlock.health = 100-Math.random()*30;
     }
 
-    loadSegments() {
+    loadSegments() { //loads segments at the start and when reviving
         let ploc = new JSVector(this.loc.x, this.loc.y);
         for(let i = 0; i<this.numSegs; i++){
             let vel2 = new JSVector(this.vel.x, this.vel.y);
@@ -43,15 +44,15 @@ class SBCreature3 extends Creature {
     }
     
     
-    update() {
+    update() { //updates snake and all segments
         this.vel.add(this.acc);
         this.vel.limit(2);
         this.loc.add(this.vel);
-        this.counter++;
+        this.counter2++;
         if(this.dataBlock.health<2){
             this.revive();
         }
-        if(this.counter%100 == 0){
+        if(this.counter2%100 == 0){
             this.dataBlock.health--;
             }
         let temp;
@@ -76,11 +77,11 @@ class SBCreature3 extends Creature {
     }
     
     
-    render() {
-        if(this.dataBlock.health  == 10){
+    render() { //renders head, body and antennas
+        if(this.dataBlock.health  == 10){ //color near death
             this.clr = "red";
          }
-        else if(this.dataBlock.health >10){
+        else if(this.dataBlock.health >10){ //color when alive
         this.clr = "lime";
         }
         this.ctx.save();
@@ -116,7 +117,7 @@ class SBCreature3 extends Creature {
         this.ctx.closePath();
     }
     
-    bounce(){
+    bounce(){ //avoids walls, doesn't get stuck in corners
         if((this.loc.y < world.dims.top  + 30 || this.loc.y > world.dims.bottom - 30) && (this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30)){
             this.acc = new JSVector.subGetNew(new JSVector(Math.random*200-100, Math.random*200-100), this.loc);
             this.acc.normalize;
@@ -130,7 +131,7 @@ class SBCreature3 extends Creature {
 
     }
 
-    search(){
+    search(){ //finds food
         let check = this.world.foods.food2;
         for(let i = 0; i<check.length; i++){
             if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>16 && !check[i].isDead){
@@ -141,7 +142,7 @@ class SBCreature3 extends Creature {
             else if(this.loc.distance(check[i].loc)<16){
                 this.statusBlock.search = false;
                 this.statusBlock.eating = true;
-                this.food = check[i]; //j not defined
+                this.food = check[i]; 
             }
          }
             
@@ -168,7 +169,7 @@ class SBCreature3 extends Creature {
         }
     }
 
-    eating(){
+    eating(){ //if isEating is on, it stands still and eats
         //lets plant know its being eaten
         if(this.food.statBlock.health <5){
             this.statusBlock.eating = false;
@@ -180,7 +181,7 @@ class SBCreature3 extends Creature {
         }
         this.food.statBlock.nourishment--;
         this.counter++;
-        if(this.counter%1000 == 0){
+        if(this.counter%500 == 0){ //adds another segment if it eats enough
             let vel2 = new JSVector(this.vel.x, this.vel.y);
             vel2.setMagnitude(this.segLength);
             let vec = JSVector.subGetNew(this.segments[this.segments.length-1], vel2);
@@ -190,7 +191,7 @@ class SBCreature3 extends Creature {
         }
     }
 
-    revive(){
+    revive(){ //spawns the creature as a new creature after death
         let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
         let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
         this.loc = new JSVector(x, y);
@@ -201,6 +202,7 @@ class SBCreature3 extends Creature {
         this.loadSegments();
         this.acc = new JSVector(0,0);
         this.counter = 0;
+        this.counter2 = 0;
         this.dataBlock.health = 100;
         this.dataBlock.isDead = false;
         this.dataBlock.nourishment = 100;
