@@ -41,14 +41,19 @@ class SBPred3 extends Creature {
   }
   
   update() { //include search, lifespan, death, and eating
-    if(this.statusBlock.attack){
-      this.vel.setMagnitude(this.dataBlock.maxSprintSpeed);
+    if(this.statusBlock.eating){
+      this.eating();
     }
-    else if(this.statusBlock.searchFood){
-    this.vel.limit(this.dataBlock.maxSpeed);
+    else{
+      if(this.statusBlock.attack){
+        this.vel.setMagnitude(this.dataBlock.maxSprintSpeed);
+      }
+      else if(this.statusBlock.searchFood){
+      this.vel.limit(this.dataBlock.maxSpeed);
+      }
+      this.loc.add(this.vel);
+      this.vel.add(this.acc);
     }
-    this.loc.add(this.vel);
-    this.vel.add(this.acc);
   }
 
   bounce(){
@@ -73,7 +78,17 @@ class SBPred3 extends Creature {
 
 
   eating(){ 
-    
+    if(this.food.statBlock.health <5){
+      this.preyDeath();
+      this.statusBlock.eating = false;
+      this.statusBlock.search = true;
+    }
+    this.food.statBlock.health--;
+    if(this.counter%50){
+      this.dataBlock.health++;
+    }
+    this.food.statBlock.nourishment--;
+    this.counter++;
   }
 
   preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
