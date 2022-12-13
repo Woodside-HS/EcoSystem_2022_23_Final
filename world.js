@@ -245,22 +245,22 @@ class World {
   runCreatures() {
     let c = this.creatures;
     let f = this.foods;
-
+    //Malcolms food3
     for (let i = 0; i < f.food3.length; i++) {
       f.food3[i].run();
       if (f.food3[i].isDead) {
         f.food3.splice(i, 1);
       }
-    }
+    } //Malcolms PS1
     for (let i = 0; i < f.pSys1.length; i++) {
       f.pSys1[i].run();
       if (f.pSys1[i].isDead) {
         f.pSys1.splice(i, 1);
       }
-    }
+    } // Malcolms herb2
     for (let i = 0; i < c.herb2.length; i++) {
       c.herb2[i].run();
-      if (c.herb2[i].isDead) {
+      if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
       }
     }
@@ -287,9 +287,10 @@ class World {
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
-    for (let i = 0; i < c.herb2.length; i++) {}
-    for (let i = 0; i < c.herb3.length; i++) {}
-    for (let i = 0; i < c.flocks.length; i++) {}
+      for (let i = 0; i < c.herb2.length; i++) {}
+      for (let i = 0; i < c.herb3.length; i++) {}
+      for (let i = 0; i < c.flocks.length; i++) {}
+    }
   }
 
   runFood() {}

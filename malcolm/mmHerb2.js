@@ -64,7 +64,8 @@ class MMHerb2 extends Creature {
     this.loc.add(this.vel);
 
     if (this.hp <= 0) {
-      this.isDead = true;
+      //   this.isDead = true;
+      this.dataBlock.isDead = true;
     }
     if (this.count++ == 10) {
       this.hp--;

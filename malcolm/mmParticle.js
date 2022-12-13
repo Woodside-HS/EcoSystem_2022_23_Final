@@ -55,8 +55,6 @@ class MMParticle extends Food {
       this.count = 0;
     }
     this.loc.add(this.vel);
-    console.log(this.loc);
-    // console.log(this.loc);
   }
   checkEdges() {
     let dims = this.world.dims;
