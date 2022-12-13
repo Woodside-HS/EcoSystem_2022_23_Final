@@ -7,6 +7,7 @@ class SBPred3 extends Creature {
         this.food;
         this.orbs = [];
         let start = 0;
+        this.counter = 0;
         this.dataBlock.maxSprintSpeed = 3;
         this.dataBlock.maxSpeed = 2;
         this.acc = new JSVector(0, 0);
@@ -53,6 +54,10 @@ class SBPred3 extends Creature {
       }
       this.loc.add(this.vel);
       this.vel.add(this.acc);
+      if(this.counter%100 == 0){
+        this.dataBlock.health--;
+        }
+        this.counter++; //repetition of counter here could be an issue. Test later
     }
   }
 
@@ -92,6 +97,14 @@ class SBPred3 extends Creature {
   }
 
   preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
+
+  }
+
+  selfDeath(){
+
+  }
+
+  runAway(){
 
   }
 
