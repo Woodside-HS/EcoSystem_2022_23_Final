@@ -6,6 +6,7 @@ class SBPred3 extends Creature {
         this.clr = this.clrlist[Math.floor(Math.random()*this.clrlist.length)];
         this.orbs = [];
         let start = 0;
+        this.acc = new JSVector(0, 0);
         let n = Math.random()*4+2;
         for(let i = 0; i<n; i++){
             this.orbs[i] = new OrbiterSB(7, start, this.loc, this.ctx, this.clrlist.indexOf(this.clr)); // start vector at planet and end at position
@@ -16,6 +17,7 @@ class SBPred3 extends Creature {
   
   run(){
     this.render();
+    this.vel.limit(2);
     this.update();
     for(let i = 0; i<this.orbs.length; i++){
       this.orbs[i].ploc.x = this.loc.x;
@@ -38,9 +40,26 @@ class SBPred3 extends Creature {
   
   update() {
     this.loc.add(this.vel);
+    this.vel.add(this.acc);
   }
 
   bounce(){
+    if(this.loc.y < world.dims.top +30  || this.loc.y > world.dims.bottom -30 ){
+      this.vel.y = -this.vel.y;
+    }
+    else if(this.loc.x < this.world.dims.left +30 || this.loc.x > this.world.dims.right -30){
+      this.vel.x = -this.vel.x;
+    }
+    if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){
+      this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+      this.acc.normalize();
+      this.acc.multiply(0.5);
+    }
+    else if(this.loc.x < this.world.dims.left +10 || this.loc.x > this.world.dims.right -10){
+      this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+      this.acc.normalize();
+      this.acc.multiply(0.5);
+    }
 
   }
 }
