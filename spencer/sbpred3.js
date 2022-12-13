@@ -10,7 +10,7 @@ class SBPred3 extends Creature {
         this.dataBlock.maxSprintSpeed = 3;
         this.dataBlock.maxSpeed = 2;
         this.acc = new JSVector(0, 0);
-        let n = Math.random()*4+2;
+        let n = Math.random()*2+6;
         for(let i = 0; i<n; i++){
             this.orbs[i] = new OrbiterSB(7, start, this.loc, this.ctx, this.clrlist.indexOf(this.clr)); // start vector at planet and end at position
       //diameter, angle, orbit radius, planet location (takes in JSVector)
