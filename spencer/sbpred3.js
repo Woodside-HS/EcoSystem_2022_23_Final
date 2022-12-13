@@ -4,8 +4,11 @@ class SBPred3 extends Creature {
         this.world = wrld;
         this.clrlist = ['#065535','#fdd800', '#0b7a85', '#00A36C', '#8b324d', '#c39797', '#9e58c7'];
         this.clr = this.clrlist[Math.floor(Math.random()*this.clrlist.length)];
+        this.food;
         this.orbs = [];
         let start = 0;
+        this.dataBlock.maxSprintSpeed = 3;
+        this.dataBlock.maxSpeed = 2;
         this.acc = new JSVector(0, 0);
         let n = Math.random()*4+2;
         for(let i = 0; i<n; i++){
@@ -17,7 +20,6 @@ class SBPred3 extends Creature {
   
   run(){
     this.render();
-    this.vel.limit(2);
     this.update();
     for(let i = 0; i<this.orbs.length; i++){
       this.orbs[i].ploc.x = this.loc.x;
@@ -38,7 +40,13 @@ class SBPred3 extends Creature {
     this.ctx.stroke(); 
   }
   
-  update() {
+  update() { //include search, lifespan, death, and eating
+    if(this.statusBlock.attack){
+      this.vel.setMagnitude(this.dataBlock.maxSprintSpeed);
+    }
+    else if(this.statusBlock.searchFood){
+    this.vel.limit(this.dataBlock.maxSpeed);
+    }
     this.loc.add(this.vel);
     this.vel.add(this.acc);
   }
@@ -64,17 +72,50 @@ class SBPred3 extends Creature {
   }
 
 
-  eating(){
+  eating(){ 
 
   }
 
-  preyDeath(){ //render prey black, random velocities, create new sbprey 3
+  preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
 
   }
 
-  searching(){
-
+  search(){
+    let check = this.world.creatures.herb2;
+    for(let i = 0; i<check.length; i++){
+        if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>16 && !check[i].isDead){
+            this.food = check[i];
+            this.statusBlock.searchFood = false;
+            this.statusBlock.attack = true;
+        }
+     }
+     let check2 = this.world.creatures.herb3;
+     for(let i = 0; i<check2.length; i++){
+         if(this.loc.distance(check2[i].loc)<200 && this.loc.distance(check2[i].loc)>16 && !check2[i].isDead){
+             this.food = check2[i];
+             this.statusBlock.searchFood = false;
+             this.statusBlock.attack = true;
+         }
+      }
   }
 
+
+  attack(){
+    if(this.food.loc.distance(this.loc)<20){
+      this.food.vel.multiply(0);
+      this.food.acc.multiply(0);
+      this.statusBlock.eating = true;
+      this.statusBlock.attack = false;
+    }
+    else if(this.food.loc.distance(this.loc)<200){
+      this.acc = JSVector.subGetNew(check[i].loc, this.loc);
+      this.acc.normalize();
+      this.acc.multiply(0.05);
+    }
+    else{
+      this.statusBlock.attack = false;
+      this.statusBlock.searchFood = true;
+    }
+  }
 
 }
