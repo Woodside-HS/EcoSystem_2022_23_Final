@@ -64,7 +64,7 @@ class tuckerHerbavore2 extends Creature {
             if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment <= 0) {
                 this.dataBlock.isDead = true;//murderizer
             }
-            if (this.dataBlock.nourishment >= 200 && this.dataBlock.age >= 100) {
+            if (this.dataBlock.nourishment >= 130 && this.dataBlock.age >= 100) {
                 this.statusBlock.searchFood = false;
                 this.statusBlock.searchMate = true;
             } else {
@@ -213,13 +213,6 @@ class tuckerHerbavore2 extends Creature {
                     }//end of PS length if statement
                 }//end of sightSq if statement
             }//end of main for loop
-            this.stuck++;
-            if (this.stuck > 100) {
-                this.vel.x = Math.random() * 1 - 0.5;
-                this.vel.y = Math.random() * 1 - 0.5;
-                this.stuck = 0;//the creature tends to get stuck near particle systems so hopefully this will "unstick them" every once and a while
-                this.cooldown = 0;
-            }
         }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
