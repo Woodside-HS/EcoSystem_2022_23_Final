@@ -162,6 +162,7 @@ class World {
       this.creatures.herb2.push(new MMHerb2(loc, vel, 10, this));
     }
 
+    //  spencer Food 2
     for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(
         new SBFood2(
@@ -170,7 +171,7 @@ class World {
             Math.random() * this.dims.height + this.dims.top
           ),
           new JSVector(0, 0),
-          20,
+          8,
           this
         )
       );
@@ -285,6 +286,7 @@ class World {
       }
     }
 
+    for (let i = 0; i < c.herb2.length; i++) {
     for (let i = 0; i < c.herb2.length; i++) {}
     for (let i = 0; i < c.herb3.length; i++) {}
     for (let i = 0; i < c.flocks.length; i++) {}
