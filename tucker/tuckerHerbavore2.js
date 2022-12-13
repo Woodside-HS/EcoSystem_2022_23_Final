@@ -126,6 +126,7 @@ class tuckerHerbavore2 extends Creature {
                 if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
                     //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
                     world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
@@ -134,7 +135,7 @@ class tuckerHerbavore2 extends Creature {
                         item: null
                     }
                 } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
-                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;//confirmed to work
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();//confirmed to work
                 }
             }//end of existence if statement
 
@@ -234,15 +235,15 @@ class tuckerHerbavore2 extends Creature {
         let dist = this.loc.distanceSquared(loc);
         let jmp = new JSVector(0, 0);
         if (dist < 100) {//10 pixels away
-            jmp = JSVector.subGetNew(loc);
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.2);
             this.acc.add(jmp);
         } else if (dist < 2500) {//50 pixels away
-            jmp = JSVector.subGetNew(loc);
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
         } else if (dist < 10000) {//100 pixels away
-            jmp = JSVector.subGetNew(loc);
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
         }

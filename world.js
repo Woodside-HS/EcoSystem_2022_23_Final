@@ -157,6 +157,15 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
+    for(let i = 0; i< numEntities;i++){
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      c.pred3.push(new tPred3(loc, vel, 3, this));
+    }//tucker's predator 3
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -227,8 +236,11 @@ class World {
         c.pred2.splice(i, 1);
       }
     }
-    for (let i = 0; i < c.pred3.length; i++) {
-
+    for (let i = c.pred3.length-1; i >= 0 ; i--) {
+      c.pred3[i].run();
+      if (c.pred3[i].dataBlock.isDead) {
+        c.pred3.splice(i, 1);
+      }
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
       c.herb1[i].run();
@@ -239,7 +251,6 @@ class World {
 
     for (let i = 0; i < c.herb2.length; i++) {
         c.herb2[i].run();
-      
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
       }
