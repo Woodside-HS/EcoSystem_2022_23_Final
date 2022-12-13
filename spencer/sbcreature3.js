@@ -119,7 +119,7 @@ class SBCreature3 extends Creature {
     
     bounce(){ //avoids walls, doesn't get stuck in corners
         if((this.loc.y < world.dims.top  + 30 || this.loc.y > world.dims.bottom - 30) && (this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30)){
-            this.acc = new JSVector.subGetNew(new JSVector(Math.random*200-100, Math.random*200-100), this.loc);
+            this.acc = new JSVector.subGetNew(new JSVector(Math.random()*200-100, Math.random()*200-100), this.loc);
             this.acc.normalize;
         }
         else if(this.loc.y < world.dims.top  + 30 || this.loc.y > world.dims.bottom - 30){
