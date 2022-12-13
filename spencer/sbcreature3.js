@@ -13,6 +13,7 @@ class SBCreature3 extends Creature {
         this.world = wrld;
         this.counter = 0;
         this.food;
+        this.dataBlock.health = 100-Math.random()*30;
     }
 
     loadSegments() {
@@ -43,12 +44,16 @@ class SBCreature3 extends Creature {
     
     
     update() {
-        if(this.counter%60 == 0){
-        this.dataBlock.health--;
-        }
         this.vel.add(this.acc);
         this.vel.limit(2);
         this.loc.add(this.vel);
+        this.counter++;
+        if(this.dataBlock.health<2){
+            this.revive();
+        }
+        if(this.counter%100 == 0){
+            this.dataBlock.health--;
+            }
         let temp;
         let ploc = new JSVector(this.loc.x, this.loc.y);
         let dis;
@@ -72,15 +77,22 @@ class SBCreature3 extends Creature {
     
     
     render() {
+        if(this.dataBlock.health  == 10){
+            this.clr = "red";
+         }
+        else if(this.dataBlock.health >10){
+        this.clr = "lime";
+        }
         this.ctx.save();
         this.ctx.translate(this.loc.x, this.loc.y);
         this.ctx.rotate(this.vel.getDirection());
         this.ctx.moveTo(0, 0);
         this.ctx.lineTo(25, 8);
-        this.ctx.strokeStyle = "lime";
+        this.ctx.strokeStyle = this.clr;
         this.ctx.stroke();
         this.ctx.moveTo(0,0);
         this.ctx.lineTo(25, -8);
+        this.ctx.strokeStyle = this.clr;
         this.ctx.stroke();
         this.ctx.restore();
         let ploc = new JSVector(this.loc.x, this.loc.y);
@@ -106,7 +118,7 @@ class SBCreature3 extends Creature {
     
     bounce(){
         if((this.loc.y < world.dims.top  + 30 || this.loc.y > world.dims.bottom - 30) && (this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30)){
-            this.acc = new JSVector.subGetNew(new JSVector(0, 0), this.loc);
+            this.acc = new JSVector.subGetNew(new JSVector(Math.random*200-100, Math.random*200-100), this.loc);
             this.acc.normalize;
         }
         else if(this.loc.y < world.dims.top  + 30 || this.loc.y > world.dims.bottom - 30){
@@ -163,7 +175,9 @@ class SBCreature3 extends Creature {
             this.statusBlock.search = true;
         }
         this.food.statBlock.health--;
-        this.dataBlock.health++;
+        if(this.counter%50){
+            this.dataBlock.health++;
+        }
         this.food.statBlock.nourishment--;
         this.counter++;
         if(this.counter%1000 == 0){
@@ -174,7 +188,26 @@ class SBCreature3 extends Creature {
             this.size++;
             
         }
-        
+    }
+
+    revive(){
+        let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
+        let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
+        this.loc = new JSVector(x, y);
+        this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+        this.segments = [];
+        this.segLength = 10;
+        console.log(this.dataBlock.health);
+        this.loadSegments();
+        this.acc = new JSVector(0,0);
+        this.counter = 0;
+        this.dataBlock.health = 100;
+        this.dataBlock.isDead = false;
+        this.dataBlock.nourishment = 100;
+        this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
+        this.dataBlock.age = 0;
+        this.clr = "lime";
+        console.log(this.dataBlock.health);
     }
     
 }

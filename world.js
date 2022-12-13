@@ -119,7 +119,7 @@ class World {
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
     //  spencer Food 2
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
     }
 
@@ -157,9 +157,7 @@ class World {
     for(let i = 0; i<numEntities/2; i++){
       c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
     }
-    for(let i = 0; i<numEntities/2; i++){
-      this.foods.food2.push(new SBFood2(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 17, this));
-    }
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);

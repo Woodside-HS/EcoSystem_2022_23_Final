@@ -4,7 +4,7 @@ class SBFood2 extends Food {  //
         super(loc, vel, sz, wrld);
         this.statBlock.health = 255-Math.random()*30;
         this.statBlock.lifeSpan = 0;
-        this.clr = ["black", "rgba(39, 196, 220," + this.statBlock.health/255 + ")", "rgba(255, 255, 255," + this.statBlock.health/255 + ")"];
+        this.clr = ["rgba(00, 00, 00, 1)", "rgba(39, 196, 220," + this.statBlock.health/255 + ")", "rgba(255, 255, 255," + this.statBlock.health/255 + ")"];
         this.world = wrld;
         
     
@@ -16,7 +16,6 @@ class SBFood2 extends Food {  //
     }
 
     update() {
-        console.log(this.statBlock.health)
         if(this.statBlock.health <= 1){
             let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
             let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
