@@ -13,29 +13,29 @@ class EvanHerbivore3 extends Creature {
        this.wWidth = wrld.dims.width;
        this.wHeight = wrld.dims.height;
  
-      //  this.statusBlock = {
-      //     searchFood:true,
-      //     searchMate:true,
-      //     eating:false,
-      //     sprint:false,
-      //     sleeping:false,
-      //     attack:false,
-      //     deathProc:false  
-      //  };
+       this.statusBlock = {
+          searchFood:true,
+          searchMate:true,
+          eating:false,
+          sprint:false,
+          sleeping:false,
+          attack:false,
+          deathProc:false  
+       };
  
-      //  this.dataBlock = {//  status block 
-      //     health: 100,
-      //     isDead: false,
-      //     nourishment: 100,
-      //     lifeSpan:30000,//  miliseconds
-      //     age:0,
-      //     numOffspring:3,
-      //     maxSpeed: 1,
-      //     maxSprintSpeed: 1,
-      //     scentValue: 100,
-      //     sightValue: 100,
-      //     weight:10,
-      //  };
+       this.dataBlock = {//  status block 
+          health: 100,
+          isDead: false,
+          nourishment: 100,
+          lifeSpan:30000,//  miliseconds
+          age:0,
+          numOffspring:3,
+          maxSpeed: 1,
+          maxSprintSpeed: 1,
+          scentValue: 100,
+          sightValue: 100,
+          weight:10,
+       };
     }//++++++++++++++++++++++++++++++++ end creature constructor
  
     //++++++++++++++++++++++++++++++++ creature methods
@@ -73,7 +73,7 @@ class EvanHerbivore3 extends Creature {
       for(let i = 0; i<world.foods.food2.length; i++){
          let d = this.loc.distance(world.foods.food2[i].loc);
          if(d < 100){
-            this.acc = JSVector.subGetNew(attractor.loc, this.loc);
+            this.acc = JSVector.subGetNew(world.foods.food2[i], this.loc);
             this.acc.normalize();
             this.acc.multiply(0.25);
          }

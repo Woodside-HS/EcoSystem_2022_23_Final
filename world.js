@@ -219,7 +219,7 @@ class World {
         let dx = Math.random() * 4 - 2;
         let dy = Math.random() * 4 - 2
         let vel = new JSVector(dx, dy);
-        this.creatures.herb3.push(new EvanHerbivore3(loc, vel, 20, this))
+        this.creatures.herb3.push(new EvanHerbivore3(loc, vel, 20, this));
       }
     
   }
@@ -263,12 +263,12 @@ class World {
     for (let i = 0; i < c.herb3.length; i++) {
      
       c.herb3[i].run;
-      for (let i = 0; i < 100; i++) {
-        if (c.herb3[i].dataBlock.isDead) {
-          c.herb3.splice(i, 1);
-        }
-        
+      
+      if (c.herb3[i].dataBlock.isDead) {
+        c.herb3.splice(i, 1);
       }
+        
+      
   
     }
     for (let i = 0; i < c.flocks.length; i++) {
