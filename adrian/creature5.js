@@ -70,7 +70,7 @@ class Creature5 extends Creature {
         this.searchForFood();
       }
       this.looseNourishment();
-      this.checkHealth();
+      this.checkHealth(c);
       this.update();
     }
     else {
@@ -86,7 +86,7 @@ class Creature5 extends Creature {
     }
   }
 
-  checkHealth() {
+  checkHealth(v) {
     if (this.nourishment < 15) {
       this.maxSpeed = 0.5;
       this.health -= 2;
@@ -94,12 +94,17 @@ class Creature5 extends Creature {
       this.maxSpeed = 1;
       this.health--;
     } else {
+      this.lookForMate(v);
       this.maxSpeed = 2;
     }
     if (this.health < 0 || this.age > this.maxAge) {
       this.isDead = true;
     }
 
+  }
+
+  lookForMate(c){
+    
   }
 
   update() {
