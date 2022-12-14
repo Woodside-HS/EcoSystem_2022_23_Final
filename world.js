@@ -163,15 +163,15 @@ class World {
       c.pred1.push(new Creature(loc, vel, 12, this));
     }
 
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2
-      let vel = new JSVector(dx, dy);
-      c.herb3.push(new Creature(loc, vel, 12, this));
-    }
+    // for (let i = 0; i < numEntities; i++) {
+    //   let x = Math.random() * this.cnvMain.width;
+    //   let y = Math.random() * this.cnvMain.height;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2
+    //   let vel = new JSVector(dx, dy);
+    //   c.herb3.push(new Creature(loc, vel, 12, this));
+    // }
 
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
@@ -212,7 +212,16 @@ class World {
       let vel = new JSVector(dx, dy);
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
     }
-
+      for(let i = 0; i < 100; i++){
+        let x = Math.random() * this.dims.width - (this.dims.width / 2);
+        let y = Math.random() * this.dims.height - (this.dims.height / 2);
+        let loc = new JSVector(x, y);
+        let dx = Math.random() * 4 - 2;
+        let dy = Math.random() * 4 - 2
+        let vel = new JSVector(dx, dy);
+        this.creatures.herb3.push(new EvanHerbivore3(loc, vel, 20, this))
+      }
+    
   }
 
 
@@ -231,7 +240,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      // c.pred2[i].run();
+      //c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -240,19 +249,27 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
-      
+     
       
 
     }
     for (let i = 0; i < c.herb3.length; i++) {
+     
       c.herb3[i].run;
+      for (let i = 0; i < 100; i++) {
+        if (c.herb3[i].dataBlock.isDead) {
+          c.herb3.splice(i, 1);
+        }
+        
+      }
+  
     }
     for (let i = 0; i < c.flocks.length; i++) {
 

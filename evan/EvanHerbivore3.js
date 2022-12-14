@@ -1,8 +1,9 @@
-class Herbivore3 extends Entity {
+class EvanHerbivore3 extends Creature {
     constructor(loc, vel, sz, wrld) {
        super(loc, vel, sz, wrld)
        //mover properties
        this.loc = loc;
+       
        this.vel = vel;
        this.acc = new JSVector(0, 0);
        this.clr = this.getRandomColor();
@@ -12,38 +13,38 @@ class Herbivore3 extends Entity {
        this.wWidth = wrld.dims.width;
        this.wHeight = wrld.dims.height;
  
-       this.statusBlock = {
-          searchFood:true,
-          searchMate:true,
-          eating:false,
-          sprint:false,
-          sleeping:false,
-          attack:false,
-          deathProc:false
-          
-       };
+      //  this.statusBlock = {
+      //     searchFood:true,
+      //     searchMate:true,
+      //     eating:false,
+      //     sprint:false,
+      //     sleeping:false,
+      //     attack:false,
+      //     deathProc:false  
+      //  };
  
-       this.dataBlock = {//  status block 
-          health: 100,
-          isDead: false,
-          nourishment: 100,
-          lifeSpan:30000,//  miliseconds
-          age:0,
-          numOffspring:3,
-          maxSpeed: 1,
-          maxSprintSpeed: 1,
-          scentValue: 100,
-          sightValue: 100,
-          weight:10,
-       };
+      //  this.dataBlock = {//  status block 
+      //     health: 100,
+      //     isDead: false,
+      //     nourishment: 100,
+      //     lifeSpan:30000,//  miliseconds
+      //     age:0,
+      //     numOffspring:3,
+      //     maxSpeed: 1,
+      //     maxSprintSpeed: 1,
+      //     scentValue: 100,
+      //     sightValue: 100,
+      //     weight:10,
+      //  };
     }//++++++++++++++++++++++++++++++++ end creature constructor
  
     //++++++++++++++++++++++++++++++++ creature methods
     run() {
+       //console.log("hi");
        this.update();
        this.checkEdges();
        this.render();
-       this.checkEating();
+       this.checkEating();   
     }
     update() {
        this.vel.add(this.acc);
@@ -68,15 +69,19 @@ class Herbivore3 extends Entity {
        //  render balls in mini map
     }
     checkEating(){
-      let dx = this.loc.x;
-      let dy = this.loc.y;
-      for(let i = 0; i<foods.food2.length; i++){
-         
-         if(this.loc.distance(world.foods.food2[i])<100){
-            v1 = JSVector.subGetNew(this.loc, world.foods.food2[i]);
-            this.vel.setDirection(world.foods.foods.food2[i]);
-            
+      
+      for(let i = 0; i<world.foods.food2.length; i++){
+         let d = this.loc.distance(world.foods.food2[i].loc);
+         if(d < 100){
+            this.acc = JSVector.subGetNew(attractor.loc, this.loc);
+            this.acc.normalize();
+            this.acc.multiply(0.25);
          }
+         // if(this.loc.distance(world.foods.food2[i])<100){
+         //    v1 = JSVector.subGetNew(this.loc, world.foods.food2[i]);
+         //    this.vel.setDirection(world.foods.foods.food2[i]);
+            
+         // }
       }
         
     }
@@ -98,4 +103,4 @@ class Herbivore3 extends Entity {
        let index = Math.floor(Math.random() * colors.length);
        return colors[index];
     }
- }
+}
