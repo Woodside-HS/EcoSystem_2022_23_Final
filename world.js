@@ -165,6 +165,11 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
+    //Spencer Herb3
+    for(let i = 0; i<numEntities/2; i++){
+      c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
+    }
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
@@ -226,11 +231,13 @@ class World {
         c.herb1.splice(i, 1);
       }
     }
+    
 
     for (let i = 0; i < c.herb2.length; i++) {
 
     }
     for (let i = 0; i < c.herb3.length; i++) {
+        c.herb3[i].run();
 
     }
     for (let i = 0; i < c.flocks.length; i++) {
