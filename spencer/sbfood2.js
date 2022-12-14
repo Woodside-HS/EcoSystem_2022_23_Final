@@ -4,7 +4,7 @@ class SBFood2 extends Food {  //
         super(loc, vel, sz, wrld);
         this.statBlock.health = 255-Math.random()*30;
         this.statBlock.lifeSpan = 0;
-        this.clr = ["black", "rgba(39, 196, 220," + this.statBlock.health + ")", "rgba(255, 255, 255," + this.statBlock.health + ")"];
+        this.clr = ["rgba(00, 00, 00, 1)", "rgba(39, 196, 220," + this.statBlock.health/255 + ")", "rgba(255, 255, 255," + this.statBlock.health/255 + ")"];
         this.world = wrld;
         
     
@@ -35,30 +35,30 @@ class SBFood2 extends Food {  //
 
     render() {
         let ctx = this.ctx;
-        this.clr[1] = "rgba(39, 196, 220," + Math.floor(this.statBlock.health) + ")";
-        this.clr[2] = "rgba(255, 255, 255," + Math.floor(this.statBlock.health) + ")";
-        for(let i = 1; i<=2; i++){
+        this.clr[1] = "rgba(39, 196, 220," + this.statBlock.health/255 + ")"; //two colors make up render
+        this.clr[2] = "rgba(255, 255, 255," + this.statBlock.health/255 + ")";
+        for(let i = 1; i<=2; i++){ //one side of shape with 2 colors (blue and white)
             ctx.beginPath();
             ctx.save();
             ctx.translate(this.loc.x, this.loc.y);
             ctx.rotate(2*i);
-            if(this.statBlock.health < 20){
+            if(this.statBlock.health < 20){ //attempt at black but unsuccesful
                 ctx.fillStyle = this.clr[0];
             }
             else{
-            ctx.fillStyle = this.clr[i];
+            ctx.fillStyle = this.clr[i]; 
             }
             ctx.arc(0, 0, this.size, 0, Math.PI/2, false);
             ctx.closePath();
             ctx.fill();
             ctx.restore();
         }
-        for(let i = 1; i<=2; i++){
+        for(let i = 1; i<=2; i++){ //other side of shape
             ctx.beginPath();
             ctx.save();
             ctx.translate(this.loc.x-(this.size)*(3/2)-1, this.loc.y-(this.size)*(3/2)+5.5);
             ctx.rotate(2*i+Math.PI);
-            if(this.statBlock.health < 20){
+            if(this.statBlock.health < 20){ //unsuccesful black
                 ctx.fillStyle = this.clr[0];
             }
             else{
