@@ -165,6 +165,7 @@ class World {
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
 
+    //Spencer Herb3
     for(let i = 0; i<numEntities/2; i++){
       c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
     }
