@@ -61,7 +61,7 @@ class tPred3 extends Creature {
             }
         }
     }
-    eat() {
+    eat() {//doesnt get to here
         this.dataBlock.nourishment+=50;
         let i = this.foodId;
 
@@ -79,6 +79,7 @@ class tPred3 extends Creature {
                     this.statusBlock.searchFood = true;
                 } else {
                     world.creatures.herb2[i].dataBlock.health -= 25;
+                    console.log(this.dataBlock.nourishment);
                 }
 
             }
