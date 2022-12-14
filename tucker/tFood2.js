@@ -27,6 +27,7 @@ class tFood2 {
                 this.spawnNew = 0;//resets the span new integer so a new cherry is spawned every 10 frames as of now
             }
         }
+        
         this.spawnNew++;
         for (let i = this.foodList.length - 1; i > 0; i--) {
             this.foodList[i].run();
