@@ -184,6 +184,11 @@ class World {
     //   f.food2.push(new Food(loc, vel, 5, this));
     // }
 
+    //Spencer Herb3
+    for(let i = 0; i<numEntities/2; i++){
+      c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
+    }
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
@@ -240,11 +245,12 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
     }
+    
 
     for (let i = 0; i < c.herb2.length; i++) {
         c.herb2[i].run();
@@ -254,6 +260,7 @@ class World {
       }
     }//tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
+        c.herb3[i].run();
 
     }
     for (let i = 0; i < c.flocks.length; i++) {
