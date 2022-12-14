@@ -43,7 +43,6 @@ class Food5Particle {
     render() {
         let ctx = this.ctx;
         ctx.beginPath();
-        ctx.rotate(Math.PI);
         ctx.arc(this.loc.x,this.loc.y,this.rad,0,-Math.PI);//bottom of the chrry
         ctx.arc(this.loc.x+this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2);//top right of the cherry
         ctx.arc(this.loc.x-this.rad/2,this.loc.y,this.rad/2,Math.PI,Math.PI*2)//top left of the cherry
