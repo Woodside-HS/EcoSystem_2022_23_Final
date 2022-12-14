@@ -11,6 +11,13 @@ class Food5Particle {
         this.ctx = ctx;
         this.deathdisplacement = Math.floor(this.randomNumber(25, 500));
         this.deathdisplacementinit = this.deathdisplacement;
+        this.statBlock = {//  properties 
+            health: 100,
+            nourishment: 100,
+            lifeSpan: 30000,
+            opacity: 1.0,
+            foodPts: 100
+        };
     }
 
     update() {
