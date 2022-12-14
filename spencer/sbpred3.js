@@ -42,18 +42,22 @@ class SBPred3 extends Creature {
   }
   
   update() { //include search, lifespan, death, and eating
+    console.log(this.vel);
+    this.loc.add(this.vel);
+    this.vel.add(this.acc);
     if(this.statusBlock.eating){
       this.eating();
+      this.vel.limit(this.dataBlock.maxSpeed);
     }
     else{
       if(this.statusBlock.attack){
         this.vel.setMagnitude(this.dataBlock.maxSprintSpeed);
+        this.attack();
       }
       else if(this.statusBlock.searchFood){
-      this.vel.limit(this.dataBlock.maxSpeed);
+        this.vel.limit(this.dataBlock.maxSpeed);
+        this.search();
       }
-      this.loc.add(this.vel);
-      this.vel.add(this.acc);
       if(this.counter%100 == 0){
         this.dataBlock.health--;
         }
@@ -61,7 +65,7 @@ class SBPred3 extends Creature {
     }
   }
 
-  bounce(){
+  bounce(){ //fix corners
     if(this.loc.y < world.dims.top +30  || this.loc.y > world.dims.bottom -30 ){
       this.vel.y = -this.vel.y;
     }
@@ -83,20 +87,17 @@ class SBPred3 extends Creature {
 
 
   eating(){ 
-    if(this.food.statBlock.health <5){
+    if(this.food.dataBlock.health <5){
       this.preyDeath();
       this.statusBlock.eating = false;
       this.statusBlock.search = true;
     }
-    this.food.statBlock.health--;
-    if(this.counter%50){
-      this.dataBlock.health++;
-    }
-    this.food.statBlock.nourishment--;
-    this.counter++;
+    this.dataBlock.health +=this.food.dataBlock.nourishment/10;
+    this.food.dataBlock.health = 6;
+    this.food.dataBlock.nourishment = 6;
   }
 
-  preyDeath(){ //render prey black, random velocities, create new sbprey 3 emerging from body like eggs
+  preyDeath(){ //render prey white, random velocities, create new sbprey 3 emerging from body like eggs
     this.food.clr = "white";
     this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);  //following lines might cause error
     this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
@@ -143,7 +144,7 @@ class SBPred3 extends Creature {
       this.statusBlock.attack = false;
     }
     else if(this.food.loc.distance(this.loc)<200){
-      this.acc = JSVector.subGetNew(check[i].loc, this.loc);
+      this.acc = JSVector.subGetNew(this.food.loc, this.loc);
       this.acc.normalize();
       this.acc.multiply(0.05);
     }

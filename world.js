@@ -93,9 +93,9 @@ class World {
     this.runCreatures();
     this.runFood();
 
-    for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-    }
+    // for (let i = 0; i < this.foods.food2.length; i++) {
+    //   this.foods.food2[i].run();
+    // }
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -198,10 +198,18 @@ class World {
       this.creatures.pred3.push(new SBPred3(loc, vel, 30, this))
     }
 
+    //SB Test food
+    for (let i = 0; i < 500; i++) {
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.creatures.herb2.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }
+
 
 
   }
-
+  
 
 
 
@@ -225,18 +233,22 @@ class World {
     for (let i = 0; i < c.pred3.length; i++) {
       c.pred3[i].run();
       if (c.pred3[i].dataBlock.isDead) {
-        c.pred2.splice(i, 1);
+        c.pred3.splice(i, 1);
       }
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      c.herb1[i].run();
+      //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
+      c.herb2[i].run();
+      if (c.herb2[i].dataBlock.isDead) {
+        c.herb2.splice(i, 1);
+      }
 
     }
     for (let i = 0; i < c.herb3.length; i++) {
@@ -255,7 +267,7 @@ class World {
     //}
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
-      f.food2[i].run();
+      //f.food2[i].run();
       if (f.food2[i].statBlock.nourishment <= 0) {
         f.food2.splice(i, 1);
       }
@@ -286,7 +298,7 @@ class World {
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
-      f.pSys2[i].run();
+      //f.pSys2[i].run();
     }
 
     for (let i = f.pSys3.length - 1; i >= 0; i--) {
