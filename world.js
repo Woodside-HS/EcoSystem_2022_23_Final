@@ -297,25 +297,13 @@ class World {
   runCreatures() {
     let c = this.creatures;
     let f = this.foods;
-    //Malcolms food2
-    for (let i = 0; i < f.food2.length; i++) {
-      f.food2[i].run();
-      if (f.food2[i].isDead) {
-        f.food2.splice(i, 1);
-      }
-    } //Malcolms PS1
-    for (let i = 0; i < f.pSys1.length; i++) {
-      f.pSys1[i].run();
-      if (f.pSys1[i].isDead) {
-        f.pSys1.splice(i, 1);
-      }
-    } // Malcolms herb2
-    for (let i = 0; i < c.herb2.length; i++) {
-      c.herb2[i].run();
-      if (c.herb2[i].dataBlock.isDead) {
-        c.herb2.splice(i, 1);
-      }
-    }
+    // Malcolms herb2
+    // for (let i = 0; i < c.herb2.length; i++) {
+    //   c.herb2[i].run();
+    //   if (c.herb2[i].dataBlock.isDead) {
+    //     c.herb2.splice(i, 1);
+    //   }
+    // }
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
       //c.pred1[i].run();
@@ -342,8 +330,9 @@ class World {
       c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
-        for (let i = 0; i < c.herb2.length; i++) {}
-      } //tuckers creature
+      }
+      for (let i = 0; i < c.herb2.length; i++) {}
+      //tuckers creature
       for (let i = 0; i < c.herb3.length; i++) {
         c.herb3[i].run();
       }

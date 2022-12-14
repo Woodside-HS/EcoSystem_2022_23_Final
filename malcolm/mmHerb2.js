@@ -104,31 +104,31 @@ class MMHerb2 extends Creature {
       }
     } // end of food2
 
-    for (let i = 0; i < world.foods.pSys1.length; i++) {
-      for (let j = 0; j < world.foods.pSys1[i].mmParticles.length; j++) {
-        let particle = world.foods.pSys1[i].mmParticles[j];
-        let dist = this.loc.distance(particle.loc);
-        if (dist < desiredDist) {
-          let diff = JSVector.subGetNew(particle.loc, this.loc);
-          diff.normalize();
-          this.vel.add(diff);
-          this.vel.limit(2);
-          this.clr = "red";
-          if (dist < 10) {
-            particle.vel = new JSVector(0, 0);
-            this.vel = new JSVector(0, 0);
-            // this.vel.multiply(0.1);
-            this.dataBlock.health =
-              this.dataBlock.health + particle.statBlock.health;
-            particle.statBlock.health = 0;
-            this.vel.x = this.vX;
-            this.vel.y = this.vY;
-          }
-        } else {
-          this.clr = "green";
-        }
-      }
-    }
+    // for (let i = 0; i < world.foods.pSys1.length; i++) {
+    //   for (let j = 0; j < world.foods.pSys1[i].mmParticles.length; j++) {
+    //     let particle = world.foods.pSys1[i].mmParticles[j];
+    //     let dist = this.loc.distance(particle.loc);
+    //     if (dist < desiredDist) {
+    //       let diff = JSVector.subGetNew(particle.loc, this.loc);
+    //       diff.normalize();
+    //       this.vel.add(diff);
+    //       this.vel.limit(2);
+    //       this.clr = "red";
+    //       if (dist < 10) {
+    //         particle.vel = new JSVector(0, 0);
+    //         this.vel = new JSVector(0, 0);
+    //         // this.vel.multiply(0.1);
+    //         this.dataBlock.health =
+    //           this.dataBlock.health + particle.statBlock.health;
+    //         particle.statBlock.health = 0;
+    //         this.vel.x = this.vX;
+    //         this.vel.y = this.vY;
+    //       }
+    //     } else {
+    //       this.clr = "green";
+    //     }
+    //   }
+    // }
   }
   checkEdges() {
     let dims = this.world.dims;
