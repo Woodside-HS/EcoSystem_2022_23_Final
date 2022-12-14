@@ -58,7 +58,8 @@ class World {
     };
 
     // performance -- change the number of entities to see the effect on framerate
-    this.loadEntities(1500, this.ctxMain, this.dims.width, this.dims.height);
+    this.numEntities = 50;
+    this.loadEntities( this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
     // performance
     this.framerate = 60;
     this.framecount = 0;
@@ -130,7 +131,7 @@ class World {
 
   //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
-      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
     }
 
     // }//++++++++++++++++++++++++++++  load entities
