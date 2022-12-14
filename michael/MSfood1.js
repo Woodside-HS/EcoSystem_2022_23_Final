@@ -54,7 +54,7 @@ class MSFood1 extends Food {
        this.ctx.lineTo(this.loc.x+5,this.loc.y-7);
        this.ctx.lineTo(this.loc.x,this.loc.y);
        this.ctx.strokeStyle = this.clr2;
-       this.ctx.lineWidth = 3;
+       //this.ctx.lineWidth = 3;
         this.ctx.stroke();
        this.ctx.closePath();
     }

@@ -59,7 +59,7 @@ class World {
 
     // performance -- change the number of entities to see the effect on framerate
     this.numEntities = 50;
-    this.loadEntities(this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
+    this.loadEntities( this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
     // performance
     this.framerate = 60;
     this.framecount = 0;
@@ -130,6 +130,13 @@ class World {
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }//michael's particle system
 
+    for (let i = 0; i < numEntities; i++) {
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      this.foods.food1.push(new MSFood1(loc, vel, 10, this));
+      //console.log()
+    }//michael's Food1
+
   //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
@@ -184,11 +191,6 @@ class World {
     //   f.food2.push(new Food(loc, vel, 5, this));
     // }
 
-    for(let i = 0;i<200;i++){
-      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top)
-      let vel = new JSVector(Math.random() * .5 - .25,Math.random() * .5 - .25)
-      this.foods.food1.push(new MSFood1(loc, vel,10,this))
-      
     //Spencer Herb3
     for(let i = 0; i<numEntities/2; i++){
       c.herb3.push(new SBCreature3(new JSVector(Math.random()*this.dims.width+this.dims.left, Math.random()*this.dims.height + this.dims.top), new JSVector(Math.random()*4-2, Math.random()*4-2), 30, this));
@@ -224,7 +226,6 @@ class World {
     }//  Adrain Food2Grass
 
   }
-}
 
 
 
@@ -251,7 +252,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      //c.herb1[i].run();
+      c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
@@ -277,9 +278,9 @@ class World {
   runFood() {
     let f = this.foods;
 
-    for (let i = f.food1.length - 1; i >= 0; i--) {
+    for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food1[i].run();
-      if (f.food1[i].statBlock.health <= 0) {
+      if (f.food1[i].statBlock.nourishment <= 0) {//cuts the food from the array if it is dead
         f.food1.splice(i, 1);
       }
     }
@@ -316,7 +317,7 @@ class World {
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
-      //f.pSys2[i].run();
+      f.pSys2[i].run();
     }
 
     for (let i = f.pSys3.length - 1; i >= 0; i--) {
