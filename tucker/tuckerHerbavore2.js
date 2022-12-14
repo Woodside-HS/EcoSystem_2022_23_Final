@@ -110,6 +110,7 @@ class tuckerHerbavore2 extends Creature {
                             world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
                         }
                         this.statusBlock.nourishment -= 50;
+                        world.creatures.herb2[i].statusBlock.nourishment -= 50;
                     }
                 }
             }

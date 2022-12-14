@@ -5,10 +5,12 @@ class tPred3 extends Creature {
         this.hurtyBit = [];
         this.size = sz;
         this.spwanNew = 0;
+        this.new = 0;
         this.hungy = 0;
         this.dataBlock.sightValue = 50;
         this.dataBlock.maxSpeed = 3;
         this.foodId = null;
+        this.stuckLol = 0;
     }
     run() {
         if (this.dataBlock.nourishment <= 0 || this.dataBlock.health <= 0 || this.dataBlock.age >= this.dataBlock.lifeSpan) {
@@ -24,6 +26,15 @@ class tPred3 extends Creature {
         this.render();
         this.bounceEdges();
         this.orbitals();
+        
+        if(this.dataBlock.nourishment >=500 && this.dataBlock.age>=100){
+            this.statusBlock.searchMate = true;
+            this.statusBlock.searchFood = false;
+            this.statusBlock.eating = false;
+        }
+
+
+        //status block stuff below
         if (this.statusBlock.searchFood) {
             this.searchFood();
             this.foodId = null;
@@ -31,11 +42,16 @@ class tPred3 extends Creature {
         if (this.statusBlock.eating) {
             this.eat();
         }
-
     }
     orbitals() {
-        if (this.hurtyBit.length < 10) {//&& this.spawnNew>=10
-            this.hurtyBit.push(new tPred3P(this.loc, this.getRandomColor(), 10));
+        if (this.hurtyBit.length < 9) {//&& this.spawnNew>=10
+            if (this.new >= Math.PI / 5) {
+                this.new = 0;
+                this.hurtyBit.push(new tPred3P(this.loc, this.getRandomColor(), 10));
+            } else {
+                this.new += Math.PI / 50;
+            }
+
         }
         for (let i = this.hurtyBit.length - 1; i >= 0; i--) {
             this.hurtyBit[i].run(this.loc);
@@ -62,30 +78,36 @@ class tPred3 extends Creature {
         }
     }
     eat() {//doesnt get to here
-        this.dataBlock.nourishment+=50;
-        let i = this.foodId;
-
-        if (world.creatures.herb2[i]) {
-            if (world.creatures.herb2[i].dataBlock.isDead != true) {
-                if (this.loc.distanceSquared(food[i].loc) >= 100) {
-                    this.statusBlock.eating = false;
-                    this.statusBlock.searchFood = true;
+        if (this.hurtyBit.length > 0) {
+            this.stuckLol++;
+            if (this.stuckLol >= 50) {
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = true;
+                this.stuckLol = 0;
+                this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+            }
+            this.dataBlock.nourishment += 50;
+            let i = this.foodId;
+            if (world.creatures.herb2[i]) {
+                if (world.creatures.herb2[i].dataBlock.isDead != true) {
+                    if (this.loc.distanceSquared(food[i].loc) >= 100) {
+                        this.statusBlock.eating = false;
+                        this.statusBlock.searchFood = true;
+                    }
+                    if (world.creatures.herb2[i].dataBlock.health <= 30) {
+                        world.creatures.herb2[i].dataBlock.health -= 25;
+                        console.log(world.creatures.herb2[i].dataBlock.health);
+                        this.foodId = null;
+                        this.statusBlock.eating = false;
+                        this.statusBlock.searchFood = true;
+                    } else {
+                        world.creatures.herb2[i].dataBlock.health -= 25;
+                        console.log(this.dataBlock.nourishment);
+                    }
+                    this.hurtyBit.splice(this.hurtyBit.length - 1, 0)
                 }
-                if (world.creatures.herb2[i].dataBlock.health <= 25) {
-                    world.creatures.herb2[i].dataBlock.health -= 25;
-                    console.log(world.creatures.herb2[i].dataBlock.health);
-                    this.foodId = null;
-                    this.statusBlock.eating = false;
-                    this.statusBlock.searchFood = true;
-                } else {
-                    world.creatures.herb2[i].dataBlock.health -= 25;
-                    console.log(this.dataBlock.nourishment);
-                }
-
             }
         }
-
-
         //for some reason it can just go to that instane of the  creature
     }
     render() {

@@ -235,7 +235,7 @@ class World {
   runCreatures() {
     let c = this.creatures;
 
-    for (let i = c.pred1.length - 1; i >= 0; i--) {
+    for (let i = c.pred1.length - 1; i >= 0; i--) {//mr ums creature(for now)
       //c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
