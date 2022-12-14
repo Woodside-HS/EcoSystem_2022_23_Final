@@ -59,7 +59,8 @@ class World {
 
     //this.entities = [];
     // performance -- change the number of entities to see the effect on framerate
-    this.loadEntities(150, this.ctxMain, this.dims.width, this.dims.height);
+    this.numEntities = 50;
+    this.loadEntities( this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
     // performance
     this.framerate = 60;
     this.framecount = 0;
@@ -116,18 +117,10 @@ class World {
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS"; // frames per second
     this.ctxMain.fillText(fps, 20, this.cnvMain.height - 105);
-    this.ctxMain.fillText(
-      "Rows = " + this.numRows,
-      20,
-      this.cnvMain.height - 130
-    );
-    this.ctxMain.fillText(
-      "Cols = " + this.numCols,
-      20,
-      this.cnvMain.height - 155
-    );
-    let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
-    this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+    // this.ctxMain.fillText("Rows = " + this.numRows, 20, this.cnvMain.height - 130);
+    // this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
+    // let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
+    // this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
@@ -246,6 +239,7 @@ class World {
       }
     }
 
+    for (let i = 0; i < c.herb2.length; i++) {
     for (let i = 0; i < c.herb2.length; i++) {}
     for (let i = 0; i < c.herb3.length; i++) {}
     for (let i = 0; i < c.flocks.length; i++) {}
