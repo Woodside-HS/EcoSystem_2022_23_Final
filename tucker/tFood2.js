@@ -5,10 +5,10 @@ class tFood2 {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.spawnNew = 0;
-        this.spawnNewMax = Math.random()*500+150;
+        this.spawnNewMax = Math.random() * 500 + 150;
         this.foodList = [];
         //adds a beginner particle to kick off the array
-        this.foodList.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random()*20+20));
+        this.foodList.push(new tFood2P(this.loc, new JSVector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5), 3, this.ctx, Math.random() * 20 + 20));
         this.trunkClr = this.getRandomColor();
         this.leaveClr = this.LgetRandomColor();
     }
@@ -16,9 +16,9 @@ class tFood2 {
         this.update();
         this.render();
     }
-    
+
     update() {
-        if(this.foodList.length<10){//limits the foodList to only 10
+        if (this.foodList.length < 10) {//limits the foodList to only 10
             if (this.spawnNew > this.spawnNewMax) {
                 let velX = Math.random() * 1 - 0.5;
                 let velY = Math.random() * 1 - 0.5;
@@ -28,7 +28,7 @@ class tFood2 {
             }
         }
         this.spawnNew++;
-        for (let i = this.foodList.length-1; i > 0; i--) {
+        for (let i = this.foodList.length - 1; i > 0; i--) {
             this.foodList[i].run();
             if (this.foodList[i].isDead == true) {//cuts out any dead particles
                 console.log("should splice");
@@ -41,26 +41,26 @@ class tFood2 {
         let ctx = this.ctx;
         ctx.beginPath();//beginning of leafs
         ctx.fillStyle = this.leaveClr;
-        ctx.arc(this.loc.x,this.loc.y-(this.rad*2),.75*this.rad,0,Math.PI*2);
-        ctx.arc(this.loc.x-this.rad,this.loc.y-(this.rad*2),this.rad*.5,0,Math.PI*2);
-        ctx.arc(this.loc.x+this.rad,this.loc.y-(this.rad*2),this.rad*.5,0,Math.PI*2);
+        ctx.arc(this.loc.x, this.loc.y - (this.rad * 2), .75 * this.rad, 0, Math.PI * 2);
+        ctx.arc(this.loc.x - this.rad, this.loc.y - (this.rad * 2), this.rad * .5, 0, Math.PI * 2);
+        ctx.arc(this.loc.x + this.rad, this.loc.y - (this.rad * 2), this.rad * .5, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();//end of leaves
         ctx.beginPath();//beginning of trunk
         ctx.fillStyle = this.trunkClr;
-        ctx.moveTo(this.loc.x,this.loc.y);//center of trunk of tree
-        ctx.lineTo(this.loc.x+(this.rad/3),this.loc.y);
-        ctx.lineTo(this.loc.x+(this.rad/2),this.loc.y-this.rad);
-        ctx.lineTo(this.loc.x+this.rad,this.loc.y-(this.rad*2));
-        ctx.lineTo(this.loc.x,this.loc.y-(this.rad*1.5));
-        ctx.lineTo(this.loc.x+(this.rad/4),this.loc.y-(this.rad*2));
-        ctx.lineTo(this.loc.x,this.loc.y-(this.rad*1.75));//midpoint of tree
-        ctx.lineTo(this.loc.x-(this.rad*.25),this.loc.y-(this.rad*2));
-        ctx.lineTo(this.loc.x,this.loc.y-(this.rad*1.5));
-        ctx.lineTo(this.loc.x-this.rad,this.loc.y-(this.rad*2));
-        ctx.lineTo(this.loc.x-(this.rad*.5),this.loc.y-this.rad);
-        ctx.lineTo(this.loc.x-(this.rad/3),this.loc.y);
-        ctx.lineTo(this.loc.x,this.loc.y);//end of tree
+        ctx.moveTo(this.loc.x, this.loc.y);//center of trunk of tree
+        ctx.lineTo(this.loc.x + (this.rad / 3), this.loc.y);
+        ctx.lineTo(this.loc.x + (this.rad / 2), this.loc.y - this.rad);
+        ctx.lineTo(this.loc.x + this.rad, this.loc.y - (this.rad * 2));
+        ctx.lineTo(this.loc.x, this.loc.y - (this.rad * 1.5));
+        ctx.lineTo(this.loc.x + (this.rad / 4), this.loc.y - (this.rad * 2));
+        ctx.lineTo(this.loc.x, this.loc.y - (this.rad * 1.75));//midpoint of tree
+        ctx.lineTo(this.loc.x - (this.rad * .25), this.loc.y - (this.rad * 2));
+        ctx.lineTo(this.loc.x, this.loc.y - (this.rad * 1.5));
+        ctx.lineTo(this.loc.x - this.rad, this.loc.y - (this.rad * 2));
+        ctx.lineTo(this.loc.x - (this.rad * .5), this.loc.y - this.rad);
+        ctx.lineTo(this.loc.x - (this.rad / 3), this.loc.y);
+        ctx.lineTo(this.loc.x, this.loc.y);//end of tree
         ctx.closePath();
         ctx.fill();//end of trunk
     }
