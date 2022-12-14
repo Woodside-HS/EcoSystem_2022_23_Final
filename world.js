@@ -200,7 +200,7 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
+      f.food2.push(new Food2Grass(loc, vel, 7, this))
     }
     //Adrians Particle System
     for (let i = 0; i < 50; i++) {
@@ -210,7 +210,7 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      this.foods.food2.push(new FoodParticleSystem2BigBalls(loc, vel, 1, this))
+      f.pSys2.push(new FoodParticleSystem2BigBalls(loc, vel, 1, this))
     }
   }
 
