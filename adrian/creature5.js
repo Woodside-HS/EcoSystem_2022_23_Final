@@ -24,6 +24,7 @@ class Creature5 extends Creature {
     this.nourishmentDecInterval = getRandomInt(3, 7);
     this.nourishmentFrameCounter = 0;
     this.maxAge = getRandomInt(400, 3000);
+    this.searchingForFood = true;
   }
   //  methods
   run(c) {
@@ -45,7 +46,7 @@ class Creature5 extends Creature {
         netForce.add(coh);
         netForce.add(sep)
         this.acc.add(netForce);
-        if (this.searchForFood) {
+        if (this.searchingForFood) {
           this.searchForFood();
         }
         this.looseNourishment();
@@ -65,7 +66,7 @@ class Creature5 extends Creature {
       this.sleeping = false;
       this.age++;
       this.movement++;
-      if (this.searchForFood) {
+      if (this.searchingForFood) {
         this.searchForFood();
       }
       this.looseNourishment();
@@ -203,52 +204,90 @@ class Creature5 extends Creature {
   }
 
   searchForFood() {
-    for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
-      for (let food = 0; food < world.foods.pSys2[foodSys].foodList.length; food++) {
-        let dist = this.loc.distance(world.foods.pSys2[foodSys].foodList[food].loc);
-        if (dist < 200 && dist * 2 >= world.foods.pSys2[foodSys].foodList[food].rad + this.rad) {
-
-          this.seek(world.foods.pSys2[foodSys].foodList[food]);
-          this.eating = false;
+    if (this.searchingForFood) {
+      let closestFoodinRange = this.findClosestFood();
+      if (closestFoodinRange != null) {
+        let dist = this.loc.distance(closestFoodinRange.loc);
+        if (closestFoodinRange.size == null) {
+          this.seek(closestFoodinRange);
+          if (dist < 200 && dist >= closestFoodinRange.rad + this.rad) {
+            this.seek(closestFoodinRange);
+            this.eating = false;
+          }
+          else if (dist * 2 < closestFoodinRange.rad + this.rad) {
+            this.eat(closestFoodinRange);
+            this.eating = true;
+          }
         }
-        else if (dist * 2 < world.foods.pSys2[foodSys].foodList[food].rad + this.rad) {
-          this.eat(world.foods.pSys2[foodSys].foodList[food]);
-          this.eating = true;
+        else {
+          if (dist < 200 && dist * 2 >= closestFoodinRange.size + this.size) {
+            this.seek(closestFoodinRange);
+            this.eating = false;
+          }
+          else if (dist * 2 < closestFoodinRange.size + this.size) {
+            this.eat(closestFoodinRange);
+            this.eating = true;
+          }
         }
       }
     }
+  }
+
+  findClosestFood() {
+    let foodsdistances = [];
     for (let food = 0; food < world.foods.food2.length; food++) {
       let dist = this.loc.distance(world.foods.food2[food].loc);
-      if (world.foods.food2[food].size == null) {
-        if (dist < 200 && dist * 2 >= world.foods.food2[food].rad + this.rad) {
-          this.seek(world.foods.food2[food]);
-          this.eating = false;
-        }
-        else if (dist * 2 < world.foods.food2[food].rad + this.rad) {
-          this.eat(world.foods.food2[food]);
-          this.eating = true;
-        }
-      }
-      else {
-        if (dist < 300 && dist * 2 >= world.foods.food2[food].size + this.size) {
-          this.seek(world.foods.food2[food]);
-          this.eating = false;
-        }
-        else if (dist * 2 < world.foods.food2[food].size + this.size) {
-          this.eat(world.foods.food2[food]);
-          this.eating = true;
-        }
-      }
-
+      foodsdistances.push(dist);
     }
+
+
+    let foodsystemdistances = [];
+    for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
+      for (let food = 1; food < world.foods.pSys2[foodSys].foodList.length; food++) {
+        foodsystemdistances.push(pSys2[foodSys].foodList[food]);
+      }
+    }
+    let foodsyspartdist = [];
+    for (let i = 0; i < foodsystemdistances.length; i++) {
+      let dist = this.loc.distance(foodsystemdistances[i]);
+      foodsyspartdist.push(dist);
+    }
+
+
+    let lowestDistance = Math.min(...foodsdistances);
+    let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
+
+    let lowestDistanceSys = Math.min(...foodsyspartdist);
+    //let lowestDistanceIndexSys = foodsystemdistances.indexOf(lowestDistanceSys);
+
+    let closestFood;
+    if (lowestDistance <= lowestDistanceSys) {
+      closestFood = world.foods.food2[lowestDistanceIndex];
+    } else {
+      //closestFood = world.foods.pSys2[].foodList[lowestDistanceIndex];
+    }
+
+    return closestFood;
   }
 
   seek(target) {
     let desired = JSVector.subGetNew(target.loc, this.loc);
+    let ctx = this.ctx;
+    ctx.save();
+    ctx.beginPath();
+    ctx.strokeStyle = this.clr;
+    ctx.fillStyle = this.clr;
+    ctx.moveTo(target.loc.x, target.loc.y);
+    ctx.lineTo(this.loc.x, this.loc.y);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    ctx.restore();
     desired.normalize();
     desired.multiply(this.maxSpeed);
     let steer = JSVector.subGetNew(desired, this.vel);
     steer.limit(this.maxForce);
+    this.vel = desired;
     //this.applyForce(steer);
   }
 
