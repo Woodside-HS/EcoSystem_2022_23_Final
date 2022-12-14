@@ -52,6 +52,7 @@ class Food5Particle {
         ctx.fillStyle = this.clr;
         ctx.fill();
         ctx.stroke();
+        ctx.restore();
     }
 
     randomNumber(min, max) { 
