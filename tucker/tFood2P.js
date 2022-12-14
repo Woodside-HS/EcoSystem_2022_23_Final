@@ -20,7 +20,7 @@ class tFood2P {
     run() {
         if (this.statBlock.nourishment <= 1) {
             this.isDead = true;
-        }//is dead it set up here to 1 because nourishment will be decreased below
+        }//have to check if lifespan is up or if nurishment is left over
         this.update();
         this.render();
         this.checkDist();
@@ -28,7 +28,9 @@ class tFood2P {
     update() {
         this.loc.add(this.vel)
         this.statBlock.lifeSpan--;
-
+        if (this.statBlock.lifeSpan < 0) {
+            this.isDead = true;
+        }//have to check if lifespan is up or if nurishment is left over
     }
     render() {
         let ctx = this.ctx;
