@@ -59,9 +59,9 @@ class World {
       pSys6: []
     };
 
-    //this.entities = [];
     // performance -- change the number of entities to see the effect on framerate
-    this.loadEntities(150, this.ctxMain, this.dims.width, this.dims.height);
+    this.numEntities = 50;
+    this.loadEntities( this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
     // performance
     this.framerate = 60;
     this.framecount = 0;
@@ -86,18 +86,13 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
-    // for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
-    //   this.entities[i].run();
-    // }
     //  draw all of the cells
     //run all of the entities
 
     this.runCreatures();
     this.runFood();
 
-    for (let i = 0; i < this.foods.food2.length; i++) {
-      this.foods.food2[i].run();
-    }
+    
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -118,13 +113,27 @@ class World {
     this.ctxMain.fillText(fps, 20, this.cnvMain.height - 105);
     this.ctxMain.fillText("Rows = " + this.numRows, 20, this.cnvMain.height - 130);
     this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
-    let numEnts = this.creatures.pred1.length + this.creatures.pred2.length;
+    let numEnts = 0;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+
+    for (let i = 0; i < this.foods.length; i++) {//  All food and creatures
+      this.foods[i].run();
+    }
+
+    
+
   }
   
   loadEntities(numEntities, ctx, w, h) {
+    for (let i = 0; i < 25; i++) {
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
+    }
+
+  //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
-      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 20, this))
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
     }
 
     // }//++++++++++++++++++++++++++++  load entities
@@ -213,6 +222,7 @@ class World {
 
 
 
+
   runCreatures() {
     let c = this.creatures;
 
@@ -225,7 +235,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      // c.pred2[i].run();
+      //c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
@@ -258,16 +268,13 @@ class World {
 
     //}
 
+
     for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food2[i].run();
       if (f.food2[i].statBlock.nourishment <= 0) {
         f.food2.splice(i, 1);
       }
     }
-
-    // for (let i = 0; i < this.foods.food2.length; i++) {
-    //   this.foods.food2[i].run();
-    // }
 
     for (let i = f.food3.length - 1; i >= 0; i--) {
 
@@ -289,7 +296,7 @@ class World {
     }
 
     for (let i = f.pSys1.length - 1; i >= 0; i--) {
-
+      f.pSys1[i].run();
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
