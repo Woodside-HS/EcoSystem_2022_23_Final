@@ -94,7 +94,6 @@ class Creature5 extends Creature {
       this.maxSpeed = 1;
       this.health--;
     } else {
-      this.lookForMate(v);
       this.maxSpeed = 2;
     }
     if (this.health < 0 || this.age > this.maxAge) {
@@ -103,9 +102,6 @@ class Creature5 extends Creature {
 
   }
 
-  lookForMate(c){
-    
-  }
 
   update() {
     this.rotation++;
@@ -194,6 +190,9 @@ class Creature5 extends Creature {
         diff.normalize();
         sum.add(diff);
         count++;
+
+        //mating
+        //world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, this));
       }
     }
 
