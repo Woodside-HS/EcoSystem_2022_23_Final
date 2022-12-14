@@ -1,4 +1,4 @@
-class Herbivore extends Entity {
+class Herbivore3 extends Entity {
     constructor(loc, vel, sz, wrld) {
        super(loc, vel, sz, wrld)
        //mover properties
@@ -63,12 +63,22 @@ class Herbivore extends Entity {
        let ctx = this.ctx;
        ctx.beginPath();
        ctx.fillStyle = this.clr;
-       ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
+       ctx.arc(this.loc.x, this.loc.y, 20, 0, 2 * Math.PI, false);
        ctx.fill();
        //  render balls in mini map
     }
     checkEating(){
-        //v1= JSVector.subGetNew(this.loc, )
+      let dx = this.loc.x;
+      let dy = this.loc.y;
+      for(let i = 0; i<foods.food2.length; i++){
+         
+         if(this.loc.distance(world.foods.food2[i])<100){
+            v1 = JSVector.subGetNew(this.loc, world.foods.food2[i]);
+            this.vel.setDirection(world.foods.foods.food2[i]);
+            
+         }
+      }
+        
     }
  
     getRandomColor() {
