@@ -17,7 +17,7 @@ class tuckerHerbavore2 extends Creature {
         }
         this.stuck = 0;
         this.cooldown = 0;
-        this.hungy = false;
+        this.hungy = 0;
         this.predatorsLocation = new JSVector(0, 0);
         this.statusBlock.lifeSpan = Math.random() * 3000 + 500
         // this.statusBlock = { this is just for reference for me
@@ -55,11 +55,11 @@ class tuckerHerbavore2 extends Creature {
             if (this.dataBlock.age >= this.dataBlock.lifeSpan) {
                 this.dataBlock.isDead = true;
             }
-            if (this.hungy && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
+            if (this.hungy >3  && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
                 this.dataBlock.nourishment--;
-                this.hungy = false;
-            } else if (!this.hungy) {//this if statement is confirmed to work
-                this.hungy = true;
+                this.hungy = 0;
+            } else {//this if statement is confirmed to work
+                this.hungy++;
             }
             if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment <= 0) {
                 this.dataBlock.isDead = true;//murderizer
@@ -227,15 +227,15 @@ class tuckerHerbavore2 extends Creature {
         let loc = predLoc.copy();
         let dist = this.loc.distanceSquared(loc);
         let jmp = new JSVector(0, 0);
-        if (dist < 100) {//10 pixels away
+        if (dist < 50) {//10 pixels away
             jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.2);
             this.acc.add(jmp);
-        } else if (dist < 2500) {//50 pixels away
+        } else if (dist < 1250) {//50 pixels away
             jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
-        } else if (dist < 10000) {//100 pixels away
+        } else if (dist < 5000) {//100 pixels away
             jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);

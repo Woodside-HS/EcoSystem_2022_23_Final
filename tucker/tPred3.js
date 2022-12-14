@@ -11,7 +11,7 @@ class tPred3 extends Creature {
         this.foodId = null;
     }
     run() {
-        if(this.dataBlock.nourishment <=0 ||  this.dataBlock.health<=0 || this.dataBlock.age >= this.dataBlock.lifeSpan){
+        if (this.dataBlock.nourishment <= 0 || this.dataBlock.health <= 0 || this.dataBlock.age >= this.dataBlock.lifeSpan) {
             this.dataBlock.isDead = true;
         }
         this.dataBlock.age++;
@@ -24,14 +24,14 @@ class tPred3 extends Creature {
         this.render();
         this.bounceEdges();
         this.orbitals();
-        if(this.statusBlock.searchFood){
+        if (this.statusBlock.searchFood) {
             this.searchFood();
             this.foodId = null;
         }
-        if(this.statusBlock.eating){
-            this.eat
+        if (this.statusBlock.eating) {
+            this.eat();
         }
-        
+
     }
     orbitals() {
         if (this.hurtyBit.length < 10) {//&& this.spawnNew>=10
@@ -49,24 +49,43 @@ class tPred3 extends Creature {
             if (!food[i].isDead && this.loc.distanceSquared(food[i].loc) <= siteSq) {
                 world.creatures.herb2[i].sprint(this.loc);
                 let attk = JSVector.subGetNew(food[i].loc, this.loc);
-                attk.setMagnitude(0.05);
-                this.acc.add(attk);
-                console.log(this.acc.getMagnitude());
+                attk.setMagnitude(0.5);
+                this.vel.add(attk);//you aren't being added
             }
-            if(this.loc.distanceSquared(food[i].loc) <= 100){
+            if (this.loc.distanceSquared(food[i].loc) <= 100) {
                 this.statusBlock.eating = true;
                 this.statusBlock.searchFood = false;
                 this.foodId = i;
-                this.vel = new JSVector(0,0);
-                world.creatures.herb2[i].vel = new JSVector();
+                this.vel = new JSVector(0, 0);
+                world.creatures.herb2[i].vel = new JSVector(0, 0);
             }
         }
     }
-    eat(){
-        this.dataBlock.nourishment++;
-
+    eat() {
+        this.dataBlock.nourishment+=50;
         let i = this.foodId;
-        world.creatures.herb2[i].health--;
+
+        if (world.creatures.herb2[i]) {
+            if (world.creatures.herb2[i].dataBlock.isDead != true) {
+                if (this.loc.distanceSquared(food[i].loc) >= 100) {
+                    this.statusBlock.eating = false;
+                    this.statusBlock.searchFood = true;
+                }
+                if (world.creatures.herb2[i].dataBlock.health <= 25) {
+                    world.creatures.herb2[i].dataBlock.health -= 25;
+                    console.log(world.creatures.herb2[i].dataBlock.health);
+                    this.foodId = null;
+                    this.statusBlock.eating = false;
+                    this.statusBlock.searchFood = true;
+                } else {
+                    world.creatures.herb2[i].dataBlock.health -= 25;
+                }
+
+            }
+        }
+
+
+        //for some reason it can just go to that instane of the  creature
     }
     render() {
         let ctx = this.ctx;
@@ -78,7 +97,7 @@ class tPred3 extends Creature {
         this.vel.add(this.acc);
         this.vel.limit(this.dataBlock.maxSpeed);
         this.loc.add(this.vel);
-        this.acc = new JSVector(0,0);
+        this.acc = new JSVector(0, 0);
     }
     bounceEdges() {
         if (this.loc.x > world.dims.right) {
