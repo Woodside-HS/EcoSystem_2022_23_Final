@@ -242,29 +242,29 @@ class Creature5 extends Creature {
 
     let lowestDistance = Math.min(...foodsdistances);
     let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
-
-
-    let lowestParticleDistance = 0;
-    let lowestParticleDistanceArrayPath;
-    let foodsystemdistances = [];
-    for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
-      for (let food = 0; food < world.foods.pSys2[foodSys].foodList.length; food++) {
-        let dist = this.loc.distance(world.foodspSys2[foodSys].foodList[food].loc);
-        if (dist < lowestDistance) {
-          lowestParticleDistance = dist;
-          lowestParticleDistanceArrayPath = [foodSys, food];
-        }
-      }
-    }
-
-    let closestFood;
-    if(lowestParticleDistance == 0) {
-      closestFood = world.foods.food2[lowestDistanceIndex];
-    } else{
-      
-    }
-    
+    let closestFood = world.foods.food2[lowestDistanceIndex];
     return closestFood;
+
+    // let lowestParticleDistance = 0;
+    // let lowestParticleDistanceArrayPath;
+    // let foodsystemdistances = [];
+    // for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
+    //   for (let food = 0; food < world.foods.pSys2[foodSys].foodList.length; food++) {
+    //     let dist = this.loc.distance(world.foodspSys2[foodSys].foodList[food].loc);
+    //     if (dist < lowestDistance) {
+    //       lowestParticleDistance = dist;
+    //       lowestParticleDistanceArrayPath = [foodSys, food];
+    //     }
+    //   }
+    // }
+
+    // let closestFood;
+    // if(lowestParticleDistance == 0) {
+    //   closestFood = world.foods.food2[lowestDistanceIndex];
+    // } else{
+      
+    // }
+    
     //let lowestDistanceSys = Math.min(...foodsyspartdist);
     //let lowestDistanceIndexSys = foodsystemdistances.indexOf(lowestDistanceSys);
 
