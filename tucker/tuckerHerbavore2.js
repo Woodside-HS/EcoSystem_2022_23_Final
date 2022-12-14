@@ -71,7 +71,7 @@ class tuckerHerbavore2 extends Creature {
                 this.statusBlock.searchFood = true;
                 this.statusBlock.searchMate = false;
             }
-            if (this.statusBlock.searchMate) {
+            if (this.statusBlock.searchMate) {//adeswf
                 this.searchMate();
             }
             if (this.statusBlock.eating == true) {
