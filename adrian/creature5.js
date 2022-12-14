@@ -241,32 +241,32 @@ class Creature5 extends Creature {
     }
 
 
-    let foodsystemdistances = [];
-    for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
-      for (let food = 1; food < world.foods.pSys2[foodSys].foodList.length; food++) {
-        foodsystemdistances.push(pSys2[foodSys].foodList[food]);
-      }
-    }
-    let foodsyspartdist = [];
-    for (let i = 0; i < foodsystemdistances.length; i++) {
-      let dist = this.loc.distance(foodsystemdistances[i]);
-      foodsyspartdist.push(dist);
-    }
+    // let foodsystemdistances = [];
+    // for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
+    //   for (let food = 1; food < world.foods.pSys2[foodSys].foodList.length; food++) {
+    //     foodsystemdistances.push(world.foodspSys2[foodSys].foodList[food]);
+    //   }
+    // }
+    // let foodsyspartdist = [];
+    // for (let i = 0; i < foodsystemdistances.length; i++) {
+    //   let dist = this.loc.distance(foodsystemdistances[i]);
+    //   foodsyspartdist.push(dist);
+    // }
 
 
     let lowestDistance = Math.min(...foodsdistances);
     let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
 
-    let lowestDistanceSys = Math.min(...foodsyspartdist);
+    //let lowestDistanceSys = Math.min(...foodsyspartdist);
     //let lowestDistanceIndexSys = foodsystemdistances.indexOf(lowestDistanceSys);
 
     let closestFood;
-    if (lowestDistance <= lowestDistanceSys) {
-      closestFood = world.foods.food2[lowestDistanceIndex];
-    } else {
-      //closestFood = world.foods.pSys2[].foodList[lowestDistanceIndex];
-    }
-
+    // if (lowestDistance <= lowestDistanceSys) {
+    //   closestFood = world.foods.food2[lowestDistanceIndex];
+    // } else {
+    //   //closestFood = world.foods.pSys2[].foodList[lowestDistanceIndex];
+    // }
+    closestFood = world.foods.food2[lowestDistanceIndex]
     return closestFood;
   }
 
