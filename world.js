@@ -131,7 +131,7 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-    //Malcolms food3
+    //Malcolms food2
     for (let i = 0; i < 400; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -139,7 +139,7 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      this.foods.food3.push(new MMFood3(loc, vel, 10, this));
+      this.foods.food2.push(new MMFood2(loc, vel, 10, this));
     }
     //Malcolms MMPSystem1
     for (let i = 0; i < 1; i++) {
@@ -245,11 +245,11 @@ class World {
   runCreatures() {
     let c = this.creatures;
     let f = this.foods;
-    //Malcolms food3
-    for (let i = 0; i < f.food3.length; i++) {
-      f.food3[i].run();
-      if (f.food3[i].isDead) {
-        f.food3.splice(i, 1);
+    //Malcolms food2
+    for (let i = 0; i < f.food2.length; i++) {
+      f.food2[i].run();
+      if (f.food2[i].isDead) {
+        f.food2.splice(i, 1);
       }
     } //Malcolms PS1
     for (let i = 0; i < f.pSys1.length; i++) {

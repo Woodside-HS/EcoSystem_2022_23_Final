@@ -9,7 +9,7 @@ class MMHerb2 extends Creature {
     this.size = sz;
     this.world = wrld;
     this.isDead = false;
-    this.hp = 100;
+    // this.hp = 100;
     this.count = 0;
     // this.clrR = "red";
     // this.clrG = "green";
@@ -48,7 +48,7 @@ class MMHerb2 extends Creature {
     ctxMain.save();
     ctxMain.beginPath();
     ctxMain.translate(this.loc.x, this.loc.y);
-    ctxMain.fillText(this.hp, -10, -20);
+    ctxMain.fillText(this.dataBlock.health, -10, -20);
     ctxMain.moveTo(-10, -10);
     ctxMain.lineTo(10, -10);
     ctxMain.lineTo(10, 10);
@@ -63,44 +63,45 @@ class MMHerb2 extends Creature {
   update() {
     this.loc.add(this.vel);
 
-    if (this.hp <= 0) {
+    if (this.dataBlock.health <= 0) {
       //   this.isDead = true;
       this.dataBlock.isDead = true;
     }
     if (this.count++ == 10) {
-      this.hp--;
+      this.dataBlock.health--;
       this.count = 0;
     }
-    if (this.hp > 100) {
-      this.hp = 100;
+    if (this.dataBlock.health > 100) {
+      this.dataBlock.health = 100;
     }
   }
   eatFood() {
     let desiredDist = 50;
 
-    for (let i = 0; i < world.foods.food3.length; i++) {
+    for (let i = 0; i < world.foods.food2.length; i++) {
       // start of food 2
-      let food3 = world.foods.food3[i]; //! temp value that ill del later
-      let dist = this.loc.distance(food3.loc);
+      let food2 = world.foods.food2[i]; //! temp value that ill del later
+      let dist = this.loc.distance(food2.loc);
       if (dist < desiredDist) {
-        let diff = JSVector.subGetNew(food3.loc, this.loc);
+        let diff = JSVector.subGetNew(food2.loc, this.loc);
         diff.normalize();
         this.vel.add(diff);
         this.vel.limit(2);
         this.clr = "red";
         if (dist < 10) {
-          food3.vel = new JSVector(0, 0);
+          food2.vel = new JSVector(0, 0);
           this.vel = new JSVector(0, 0);
           //   this.vel.multiply(0.1);
-          this.hp = this.hp + food3.statBlock.health;
-          food3.statBlock.health = 0;
+          this.dataBlock.health =
+            this.dataBlock.health + food2.statBlock.health;
+          food2.statBlock.health = 0;
           this.vel.x = this.vX;
           this.vel.y = this.vY;
         }
       } else {
         this.clr = "green";
       }
-    } // end of food3
+    } // end of food2
 
     for (let i = 0; i < world.foods.pSys1.length; i++) {
       for (let j = 0; j < world.foods.pSys1[i].mmParticles.length; j++) {
@@ -116,7 +117,8 @@ class MMHerb2 extends Creature {
             particle.vel = new JSVector(0, 0);
             this.vel = new JSVector(0, 0);
             // this.vel.multiply(0.1);
-            this.hp = this.hp + particle.statBlock.health;
+            this.dataBlock.health =
+              this.dataBlock.health + particle.statBlock.health;
             particle.statBlock.health = 0;
             this.vel.x = this.vX;
             this.vel.y = this.vY;

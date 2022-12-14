@@ -1,4 +1,4 @@
-class MMFood3 extends Food {
+class MMFood2 extends Food {
   // properties
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
