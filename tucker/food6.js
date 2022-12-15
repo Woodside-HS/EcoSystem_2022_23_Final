@@ -1,4 +1,4 @@
-class Food6 extends Food {
+class Food6 extends Food {//this is tucker's food
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)

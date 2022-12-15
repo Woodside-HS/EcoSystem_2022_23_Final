@@ -107,7 +107,9 @@ class tuckerHerbavore2 extends Creature {
                         let dy = Math.random() * 4 - 2
                         let currentNumOffspring = Math.floor(Math.random() * this.dataBlock.numOffspring)
                         for (let i = 0; i < currentNumOffspring; i++) {
-                            world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                            if(!world.creatures.herb2.length>=1000){//there is an issue where my creature quickly spirals out of control with it quickly reaching 10000s of creatures, this should help
+                                world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                            }
                         }
                         this.statusBlock.nourishment -= 50;
                         world.creatures.herb2[i].statusBlock.nourishment -= 50;
