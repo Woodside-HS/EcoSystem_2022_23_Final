@@ -10,6 +10,7 @@ class SBPred3 extends Creature {
         this.counter = 0;
         this.dataBlock.maxSprintSpeed = 3;
         this.dataBlock.maxSpeed = 2;
+        this.preyRender = [false, 0];
         this.acc = new JSVector(0, 0);
         let n = Math.random()*2+6;
         for(let i = 0; i<n; i++){
@@ -61,6 +62,21 @@ class SBPred3 extends Creature {
         }
         this.counter++; //repetition of counter here could be an issue. Test later
     }
+    if(this.preyRender[0]){ // possibly not working
+      if(this.preyRender[1]%30 != 0){
+        this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+        this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
+        this.ctx.fillStyle = "red"; 
+        this.ctx.stroke();
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.preyRender[1]++;
+      }
+      else{
+        this.preyRender[1] == 0
+        this.preyRender[0] == false;
+      }
+    }
   }
 
   bounce(){ //fix corners
@@ -89,20 +105,21 @@ class SBPred3 extends Creature {
     this.statusBlock.eating = false;
     this.statusBlock.search = true;
     this.dataBlock.health +=this.food.dataBlock.nourishment/10;
-    this.food.dataBlock.health = 1;
-    this.food.dataBlock.nourishment = 1;
+    this.food.dataBlock.health = 5;
+    this.food.dataBlock.nourishment = 5;
     this.preyDeath();
   }
 
   preyDeath(){ //need to rewrite to figure out render issue of blood and vibrating velocity
-    this.food.clr = "red";
-    this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);  //following lines might cause error
+    this.food.clr = "black";
+    this.preyRender[0] = true;
+    this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+    //following lines might cause error
     // this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
     // this.ctx.fillStyle = "red"; 
     // this.ctx.stroke();
     // this.ctx.fill();
     // this.ctx.closePath();
-
   }
 
   selfDeath(){
@@ -134,7 +151,7 @@ class SBPred3 extends Creature {
 
 
   attack(){
-    if(this.food.loc.distance(this.loc)<20){
+    if(this.food.loc.distance(this.loc)<30){
       this.food.vel.multiply(0);
       this.food.acc.multiply(0);
       this.statusBlock.eating = true;
@@ -143,7 +160,7 @@ class SBPred3 extends Creature {
     else if(this.food.loc.distance(this.loc)<200){
       this.acc = JSVector.subGetNew(this.food.loc, this.loc);
       this.acc.normalize();
-      this.acc.multiply(0.05);
+      this.acc.multiply(0.5);
     }
     else{
       this.statusBlock.attack = false;

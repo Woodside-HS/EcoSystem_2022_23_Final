@@ -231,17 +231,6 @@ class World {
       let vel = new JSVector(dx, dy);
       this.creatures.pred3.push(new SBPred3(loc, vel, 30, this))
     }
-
-    //SB Test food
-    for (let i = 0; i < 500; i++) {
-      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
-      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
-      let loc = new JSVector(x, y);
-      this.creatures.herb2.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
-    }
-
-
-
   }
   
 
@@ -273,7 +262,7 @@ class World {
 
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      //c.herb1[i].run();
+      c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
@@ -287,7 +276,7 @@ class World {
       }
     }//tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
-        //c.herb3[i].run();
+        c.herb3[i].run();
 
     }
     for (let i = 0; i < c.flocks.length; i++) {
@@ -334,7 +323,7 @@ class World {
     }
 
     for (let i = f.pSys2.length - 1; i >= 0; i--) {
-      //f.pSys2[i].run();
+      f.pSys2[i].run();
     }
 
     for (let i = f.pSys3.length - 1; i >= 0; i--) {
