@@ -113,6 +113,7 @@ class World {
     this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
     let numEnts = 0;
     this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+    this.ctxMain.fillText("Tucker's Creatures = " + this.creatures.herb2.length,20,this.cnvMain.height-65);
 
     for (let i = 0; i < this.foods.length; i++) {//  All food and creatures
       this.foods[i].run();
@@ -127,7 +128,7 @@ class World {
       let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
-    }
+    }//michael's particle system
 
   //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
@@ -181,7 +182,7 @@ class World {
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this,));
-    }
+    }//tucker's herbavore
     // for (let i = 0; i < numEntities; i++) {
     //   let x = Math.random() * this.dims.width - this.dims.width / 2;
     //   let y = Math.random() * this.dims.height - this.dims.height / 2;
