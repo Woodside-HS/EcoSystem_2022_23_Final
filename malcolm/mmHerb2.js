@@ -81,9 +81,9 @@ class MMHerb2 extends Creature {
 
     for (let i = 0; i < world.foods.pSys1.length; i++) {
       let mmPS1 = world.foods.pSys1[i].particles;
-      if (mmPS1 > 1) {
-        // for (let j = 0; j < world.foods.pSys1[i].mmParticles.length; j++) {
-        let particle = world.foods.pSys1[i].mmParticles[j];
+      // if (mmPS1 > 1) {
+      for (let j = 0; j < mmPS1.length; j++) {
+        let particle = mmPS1[j];
         let dist = this.loc.distance(particle.loc);
         if (dist < desiredDist) {
           let diff = JSVector.subGetNew(particle.loc, this.loc);
@@ -105,6 +105,7 @@ class MMHerb2 extends Creature {
           this.clr = "green";
         }
       }
+      // }
     }
   }
   checkEdges() {
