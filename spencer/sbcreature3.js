@@ -171,7 +171,7 @@ class SBCreature3 extends Creature {
 
     eating(){ //if isEating is on, it stands still and eats
         //lets plant know its being eaten
-        if(this.food.statBlock.health <2 || this.food.statBlock.nourishment <2){
+        if(this.food.statBlock.health <2 || this.food.statBlock.nourishment <2 || this.food.loc.distance(this.loc)>20){
             this.statusBlock.eating = false;
             this.statusBlock.search = true;
             this.food = 0;
@@ -183,7 +183,7 @@ class SBCreature3 extends Creature {
         }
         this.food.statBlock.nourishment--;
         this.counter++;
-        if(this.counter%500 == 0 && this.statusBlock.eating){ //adds another segment if it eats enough
+        if(this.counter%500 == 0 && this.statusBlock.eating && this.food.loc.distance(this.loc)<10){ //adds another segment if it eats enough
             let vel2 = new JSVector(this.vel.x, this.vel.y);
             vel2.setMagnitude(this.segLength);
             let vec = JSVector.subGetNew(this.segments[this.segments.length-1], vel2);
