@@ -2,42 +2,42 @@ class Creature5 extends Creature {
   // properties
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
-    this.loc = loc;
-    this.acc = new JSVector(0, 0);
-    this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1)
-    this.ctx = wrld.ctxMain;
-    this.clr = this.getRandomColor();
-    this.tempclr = this.clr;
-    this.rad = 10;
-    this.wWidth = wrld.dims.width;
+    this.loc = loc; // creature location
+    this.acc = new JSVector(0, 0); // creature acceleration
+    this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1) // creature velocity
+    this.ctx = wrld.ctxMain; //ctx
+    this.clr = this.getRandomColor(); // creature get random color
+    this.tempclr = this.clr; // reference color used as constant
+    this.rad = 10; // radius references for everything made in this creature
+    this.wWidth = wrld.dims.width; 
     this.wHeight = wrld.dims.height;
-    this.size = 5;
-    this.sizeFactor = 1;
-    this.rotation = 0;
-    this.maxSpeed = 2;
-    this.desiredSep = 25;
-    this.maxSpeed = 2;
-    this.maxForce = 1;
-    this.movement = 0;
-    this.sleepTime = getRandomInt(250, 500);
-    this.stamina = getRandomInt(250, 3000);
-    this.nourishmentDecInterval = getRandomInt(3, 7);
-    this.nourishmentFrameCounter = 0;
-    this.maxAge = getRandomInt(400, 3000);
+    this.size = 5; // size references for everything made in this creature
+    this.sizeFactor = 1; // size factor
+    this.rotation = 0; // init rotaiton
+    this.maxSpeed = 2; // max speed
+    this.desiredSep = 25; // how far they are gonna be from each other
+    this.maxSpeed = 2; // max speed
+    this.maxForce = 1; // max force
+    this.movement = 0; // how much they have moved
+    this.sleepTime = getRandomInt(250, 500); // how long they sleep for
+    this.stamina = getRandomInt(250, 3000); // how long they don't sleep for
+    this.nourishmentDecInterval = getRandomInt(3, 7); // how fast nourishment decreases
+    this.nourishmentFrameCounter = 0; // keep track of nourishment dec
+    this.maxAge = getRandomInt(400, 3000); // age
     this.searchingForFood = true;
-    this.mateInterval = getRandomInt(1000, 5000);
-    this.mateTime = 0;
+    this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
+    this.mateTime = 0; // mating tick
   }
   //  methods
   run(c) {
-    this.interaction(c);
-    this.render();
-    this.checkEdges();
+    this.checkEdges(); // check edges
+    this.interaction(c); // update func
+    this.render(); // render
   }
 
-  interaction(c) {
-    if (!this.isDead && !this.eating) {
-      if (this.movement <= this.stamina) {
+  interaction(c) { // everything goes down here
+    if (!this.isDead && !this.eating) { // if not dead or not eating do this
+      if (this.movement <= this.stamina) { // make sure its not out of stamina
         this.clr = this.tempclr;
         this.sleeping = false;
         this.age++;
@@ -47,16 +47,16 @@ class Creature5 extends Creature {
         let sep = this.seperate(c);
         netForce.add(coh);
         netForce.add(sep)
-        this.acc.add(netForce);
+        this.acc.add(netForce); // seperation and cohesion forces applied to netforce and added to acc
         if (this.searchingForFood) {
-          this.searchForFood();
+          this.searchForFood(); //search for food
         }
         this.looseNourishment();
         this.checkHealth();
         this.searchMate();
         this.update();
       }
-      else {
+      else { // if movement has overgone stamina it will get to tired and need to regen so here it sleeps it becomes grey when sleeping
         this.sleeping = true;
         this.clr = "#808080";
         this.movement++;
@@ -64,7 +64,7 @@ class Creature5 extends Creature {
           this.movement = 0;
         }
       }
-    } else if (!this.isDead && this.eating) {
+    } else if (!this.isDead && this.eating) { // happens if eating
       this.clr = this.tempclr;
       this.sleeping = false;
       this.age++;
@@ -81,8 +81,8 @@ class Creature5 extends Creature {
     }
   }
 
-  searchMate() {
-    if (this.age > this.maxAge/3){
+  searchMate() { // search for a mate
+    if (this.age > this.maxAge/3){ // make its at least above a third through its life before mating
       if (this.statusBlock.searchMate){
         world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, world));
         this.statusBlock.searchMate = false;
@@ -96,7 +96,7 @@ class Creature5 extends Creature {
     }
   }
 
-  looseNourishment() {
+  looseNourishment() { // loosing nourishment over time
     this.nourishmentFrameCounter++;
     if (this.nourishmentFrameCounter > this.nourishmentDecInterval) {
       this.nourishmentFrameCounter = 0;
@@ -104,7 +104,7 @@ class Creature5 extends Creature {
     }
   }
 
-  checkHealth(v) {
+  checkHealth(v) { // check nourishment and do stuff  to health and speed based on how much nourishment it has
     if (this.nourishment < 15) {
       this.maxSpeed = 0.5;
       this.health -= 2;
@@ -121,14 +121,14 @@ class Creature5 extends Creature {
   }
 
 
-  update() {
+  update() { // gets called in the interaction func
     this.rotation++;
     this.vel.add(this.acc);
     this.vel.limit(1);
     this.loc.add(this.vel);
   }
 
-  checkEdges() {
+  checkEdges() { // make sure its not outside of world bounds
     if (this.loc.x < world.dims.left) {
       this.vel.x = -this.vel.x;
     }
@@ -143,7 +143,7 @@ class Creature5 extends Creature {
     }
   }
 
-  render() {
+  render() { // render stuff 
     let ctx = this.ctx;
     ctx.save();
     ctx.translate(this.loc.x, this.loc.y);
@@ -169,7 +169,7 @@ class Creature5 extends Creature {
     ctx.restore();
   }
 
-  cohesion(c) {
+  cohesion(c) { // cohession from flocking lab
     let neighbordist = 400;
     let sum = new JSVector(0, 0);
     let count = 0;
@@ -195,8 +195,7 @@ class Creature5 extends Creature {
     return steeringForce;
   }
 
-  seperate(c) {
-    // A vector for average of separation forces
+  seperate(c) { //seperation from flocking lab
     let sum = new JSVector(0, 0);
     let ds = this.desiredSep * this.desiredSep;
     let steer = new JSVector(0, 0);
@@ -208,9 +207,6 @@ class Creature5 extends Creature {
         diff.normalize();
         sum.add(diff);
         count++;
-
-        //mating
-        //
       }
     }
 
@@ -225,7 +221,7 @@ class Creature5 extends Creature {
     return separationForce;
   }
 
-  searchForFood() {
+  searchForFood() { //search for food
     if (this.searchingForFood) {
       let closestFoodinRange = this.findClosestFood();
       try{
@@ -264,7 +260,7 @@ class Creature5 extends Creature {
     }
   }
 
-  findClosestFood() {
+  findClosestFood() { // locate closest food
     let foodsdistances = [];
     for (let food = 0; food < world.foods.food2.length; food++) {
       let dist = this.loc.distance(world.foods.food2[food].loc);
@@ -278,7 +274,7 @@ class Creature5 extends Creature {
     
   }
 
-  findClosestFoodParticle() {
+  findClosestFoodParticle() { // locate clocest food particle in a system
     let lowestParticleDistances = [];
     for (let foodSys = 1; foodSys < world.foods.pSys2.length; foodSys++) {
       let lowestParticleDist;
@@ -305,14 +301,13 @@ class Creature5 extends Creature {
     return closestFood;
   }
 
-  seek(target) {
+  seek(target) { // chase anything it needs too
     let desired = JSVector.subGetNew(target.loc, this.loc);
     desired.normalize();
     desired.multiply(this.maxSpeed);
     let steer = JSVector.subGetNew(desired, this.vel);
     steer.limit(this.maxForce);
     this.vel = desired;
-    //this.applyForce(steer);
   }
 
   applyForce(force) {
