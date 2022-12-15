@@ -166,18 +166,21 @@ class tuckerHerbavore2 extends Creature {
         //normal foods below
         for (let i = 0; i < world.foods.food3.length; i++) {//only gos thru food3 rn should be pretty easily be able to modify to work with particle sytstems
             let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
-            if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
-                let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
-                jmp.setMagnitude(0.05);
-                this.acc.add(jmp);
-                if (this.loc.distanceSquared(world.foods.food2[i].loc) < 400) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
-                    this.vel.setMagnitude(0);
-                    this.acc.setMagnitude(0);
-                    this.statusBlock.searchFood = false;
-                    this.statusBlock.eating = true;
-                    this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
+            if (world.foods.food2[i]) {//makes sure that the food item exists, probably addds like 30 years to runtime but idc
+                if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
+                    let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
+                    jmp.setMagnitude(0.05);
+                    this.acc.add(jmp);
+                    if (this.loc.distanceSquared(world.foods.food2[i].loc) < 400) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
+                        this.vel.setMagnitude(0);
+                        this.acc.setMagnitude(0);
+                        this.statusBlock.searchFood = false;
+                        this.statusBlock.eating = true;
+                        this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
+                    }
                 }
             }
+
         }
         //particle system below
         //IMPORTANT REMEMNBER THAT THIS IS A THING
