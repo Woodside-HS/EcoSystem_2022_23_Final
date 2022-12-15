@@ -81,7 +81,7 @@ class SBCreature3 extends Creature {
         if(this.dataBlock.health  == 10){ //color near death
             this.clr = "red";
          }
-        else if(this.dataBlock.health >10){ //color when alive
+        else if(this.dataBlock.health >10){ //color when alive 
         this.clr = "lime";
         }
         this.ctx.save();
