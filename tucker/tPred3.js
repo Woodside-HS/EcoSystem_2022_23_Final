@@ -6,7 +6,10 @@ class tPred3 extends Creature {
         this.size = sz;//this is size of creature
         this.new = 0;//this is referencing when it will make a new particle
         this.hungy = 0;//this counts up to 5, once it reaches 5, nourishment will decrease
-        this.foodId = null;//this is the ID of the food item that is currently being eaten
+        this.foodId = {
+            id: -1,
+            or: -1
+        };//this is the ID of the food item that is currently being eaten
         this.stuckLol = 0;//this is a variable that intends to "unstuck" the creature in case of me not wanting to fix bugs
         this.cooldown = 0;//keeps the creature from sprialing out of control with its numbers
         //below overwrites various creature stats so that it works more betterly
@@ -35,7 +38,8 @@ class tPred3 extends Creature {
         }
         //status block stuff below
         if (this.statusBlock.searchFood) {
-            this.foodId = null;//this CANNOT be after search food because oither wise it will just be overwritten every time
+            this.foodId.id = -1;//this CANNOT be after search food because oither wise it will just be overwritten every time
+            this.foodId.id = -1;
             this.searchFood();
         }
         if (this.statusBlock.eating) {
@@ -71,6 +75,7 @@ class tPred3 extends Creature {
     }
     searchFood() {
         let food = world.creatures.herb2;
+        let food2 = world.creatures.herb3;
         let siteSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
         for (let i = 0; i < food.length; i++) {
             if (!food[i].isDead && this.loc.distanceSquared(food[i].loc) <= siteSq) {
@@ -83,10 +88,29 @@ class tPred3 extends Creature {
                 //console.log(world.creatures.herb2[i].dataBlock.health);//gets to here
                 this.statusBlock.eating = true;
                 this.statusBlock.searchFood = false;
-                this.foodId = i;
+                this.foodId.or = true;
+                this.foodId.id = i;
                 this.eat();//check to make sure that it is actually eating and there isnt a bug in between here and the next few lines
                 this.vel = new JSVector(0, 0);
                 world.creatures.herb2[i].vel = new JSVector(0, 0);
+            }
+        }
+        for (let i = 0; i < food2.length; i++) {
+            if (!food2[i].isDead && this.loc.distanceSquared(food2[i].loc) <= siteSq) {
+                //food2[i].sprint(this.loc);
+                let attk = JSVector.subGetNew(food2[i].loc, this.loc);
+                attk.setMagnitude(0.5);
+                this.vel.add(attk);//gets past here
+            }
+            if (this.loc.distanceSquared(food2[i].loc) <= 100) {
+                //console.log(world.creatures.herb2[i].dataBlock.health);//gets to here
+                this.statusBlock.eating = true;
+                this.statusBlock.searchFood = false;
+                this.foodId.or = false;
+                this.foodId.id = i;
+                this.eat();//check to make sure that it is actually eating and there isnt a bug in between here and the next few lines
+                this.vel = new JSVector(0, 0);
+                world.creatures.herb3[i].vel = new JSVector(0, 0);
             }
         }
     }
@@ -100,8 +124,8 @@ class tPred3 extends Creature {
                 this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
             }
             this.dataBlock.nourishment += 25;
-            let i = this.foodId;//works until here
-            if (world.creatures.herb2[i] && i != null) {
+            let i = this.foodId.id;//works until here
+            if (world.creatures.herb2[i] && i != null && this.foodId.or) {
                 if (world.creatures.herb2[i].dataBlock.isDead != true) {
                     if (this.loc.distanceSquared(world.creatures.herb2[i].loc) >= 100) {//this checks to make sure that the creature hasnt "escaped"
                         this.statusBlock.eating = false;
@@ -110,7 +134,8 @@ class tPred3 extends Creature {
                     }
                     if (world.creatures.herb2[i].dataBlock.health <= 30) {
                         world.creatures.herb2[i].dataBlock.health -= 30;
-                        this.foodId = null;
+                        this.foodId.id = -1;
+                        this.foodId.id = -1;
                         this.statusBlock.eating = false;
                         this.statusBlock.searchFood = true;
                         this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);//have to reset speed so it doesnt get stuck
@@ -121,8 +146,29 @@ class tPred3 extends Creature {
                     this.hurtyBit.splice(this.hurtyBit.length - 1, 1);//acts as if the orbitals attack thje creature instead of it just vibin there
                     this.new = 0;
                 }
-            }
-        }//end of hurty if statement
+            } else if (world.creatures.herb3[i] && i != null && !this.foodId.or) {
+                if (world.creatures.herb3[i].dataBlock.isDead != true) {
+                    if (this.loc.distanceSquared(world.creatures.herb3[i].loc) >= 100) {//this checks to make sure that the creature hasnt "escaped"
+                        this.statusBlock.eating = false;
+                        this.statusBlock.searchFood = true;
+                        this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);//have to reset speed so it doesnt get stuck
+                    }
+                    if (world.creatures.herb3[i].dataBlock.health <= 30) {
+                        world.creatures.herb3[i].dataBlock.health -= 30;
+                        this.foodId.id = -1;
+                        this.foodId.or = -1;
+                        this.statusBlock.eating = false;
+                        this.statusBlock.searchFood = true;
+                        this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);//have to reset speed so it doesnt get stuck
+                    } else {
+                        world.creatures.herb3[i].dataBlock.health -= 30;//this bit works fine
+                        //console.log(world.creatures.herb2[i].dataBlock.health);//the code never gets to this point
+                    }
+                    this.hurtyBit.splice(this.hurtyBit.length - 1, 1);//acts as if the orbitals attack thje creature instead of it just vibin there
+                    this.new = 0;
+                }
+            }//end of hurty if statement
+        }
     }
     searchMate() {
         for (let i = 0; i < world.creatures.pred3.length; i++) {
@@ -134,7 +180,7 @@ class tPred3 extends Creature {
                 mte.setMagnitude(0.05);
                 this.acc.add(mte);
             }
-            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >=50) {
+            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >= 50) {
                 this.dataBlock.nourishment -= 25;//I intend for it to be 50 but since both of them are probably gonna be running this it is 1/2
                 world.creatures.pred3[i].dataBlock.nourishment -= 25;
                 let x = Math.random() * world.dims.width - world.dims.width / 2;
@@ -144,7 +190,7 @@ class tPred3 extends Creature {
                 world.creatures.pred3.push(new tPred3(new JSVector(x, y), new JSVector(dx, dy), this.size, world));
                 this.statusBlock.searchMate = false;
                 world.creatures.pred3[i].statusBlock.searchFood = false;
-                this.cooldown =0;
+                this.cooldown = 0;
             }
         }
     }

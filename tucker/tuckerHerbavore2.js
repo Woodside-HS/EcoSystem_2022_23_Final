@@ -64,7 +64,7 @@ class tuckerHerbavore2 extends Creature {
             if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment <= 0) {
                 this.dataBlock.isDead = true;//murderizer
             }
-            if (this.dataBlock.nourishment >= 130 && this.dataBlock.age >= 100) {
+            if (this.dataBlock.nourishment >= 120 && this.dataBlock.age >= 50) {
                 this.statusBlock.searchFood = false;
                 this.statusBlock.searchMate = true;
             } else {

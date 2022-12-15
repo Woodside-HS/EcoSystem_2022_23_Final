@@ -124,6 +124,7 @@ class World {
   }
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
+    numEntities = 300
     for (let i = 0; i < 25; i++) {
       let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
@@ -165,7 +166,7 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred2.push(new Creature(loc, vel, 3, this));
     }
-    for(let i = 0; i< numEntities;i++){
+    for(let i = 0; i< numEntities/2;i++){
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
       let loc = new JSVector(x, y);
