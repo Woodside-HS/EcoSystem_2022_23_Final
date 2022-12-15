@@ -8,7 +8,7 @@ class MMHerb2 extends Creature {
     this.vel = new JSVector(this.vX, this.vY);
     this.size = sz;
     this.world = wrld;
-    // this.isDead = false;
+    this.tickRate = 40;
     this.count = 0;
 
     this.clr = "green";
@@ -43,7 +43,7 @@ class MMHerb2 extends Creature {
     if (this.dataBlock.health <= 0) {
       this.dataBlock.isDead = true;
     }
-    if (this.count++ == 10) {
+    if (this.count++ == this.tickRate) {
       this.dataBlock.health--;
       this.count = 0;
     }
