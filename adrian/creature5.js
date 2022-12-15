@@ -25,6 +25,8 @@ class Creature5 extends Creature {
     this.nourishmentFrameCounter = 0;
     this.maxAge = getRandomInt(400, 3000);
     this.searchingForFood = true;
+    this.mateInterval = getRandomInt(1000, 5000);
+    this.mateTime = 0;
   }
   //  methods
   run(c) {
@@ -51,6 +53,7 @@ class Creature5 extends Creature {
         }
         this.looseNourishment();
         this.checkHealth();
+        this.searchMate();
         this.update();
       }
       else {
@@ -75,6 +78,21 @@ class Creature5 extends Creature {
     }
     else {
       this.clr = "#000000";
+    }
+  }
+
+  searchMate() {
+    if (this.age > this.maxAge/3){
+      if (this.statusBlock.searchMate){
+        world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, world));
+        this.statusBlock.searchMate = false;
+      } else {
+        this.mateTime++;
+        if (this.mateTime > this.mateInterval){
+          this.statusBlock.searchMate = true;
+          this.mateTime = 0;
+        }
+      }
     }
   }
 
@@ -192,7 +210,7 @@ class Creature5 extends Creature {
         count++;
 
         //mating
-        //world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, this));
+        //
       }
     }
 
@@ -210,6 +228,15 @@ class Creature5 extends Creature {
   searchForFood() {
     if (this.searchingForFood) {
       let closestFoodinRange = this.findClosestFood();
+      try{
+        let closestFoodParticleinRange = this.findClosestFoodParticle();
+        if (closestFoodinRange > closestFoodParticleinRange) {
+          closestFoodinRange = closestFoodParticleinRange;
+        }
+      }
+      catch{
+      }
+      
       if (closestFoodinRange != null) {
         let dist = this.loc.distance(closestFoodinRange.loc);
         if (closestFoodinRange.size == null) {
@@ -248,52 +275,38 @@ class Creature5 extends Creature {
     let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
     let closestFood = world.foods.food2[lowestDistanceIndex];
     return closestFood;
-
-    // let lowestParticleDistance = 0;
-    // let lowestParticleDistanceArrayPath;
-    // let foodsystemdistances = [];
-    // for (let foodSys = 0; foodSys < world.foods.pSys2.length; foodSys++) {
-    //   for (let food = 0; food < world.foods.pSys2[foodSys].foodList.length; food++) {
-    //     let dist = this.loc.distance(world.foodspSys2[foodSys].foodList[food].loc);
-    //     if (dist < lowestDistance) {
-    //       lowestParticleDistance = dist;
-    //       lowestParticleDistanceArrayPath = [foodSys, food];
-    //     }
-    //   }
-    // }
-
-    // let closestFood;
-    // if(lowestParticleDistance == 0) {
-    //   closestFood = world.foods.food2[lowestDistanceIndex];
-    // } else{
-      
-    // }
     
-    //let lowestDistanceSys = Math.min(...foodsyspartdist);
-    //let lowestDistanceIndexSys = foodsystemdistances.indexOf(lowestDistanceSys);
+  }
 
-    
-    // if (lowestDistance <= lowestDistanceSys) {
-    //   closestFood = world.foods.food2[lowestDistanceIndex];
-    // } else {
-    //   //closestFood = world.foods.pSys2[].foodList[lowestDistanceIndex];
-    // }
-    
+  findClosestFoodParticle() {
+    let lowestParticleDistances = [];
+    for (let foodSys = 1; foodSys < world.foods.pSys2.length; foodSys++) {
+      let lowestParticleDist;
+      for (let food = 1; food < world.foods.pSys2[foodSys].foodList.length; food++) {
+        let dist = this.loc.distance(world.foods.pSys2[foodSys].foodList[food].loc);
+        let prevdist = this.loc.distance(world.foods.pSys2[foodSys - 1].foodList[food - 1].loc);
+        if (dist < prevdist) {
+          lowestParticleDist =  world.foods.pSys2[foodSys].foodList[food];
+        }
+      }
+      lowestParticleDistances.push(lowestParticleDist);
+    }
+
+    let foodsdistances = [];
+    for (let food = 0; food < lowestParticleDistances.length; food++) {
+      let dist = this.loc.distance(lowestParticleDistances[food].loc);
+      foodsdistances.push(dist);
+    }
+
+    let lowestDistance = Math.min(...foodsdistances);
+    let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
+    let closestFood = lowestParticleDistances[lowestDistanceIndex];
+
+    return closestFood;
   }
 
   seek(target) {
     let desired = JSVector.subGetNew(target.loc, this.loc);
-    let ctx = this.ctx;
-    ctx.save();
-    ctx.beginPath();
-    ctx.strokeStyle = this.clr;
-    ctx.fillStyle = this.clr;
-    ctx.moveTo(target.loc.x, target.loc.y);
-    ctx.lineTo(this.loc.x, this.loc.y);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
     desired.normalize();
     desired.multiply(this.maxSpeed);
     let steer = JSVector.subGetNew(desired, this.vel);

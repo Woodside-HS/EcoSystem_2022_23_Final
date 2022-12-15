@@ -136,12 +136,7 @@ class World {
     }//loads spencers triangle
 
     // }//++++++++++++++++++++++++++++  load entities
-    for (let i = 0; i < 100; i++) {
-      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
-      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
-      let loc = new JSVector(x, y);
-      this.creatures.herb1.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
-    }//adrains creatures
+    
 
     let c = this.creatures;
     let f = this.foods;
@@ -155,6 +150,12 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred1.push(new Creature(loc, vel, 12, this));
     }
+    for (let i = 0; i < 100; i++) {
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      c.herb1.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }//adrains creatures
 
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
@@ -215,7 +216,7 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
+      f.food2.push(new Food2Grass(loc, vel, 7, this))
     }//  Adrain Food2Grass
 
   }

@@ -46,19 +46,9 @@ class Food2Grass extends Food {
             this.sizeFactor = this.life/this.lifeSpan;
             if (this.life <= 0) {
                 this.isDead = true;
-                this.respawn();
+                this.statBlock.nourishment = 0;
             }
         }
-    }
-
-    respawn() {
-        let x = Math.random() * (world.dims.width-20) - (world.dims.width / 2 - 10);
-        let y = Math.random() * (world.dims.height-20) - (world.dims.height / 2 - 10);
-        this.loc = new JSVector(x, y);
-        this.lifeSpan = getRandomInt(500/this.speedFactor, 1000/this.speedFactor);
-        this.life = 0;
-        this.isDead = false;
-        this.growing = true;
     }
 
     render() {
