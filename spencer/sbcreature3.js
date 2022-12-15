@@ -198,7 +198,6 @@ class SBCreature3 extends Creature {
         this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
         this.segments = [];
         this.segLength = 10;
-        console.log(this.dataBlock.health);
         this.loadSegments();
         this.acc = new JSVector(0,0);
         this.counter = 0;

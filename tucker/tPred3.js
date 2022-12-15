@@ -91,7 +91,7 @@ class tPred3 extends Creature {
                 this.foodId.or = true;
                 this.foodId.id = i;
                 this.eat();//check to make sure that it is actually eating and there isnt a bug in between here and the next few lines
-                this.vel = new JSVector(0, 0);
+
                 world.creatures.herb2[i].vel = new JSVector(0, 0);
             }
         }
@@ -109,7 +109,7 @@ class tPred3 extends Creature {
                 this.foodId.or = false;
                 this.foodId.id = i;
                 this.eat();//check to make sure that it is actually eating and there isnt a bug in between here and the next few lines
-                this.vel = new JSVector(0, 0);
+
                 world.creatures.herb3[i].vel = new JSVector(0, 0);
             }
         }
