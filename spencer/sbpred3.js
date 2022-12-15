@@ -42,16 +42,14 @@ class SBPred3 extends Creature {
   }
   
   update() { //include search, lifespan, death, and eating
-    console.log(this.vel);
     this.loc.add(this.vel);
     this.vel.add(this.acc);
+    this.vel.limit(this.dataBlock.maxSpeed);
     if(this.statusBlock.eating){
       this.eating();
-      this.vel.limit(this.dataBlock.maxSpeed);
     }
     else{
       if(this.statusBlock.attack){
-        this.vel.setMagnitude(this.dataBlock.maxSprintSpeed);
         this.attack();
       }
       else if(this.statusBlock.searchFood){
@@ -87,24 +85,23 @@ class SBPred3 extends Creature {
 
 
   eating(){ 
-    if(this.food.dataBlock.health <5){
-      this.preyDeath();
-      this.statusBlock.eating = false;
-      this.statusBlock.search = true;
-    }
+    this.preyDeath();
+    this.statusBlock.eating = false;
+    this.statusBlock.search = true;
     this.dataBlock.health +=this.food.dataBlock.nourishment/10;
-    this.food.dataBlock.health = 6;
-    this.food.dataBlock.nourishment = 6;
+    this.food.dataBlock.health = 1;
+    this.food.dataBlock.nourishment = 1;
+    this.preyDeath();
   }
 
-  preyDeath(){ //render prey white, random velocities, create new sbprey 3 emerging from body like eggs
-    this.food.clr = "white";
+  preyDeath(){ //need to rewrite to figure out render issue of blood and vibrating velocity
+    this.food.clr = "red";
     this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);  //following lines might cause error
-    this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
-    this.ctx.fillStyle = "red"; 
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
+    // this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
+    // this.ctx.fillStyle = "red"; 
+    // this.ctx.stroke();
+    // this.ctx.fill();
+    // this.ctx.closePath();
 
   }
 

@@ -287,7 +287,7 @@ class World {
       }
     }//tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
-        c.herb3[i].run();
+        //c.herb3[i].run();
 
     }
     for (let i = 0; i < c.flocks.length; i++) {
