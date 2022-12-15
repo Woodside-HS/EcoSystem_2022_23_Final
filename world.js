@@ -164,8 +164,13 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      c.pred2.push(new Creature(loc, vel, 3, this));
+      //c.pred2.push(new Creature(loc, vel, 3, this));
     }
+    for(let i = 0; i < numEntities/2;i++){
+      let loc = new JSVector(100,100);//setting it to 100 for now so i know where it spawns
+      let vel = new JSVector(0,0);
+      c.pred2.push(new tPred2(loc,vel,10,this));
+    }//tucker's Predator 2
     for(let i = 0; i< numEntities/2;i++){
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
@@ -246,7 +251,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      //c.pred2[i].run();
+      c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }

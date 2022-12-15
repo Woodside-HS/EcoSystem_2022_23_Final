@@ -208,7 +208,6 @@ class SBCreature3 extends Creature {
         this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
         this.dataBlock.age = 0;
         this.clr = "lime";
-        console.log(this.dataBlock.health);
     }
     
 }
