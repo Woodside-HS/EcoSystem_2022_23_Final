@@ -8,6 +8,7 @@ class tPred3 extends Creature {
         this.hungy = 0;//this counts up to 5, once it reaches 5, nourishment will decrease
         this.foodId = null;//this is the ID of the food item that is currently being eaten
         this.stuckLol = 0;//this is a variable that intends to "unstuck" the creature in case of me not wanting to fix bugs
+        this.cooldown = 0;//keeps the creature from sprialing out of control with its numbers
         //below overwrites various creature stats so that it works more betterly
         this.dataBlock.sightValue = 50;
         this.dataBlock.maxSpeed = 1.5;
@@ -49,6 +50,7 @@ class tPred3 extends Creature {
             this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
         }
         if (this.statusBlock.searchMate) {
+            this.cooldown++
             this.searchMate();
         }
     }
@@ -132,7 +134,7 @@ class tPred3 extends Creature {
                 mte.setMagnitude(0.05);
                 this.acc.add(mte);
             }
-            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100) {
+            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >=50) {
                 this.dataBlock.nourishment -= 25;//I intend for it to be 50 but since both of them are probably gonna be running this it is 1/2
                 world.creatures.pred3[i].dataBlock.nourishment -= 25;
                 let x = Math.random() * world.dims.width - world.dims.width / 2;
@@ -142,6 +144,7 @@ class tPred3 extends Creature {
                 world.creatures.pred3.push(new tPred3(new JSVector(x, y), new JSVector(dx, dy), this.size, world));
                 this.statusBlock.searchMate = false;
                 world.creatures.pred3[i].statusBlock.searchFood = false;
+                this.cooldown =0;
             }
         }
     }
