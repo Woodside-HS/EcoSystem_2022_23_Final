@@ -8,8 +8,8 @@ class tPred2 extends Creature {
         this.update();
     }
     update(){
-        this.rot++
-        if(this.rot>=2){
+        this.rot+=0.1;
+        if(this.rot>=1.1){
             this.rot=0;
         }
     }
@@ -39,6 +39,7 @@ class tPred2 extends Creature {
         ctx.closePath();//endof body
         ctx.fill();
         //right wing I want these bois to rotate but thats for later
+        ctx.save();
         ctx.translate(x, y);
         x = 0;
         y = 0;
@@ -63,7 +64,7 @@ class tPred2 extends Creature {
         ctx.translate(x,y);
         x = 0;
         y = 0;
-        ctx.rotate(this.rot);
+        ctx.rotate(-this.rot);
         ctx.beginPath();
         ctx.fillStyle = "red";
         ctx.moveTo(x - this.size, y - this.size);
@@ -78,6 +79,28 @@ class tPred2 extends Creature {
         ctx.closePath();
         ctx.stroke();
         ctx.fill();
+        ctx.fillStyle = "red";
+        ctx.fill();
         ctx.restore();
+        x = this.loc.x;
+        y = this.loc.y;
+        //head
+        ctx.save();
+        ctx.fillStyle = "#560000";
+        ctx.translate(x,y-(this.size + smlSz));
+        //ctx.rotate();//head rotation, to look directly at nearest creature tbd
+        ctx.moveTo(0,0);
+        ctx.lineTo(-smlSz/4,0);
+        ctx.lineTo(-2*smlSz/4,smlSz);//tip of horn
+        ctx.lineTo(-3*smlSz/4,0);
+        ctx.lineTo(-2*smlSz/4,-this.size);
+        ctx.lineTo(2*smlSz/4,-this.size);
+        ctx.lineTo(3*smlSz/4,0);
+        ctx.lineTo(2*smlSz/4,smlSz);//tip of horn 2
+        ctx.lineTo(smlSz/4,0)
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        ctx.fillStyle = "red";//test thing
     }
 }
