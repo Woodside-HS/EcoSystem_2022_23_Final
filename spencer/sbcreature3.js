@@ -128,6 +128,17 @@ class SBCreature3 extends Creature {
       else if(this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30){
         this.vel.x = -this.vel.x;
       }
+      if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){ //added because of error in predator branch
+        this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+        this.acc.normalize();
+        this.acc.multiply(0.5);
+      }
+      else if(this.loc.x < this.world.dims.left +10 || this.loc.x > this.world.dims.right -10){
+        this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+        this.acc.normalize();
+        this.acc.multiply(0.5);
+      }
+
 
     }
 
