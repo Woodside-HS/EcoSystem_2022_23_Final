@@ -64,7 +64,7 @@ class SBPred3 extends Creature {
     }
     if(this.preyRender[0]){ // possibly not working
       if(this.preyRender[1]%30 != 0){
-        this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+       // this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
         this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
         this.ctx.fillStyle = "red"; 
         this.ctx.stroke();
