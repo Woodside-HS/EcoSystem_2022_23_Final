@@ -180,7 +180,7 @@ class tPred3 extends Creature {
                 mte.setMagnitude(0.05);
                 this.acc.add(mte);
             }
-            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >= 50) {
+            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >= 50 && world.creatures.pred3.length <100) {
                 this.dataBlock.nourishment -= 25;//I intend for it to be 50 but since both of them are probably gonna be running this it is 1/2
                 world.creatures.pred3[i].dataBlock.nourishment -= 25;
                 let x = Math.random() * world.dims.width - world.dims.width / 2;
