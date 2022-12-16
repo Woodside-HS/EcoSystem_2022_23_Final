@@ -6,6 +6,7 @@ class tPred2 extends Creature {
         this.foodDirect = 0;
         this.no = false
         this.dataBlock.sightValue = 50;
+        this.dataBlock.maxSpeed = 3;
         this.foodId = {
             creatTp : -1,//this is the type of the creature that it is eating
             creatId : -1//this is the ID of the creature being eaten
