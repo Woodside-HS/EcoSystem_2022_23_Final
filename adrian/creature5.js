@@ -301,6 +301,7 @@ class AdrainCreature5 extends Creature {
     return closestFood;
   }
 
+  
   seek(target) { // chase anything it needs too
     let desired = JSVector.subGetNew(target.loc, this.loc);
     desired.normalize();
