@@ -147,7 +147,7 @@ class World {
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
       this.creatures.herb2.push(new AdrianCreature5V2(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
-    }//adrains creatures
+    }//adrains creatures CRAZY BUG IDK WHY BUT ITS A FEATURE
 
     let c = this.creatures;
     let f = this.foods;
