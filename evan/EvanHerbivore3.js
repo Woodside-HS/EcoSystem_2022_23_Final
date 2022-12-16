@@ -100,7 +100,7 @@ class EvanHerbivore3 extends Creature {
       let ctx = this.ctx;
       ctx.beginPath();
       ctx.fillStyle = this.clr;
-      ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
+      ctx.arc(this.loc.x, this.loc.y, this.size*this.sizeFactor, 0, 2 * Math.PI, false);
       ctx.fill();
     }
 
