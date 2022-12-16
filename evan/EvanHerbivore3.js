@@ -12,6 +12,7 @@ class EvanHerbivore3 extends Creature {
        this.ctx = wrld.ctxMain;
        this.wWidth = wrld.dims.width;
        this.wHeight = wrld.dims.height;
+       this.foodObj = null;
  
        this.statusBlock = {
           searchFood:true,
@@ -81,12 +82,58 @@ class EvanHerbivore3 extends Creature {
                     this.acc.setMagnitude(0);
                     this.statusBlock.searchFood = false;
                     this.statusBlock.eating = true;
-                    this.foodEat = i;
+                    this.foodObj = i;
             }
          }
 
       }
         
+    }
+    eatFood(){
+      let i = this.foodObj;
+        this.dataBlock.nourishment++;//already know that we are consuming because eating must be true bc the stuff that is happening
+        
+        if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
+            if (world.foods.food2[i].statBlock.nourishment <= 2) {
+                //this needs to go before the others so that it checks this forst
+                //hopefully this should fix it -- It did not -- Wait it did
+                world.foods.food2[i].statBlock.nourishment--;
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = true;
+                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+                this.foodEat = null;
+            } else if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
+                world.foods.food2[i].statBlock.nourishment--;
+            } else {
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = true;
+                this.foodEat = null;
+                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+            }// I need some way to restart movement after eating something
+        } else {//should be checking to make sure that it goes back to check eat wont ever be run because it new thing is created
+            this.statusBlock.eating = false;
+            this.statusBlock.searchFood = true;
+            this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5)
+        }
+
+        //Particle System Foor Checker
+        if (this.PSfoodEat.pSys != null) {
+         if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment) {
+             if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
+                 world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
+                 this.statusBlock.eating = false;
+                 this.statusBlock.searchFood = true;
+                 this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+                 this.PSfoodEat = {
+                     pSys: null,
+                     item: null
+                 }
+             } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
+                 world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;//confirmed to work
+             }
+         }
+
+     }
     }
  
     getRandomColor() {
