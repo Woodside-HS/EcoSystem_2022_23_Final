@@ -2,7 +2,7 @@ class tPred2 extends Creature {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld);
         this.id = "tPred2";
-        this.rot = 0;
+        this.rot = Math.random()*2;
         this.foodDirect = 0;
         this.no = false
         this.dataBlock.sightValue = 50;
