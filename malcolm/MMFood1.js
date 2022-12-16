@@ -46,7 +46,7 @@ class MMFood1 extends Food {
     this.ctxMain.save();
     this.ctxMain.translate(this.loc.x, this.loc.y);
     this.ctxMain.fillText(this.statBlock.health, -15, -15);
-    this.ctxMain.rotate(this.angle);
+    // this.ctxMain.rotate(this.angle);
     this.ctxMain.moveTo(0, -10);
     this.ctxMain.lineTo(-10, -10);
     this.ctxMain.lineTo(-10, 0);

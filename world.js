@@ -165,7 +165,7 @@ class World {
     }
 
     // Malcolm food 1
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       let x =
         Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y =
