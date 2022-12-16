@@ -5,7 +5,7 @@ class tPred2 extends Creature {
         this.rot = 0;
         this.foodDirect = 0;
         this.no = false
-        this.dataBlock.sightValue = 100;
+        this.dataBlock.sightValue = 50;
         this.foodId = {
             creatTp : -1,//this is the type of the creature that it is eating
             creatId : -1//this is the ID of the creature being eaten
@@ -16,15 +16,15 @@ class tPred2 extends Creature {
             this.dataBlock.isDead = true;
         }
         this.render();
-        this.runChecks();
         this.checkEdges();
+        this.runChecks();
         this.update();
     }
     runChecks(){
         if(this.statusBlock.nourishment >=200 && this.statusBlock.age >=500 && this.no){
-            this.statusBlock.searchMate =true;
-            this.statusBlock.eating = false;
-            this.statusBlock.searchFood = false;
+            // this.statusBlock.searchMate =true;
+            // this.statusBlock.eating = false;
+            // this.statusBlock.searchFood = false;
         }
         if(this.nourishment <= 150){
             this.statusBlock.searchMate = false;
@@ -37,17 +37,41 @@ class tPred2 extends Creature {
             this.searchMate();
         }
         if(this.statusBlock.eating){
-
+            this.eat();
         }
     }
     searchMate(){
         let pred = world.creatures.pred3
         for(let i = 0; i<pred.length;i++){
             if(this.id == pred[i].id && this != pred[i]){
+                //makes sure it is the same type of creature and it isnt looking at itself
+                let siteSq = this.statusBlock.sightValue*this.statusBlock.sightValue;
+                if(this.distanceSquared(pred[i].loc)<=siteSq){
 
+                }
             }
         }
     }
+    // let siteSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
+    //         if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= siteSq && world.creatures.pred3[i].statusBlock.searchMate && world.creatures.pred3 ) {
+    //             //checks that mate is in range and looking for baby
+    //             let mate = world.creatures.pred3[i];
+    //             let mte = JSVector.subGetNew(mate.loc, this.loc);
+    //             mte.limit(0.05);
+    //             this.acc.add(mte);
+    //         }
+    //         if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >= 50 && world.creatures.pred3.length <100) {
+    //             this.dataBlock.nourishment -= 25;//I intend for it to be 50 but since both of them are probably gonna be running this it is 1/2
+    //             world.creatures.pred3[i].dataBlock.nourishment -= 25;
+    //             let x = Math.random() * world.dims.width - world.dims.width / 2;
+    //             let y = Math.random() * world.dims.height - world.dims.height / 2;
+    //             let dx = Math.random() * 4 - 2;
+    //             let dy = Math.random() * 4 - 2
+    //             world.creatures.pred3.push(new tPred3(new JSVector(x, y), new JSVector(dx, dy), this.size, world));
+    //             this.statusBlock.searchMate = false;
+    //             world.creatures.pred3[i].statusBlock.searchFood = false;
+    //             this.cooldown = 0;
+    //         }
     searchFood(){
         let food1 = world.creatures.pred3;
         let food2 = world.creatures.herb1;
@@ -93,20 +117,22 @@ class tPred2 extends Creature {
         let food2 = world.creatures.herb1;
         let i = this.foodId.creatId;//using this cause I like i
 
-        if(food1[i] && this.foodId.foodId == 0){
+        if(food1[i] && this.foodId.foodId == 0 && this.loc.distanceSquared(food1[i].loc)<=100){
             food1[i].statusBlock.health -= 50;
             this.vel = new JSVector(0,0);
-            if(food1[i].statusBlock.health <= 10 ||food1[i].isDead ){
+            if(food1[i].statusBlock.health <= 10 ||food1[i].isDead ){//resets the creature to a default state
+                food2[i].statusBlock.health -= 50;
                 this.statusBlock.eating = false;
                 this.statusBlock.searchFood = false;
                 this.foodId.creatTp = -1;
                 this.foodId.creatId = -1;
-                this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+                this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);//have to make sure that the creature cotinues to move after eating
             }
-        } else if (food2[i] && this.foodId.creatId == 1) {
+        } else if (food2[i] && this.foodId.creatId == 1 && this.loc.distanceSquared(food2[i].loc)<=100) {
             food2[i].statusBlock.health -= 50;
             this.vel = new JSVector(0,0);
-            if(food2[i].statusBlock.health <= 10 || food2[i].isDead){
+            if(food2[i].statusBlock.health <= 10 || food2[i].isDead){//this resets the creature to a default state
+                food2[i].statusBlock.health -= 50;
                 this.statusBlock.eating = false;
                 this.statusBlock.searchFood = false;
                 this.foodId.creatTP = -1;

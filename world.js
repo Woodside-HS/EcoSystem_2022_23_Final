@@ -174,7 +174,7 @@ class World {
       let vel = new JSVector(dx, dy);
       let loc = new JSVector(x, y);
       c.pred2.push(new tPred2(loc,vel,10,this));
-    }//tucker's Predator 2
+    }//tucker's Predator 2(Dragon)
     for(let i = 0; i< numEntities/2;i++){
       let x = Math.random() * this.dims.width - (this.dims.width / 2);
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
@@ -183,7 +183,7 @@ class World {
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
       c.pred3.push(new tPred3(loc, vel, 3, this));
-    }//tucker's predator 3
+    }//tucker's predator 3(circly boy)
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
