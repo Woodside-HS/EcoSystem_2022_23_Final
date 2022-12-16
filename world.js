@@ -142,11 +142,11 @@ class World {
       let loc = new JSVector(x, y);
       this.creatures.herb1.push(new Creature5(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
     }//adrains creatures
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 200; i++) {
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
-      this.creatures.herb1.push(new AdrianCreature5V2(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+      this.creatures.herb2.push(new AdrianCreature5V2(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
     }//adrains creatures
 
     let c = this.creatures;

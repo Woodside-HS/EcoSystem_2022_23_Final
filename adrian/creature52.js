@@ -27,7 +27,7 @@ class AdrianCreature5V2 extends Creature {
     this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
     this.mateTime = 0; // mating tick
 
-    this.numSegs = 10;
+    this.numSegs = 3;
     this.segLength = 10;
     this.segments = [];
     this.loadSegments();
@@ -45,9 +45,9 @@ class AdrianCreature5V2 extends Creature {
       if (i == 0) {
           this.segments[i].sub(this.vel);
       } else {
-          let timotheeChalamet = new JSVector(0,0);
-          timotheeChalamet = JSVector.subGetNew(this.segments[i-1],this.vel);
-          this.segments[i].sub(timotheeChalamet);
+          let temp = new JSVector(0,0);
+          temp = JSVector.subGetNew(this.segments[i-1],this.vel);
+          this.segments[i].sub(temp);
       }
   }
   }
@@ -63,7 +63,6 @@ class AdrianCreature5V2 extends Creature {
       }
       this.looseNourishment();
       this.checkHealth();
-      this.searchMate();
       this.update();
     } else if (!this.isDead && this.eating) { // happens if eating
       this.clr = this.tempclr;
@@ -82,20 +81,7 @@ class AdrianCreature5V2 extends Creature {
     }
   }
 
-  searchMate() { // search for a mate
-    if (this.age > this.maxAge / 3) { // make its at least above a third through its life before mating
-      if (this.statusBlock.searchMate) {
-        world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, world));
-        this.statusBlock.searchMate = false;
-      } else {
-        this.mateTime++;
-        if (this.mateTime > this.mateInterval) {
-          this.statusBlock.searchMate = true;
-          this.mateTime = 0;
-        }
-      }
-    }
-  }
+
 
   looseNourishment() { // loosing nourishment over time
     this.nourishmentFrameCounter++;
