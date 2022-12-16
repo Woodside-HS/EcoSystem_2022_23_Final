@@ -2,7 +2,10 @@ class MMHerb2 extends Creature {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
     // this.loc = loc;
-    this.loc = new JSVector(300, 300);
+    this.loc = new JSVector(
+      Math.random() * (500 - 100) + 100,
+      Math.random() * (500 - 100) + 100
+    );
     this.vX = Math.random() * (0.5 - -0.5) + -0.5;
     this.vY = Math.random() * (0.5 - -0.5) + -0.5;
     this.vel = new JSVector(this.vX, this.vY);
@@ -10,6 +13,8 @@ class MMHerb2 extends Creature {
     this.world = wrld;
     this.tickRate = 40;
     this.count = 0;
+    this.angle = 0;
+    this.mated = false;
 
     this.clr = "green";
   }
@@ -19,13 +24,16 @@ class MMHerb2 extends Creature {
 
     this.eatFood();
     this.checkEdges();
+    this.mate();
   }
   render() {
     let ctxMain = world.ctxMain;
+    this.angle += 0.5;
     ctxMain.save();
     ctxMain.beginPath();
     ctxMain.translate(this.loc.x, this.loc.y);
     ctxMain.fillText(this.dataBlock.health, -10, -20);
+    ctxMain.rotate(this.angle);
     ctxMain.moveTo(-10, -10);
     ctxMain.lineTo(10, -10);
     ctxMain.lineTo(10, 10);
@@ -114,5 +122,35 @@ class MMHerb2 extends Creature {
     if (this.loc.x < dims.left) this.vel.x = -this.vel.x;
     if (this.loc.y > dims.bottom) this.vel.y = -this.vel.y;
     if (this.loc.y < dims.top) this.vel.y = -this.vel.y;
+  }
+  mate() {
+    if (!this.mated) {
+      let desiredDist = 20;
+      // console.log(world.creatures.herb2.length);
+      let herb2 = world.creatures.herb2;
+      for (let i = 0; i < herb2.length; i++) {
+        let other = herb2[i];
+        if (this != other) {
+          let dist = this.loc.distance(other.loc);
+          if (desiredDist > dist) {
+            let diff = JSVector.subGetNew(other.loc, this.loc);
+            diff.normalize();
+            this.vel.add(diff);
+            this.vel.limit(2);
+
+            if (dist < 5) {
+              this.vel = new JSVector(0, 0);
+              world.creatures.herb2.push(
+                new MMHerb2(this.loc, this.vel, this.size, this.world)
+              );
+              this.vel.x = this.vX;
+              this.vel.y = this.vY;
+
+              this.mated = true;
+            }
+          }
+        }
+      }
+    }
   }
 }
