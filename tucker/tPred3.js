@@ -60,7 +60,7 @@ class tPred3 extends Creature {
     }
     orbitals() {
         if (this.hurtyBit.length < 10) {
-            if (this.new >= 50) {
+            if (this.new >= Math.random() *10 + 40) {
                 this.new = 0;
                 this.hurtyBit.push(new tPred3P(this.loc, this.getRandomColor(), 10));
             } else {
