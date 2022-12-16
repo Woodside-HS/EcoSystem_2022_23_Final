@@ -169,7 +169,7 @@ class World {
     let f = this.foods;
 
      //SB Alpha Pred
-     for (let i = 0; i < 5; i++) {
+     for (let i = 0; i < 12; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
