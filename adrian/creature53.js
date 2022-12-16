@@ -15,9 +15,24 @@ class AdrianWilsonCreature53 extends Creature {
         this.maxSpeed = 3;
         this.maxForce = 1;
         this.desiredSep = 25;
-        this.desiredCoh = 15;
         this.clr = "#000000";
+        this.numSegs = 10;
+        this.segLength = 5;
+        this.segments = [];
+        this.dataBlock.nourishment = getRandomInt(30, 500);
     }
+
+    loadSegments() {
+      let loc = new JSVector(this.loc.x, this.loc.y);
+      for(let i = 0; i < this.numSegs; i++){
+          let vel = new JSVector(this.vel.x, this.vel.y);
+          vel.setMagnitude(this.segLength);
+          let newVector = JSVector.subGetNew(loc, vel);
+          this.segments.push(newVector); 
+          loc = new JSVector(newVector.x, newVector.y);
+      }
+  }
+
     //  methods
     run(v) {
         this.interaction(v);
@@ -27,21 +42,30 @@ class AdrianWilsonCreature53 extends Creature {
     }
 
     interaction(vehicles) {
+      this.dataBlock.nourishment--;
+      this.checkHealth();
         //  flock force is the accumulation of all forces
         let flockForce = new JSVector(0,0);
         // set up force vectors to be added to acc
         let ali = this.align(vehicles);
-        let coh = this.cohesion(vehicles);
         let sep = this.separate(vehicles);
         //  add each of these to flockForce
         
         flockForce.add(ali);
-        flockForce.add(coh);
         flockForce.add(sep);
         //flockForce.add(seek);
         this.acc.add(flockForce);
 
         this.searchForFood();
+    }
+
+    checkHealth() {
+      if (this.dataBlock.nourishment <= 0){
+        this.dataBlock.health--;
+      }
+      if (this.dataBlock.health <= 0) {
+        this.dataBlock.isDead = true;
+      }
     }
 
     applyForce(force) {
@@ -94,39 +118,29 @@ class AdrianWilsonCreature53 extends Creature {
       return steeringForce;
     }
 
-    cohesion = function (v) {
-      let distSq = this.desiredCoh * this.desiredCoh;
-      let count = 0;
-      let sum = new JSVector(0, 0);
-      let steer = new JSVector(0, 0);
-      for (let i = 0; i < v.length; i++) {
-        if (this != v[i]) {
-          let d = this.loc.distanceSquared(v[i].loc);
-          if (d < distSq) {
-            let diff = JSVector.subGetNew(v[i].loc, this.loc);
-            diff.normalize();
-            sum.add(diff);
-            count++;
-          }
-        }
-      }
-      if (count != 0) {
-        sum.divide(count);
-        sum.normalize();
-        sum.multiply(this.maxSpeed);
-        steer = JSVector.subGetNew(sum, this.vel);
-        steer.limit(this.maxForce * 10);
-      }
-      let cohesionForce = steer;
-      return cohesionForce;
-    }
-
     update() {
       this.acc.limit(this.maxForce);
       this.vel.add(this.acc);
       this.acc = new JSVector();
       this.vel.limit(this.maxSpeed);
       this.loc.add(this.vel);
+
+
+      let loc = new JSVector(this.loc.x, this.loc.y);
+      let distance;
+      for(let i = 0; i<this.segments.length; i++){
+        tempVector = new JSVector(this.segments[i].x, this.segments[i].y);
+        tempVector = JSVector.subGetNew(tempVector, loc);
+        tempVector.limit(this.vel.getMagnitude());
+        tempVector.multiply(-1);
+        this.segments[i].add(tempVector);
+        distance = this.segments[i].distance(loc);
+        if(distance<this.segLength){
+          tempVector.setMagnitude(this.segLength - distance);
+          this.segments[i].sub(tempVector); 
+        }
+        loc = this.segments[i];
+      }
     }
 
     checkEdges() {
@@ -204,13 +218,32 @@ class AdrianWilsonCreature53 extends Creature {
   }
 
   seek(target) { // chase anything it needs too
-    console.log("hi");
     let desired = JSVector.subGetNew(target.loc, this.loc);
+    let ctx = this.ctx;
+    ctx.save();
+    ctx.beginPath();
+    ctx.strokeStyle = "#1dc714";
+    ctx.fillStyle = "#1dc714";
+    ctx.moveTo(this.loc.x, this.loc.y);
+    ctx.lineTo(target.loc.x, target.loc.y);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    ctx.restore();  
     desired.normalize();
     desired.multiply(this.maxSpeed);
     let steer = JSVector.subGetNew(desired, this.vel);
     steer.limit(this.maxForce);
+      
     this.vel = desired;
+  }
+
+  eat(foodEaten) {
+    if (foodEaten.statBlock.nourishment > 0) {
+      foodEaten.statBlock.nourishment--;
+      foodEaten.size = foodEaten.size * (foodEaten.statBlock.nourishment / 100);
+      this.dataBlock.nourishment++;
+    }
   }
 
     getRandomColor() {
