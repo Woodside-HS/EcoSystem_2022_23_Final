@@ -143,184 +143,31 @@ class AdrainCreature5 extends Creature {
     }
   }
 
-  render() { // render stuff 
-    let ctx = this.ctx;
-    ctx.save();
-    ctx.translate(this.loc.x, this.loc.y);
-    ctx.beginPath();
-    ctx.rotate(Math.PI / 360 * this.rotation);
-    ctx.strokeStyle = this.clr;
-    ctx.fillStyle = this.clr;
-    ctx.moveTo(-this.size * this.sizeFactor, 0);
-    ctx.lineTo(this.size * this.sizeFactor, 0);
-    ctx.lineTo(this.size * this.sizeFactor, 5);
-    ctx.lineTo(this.size * this.sizeFactor + 10, 0);
-    ctx.lineTo(this.size * this.sizeFactor, -5);
-    ctx.lineTo(0, -this.size * this.sizeFactor - 10);
-    ctx.lineTo(-this.size * this.sizeFactor, -5);
-    ctx.lineTo(-this.size * this.sizeFactor - 10, 0);
-    ctx.lineTo(-this.size * this.sizeFactor, 5);
-    ctx.lineTo(0, this.size * this.sizeFactor + 10);
-    ctx.lineTo(this.size * this.sizeFactor, 5);
-    ctx.lineTo(this.size * this.sizeFactor, 0);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
-  }
-
-  cohesion(c) { // cohession from flocking lab
-    let neighbordist = 400;
-    let sum = new JSVector(0, 0);
-    let count = 0;
-    let steeringForce = new JSVector(0, 0);
-    for (let other = 0; other < c.length; other++) {
-      let d = this.loc.distanceSquared(c[other].loc);
-      if ((d > 0) && (d < neighbordist)) {
-        sum.add(c[other].loc);
-        count++;
-      }
+    render() {
+        let ctx = this.ctx;
+        ctx.save();
+        ctx.translate(this.loc.x, this.loc.y);
+        ctx.beginPath();
+        ctx.rotate(Math.PI/360 * this.rotation);
+        ctx.strokeStyle = this.clr;
+        ctx.fillStyle = this.clr;
+        ctx.moveTo(-this.size * this.sizeFactor, 0);
+        ctx.lineTo(this.size * this.sizeFactor, 0);
+        ctx.lineTo(this.size * this.sizeFactor, 5);
+        ctx.lineTo(this.size * this.sizeFactor + 10, 0);
+        ctx.lineTo(this.size * this.sizeFactor, -5);
+        ctx.lineTo(0, -this.size * this.sizeFactor - 10);
+        ctx.lineTo(-this.size * this.sizeFactor, -5);
+        ctx.lineTo(-this.size * this.sizeFactor - 10, 0);
+        ctx.lineTo(-this.size * this.sizeFactor, 5);
+        ctx.lineTo(0, this.size * this.sizeFactor + 10);
+        ctx.lineTo(this.size * this.sizeFactor, 5);
+        ctx.lineTo(this.size * this.sizeFactor, 0);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
     }
-
-    if (count > 0) {
-      sum.divide(count);
-      sum.normalize();
-      sum.multiply(this.maxSpeed);
-      let steer = JSVector.subGetNew(sum, this.vel);
-      steeringForce = steer;
-    } else {
-      steeringForce = new JSVector(0, 0);
-    }
-
-    return steeringForce;
-  }
-
-  seperate(c) { //seperation from flocking lab
-    let sum = new JSVector(0, 0);
-    let ds = this.desiredSep * this.desiredSep;
-    let steer = new JSVector(0, 0);
-    let count = 0;
-    for (let other = 0; other < c.length; other++) {
-      let d = this.loc.distanceSquared(c[other].loc);
-      if (d < ds && d > 0) {
-        let diff = JSVector.subGetNew(this.loc, c[other].loc);
-        diff.normalize();
-        sum.add(diff);
-        count++;
-      }
-    }
-
-    if (count !== 0) {
-      sum.divide(count);
-      sum.normalize();
-      sum.multiply(this.maxSpeed);
-      steer = JSVector.subGetNew(sum, this.vel);
-      steer.limit(this.maxForce)
-    }
-    let separationForce = steer;
-    return separationForce;
-  }
-
-  searchForFood() { //search for food
-    if (this.searchingForFood) {
-      let closestFoodinRange = this.findClosestFood();
-      try {
-        let closestFoodParticleinRange = this.findClosestFoodParticle();
-        if (closestFoodinRange > closestFoodParticleinRange) {
-          closestFoodinRange = closestFoodParticleinRange;
-        }
-      }
-      catch {
-      }
-
-      if (closestFoodinRange != null) {
-        let dist = this.loc.distance(closestFoodinRange.loc);
-        if (closestFoodinRange.size == null) {
-          this.seek(closestFoodinRange);
-          if (dist < 200 && dist >= closestFoodinRange.rad + this.rad) {
-            this.seek(closestFoodinRange);
-            this.eating = false;
-          }
-          else if (dist * 2 < closestFoodinRange.rad + this.rad) {
-            this.eat(closestFoodinRange);
-            this.eating = true;
-          }
-        }
-        else {
-          if (dist < 200 && dist * 2 >= closestFoodinRange.size + this.size) {
-            this.seek(closestFoodinRange);
-            this.eating = false;
-          }
-          else if (dist * 2 < closestFoodinRange.size + this.size) {
-            this.eat(closestFoodinRange);
-            this.eating = true;
-          }
-        }
-      }
-    }
-  }
-
-  findClosestFood() { // locate closest food
-    let foodsdistances = [];
-    for (let food = 0; food < world.foods.food2.length; food++) {
-      let dist = this.loc.distance(world.foods.food2[food].loc);
-      foodsdistances.push(dist);
-    }
-
-    let lowestDistance = Math.min(...foodsdistances);
-    let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
-    let closestFood = world.foods.food2[lowestDistanceIndex];
-    return closestFood;
-
-  }
-
-  findClosestFoodParticle() { // locate clocest food particle in a system
-    let lowestParticleDistances = [];
-    for (let foodSys = 1; foodSys < world.foods.pSys2.length; foodSys++) {
-      let lowestParticleDist;
-      for (let food = 1; food < world.foods.pSys2[foodSys].foodList.length; food++) {
-        let dist = this.loc.distance(world.foods.pSys2[foodSys].foodList[food].loc);
-        let prevdist = this.loc.distance(world.foods.pSys2[foodSys - 1].foodList[food - 1].loc);
-        if (dist < prevdist) {
-          lowestParticleDist = world.foods.pSys2[foodSys].foodList[food];
-        }
-      }
-      lowestParticleDistances.push(lowestParticleDist);
-    }
-
-    let foodsdistances = [];
-    for (let food = 0; food < lowestParticleDistances.length; food++) {
-      let dist = this.loc.distance(lowestParticleDistances[food].loc);
-      foodsdistances.push(dist);
-    }
-
-    let lowestDistance = Math.min(...foodsdistances);
-    let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
-    let closestFood = lowestParticleDistances[lowestDistanceIndex];
-
-    return closestFood;
-  }
-
-  
-  seek(target) { // chase anything it needs too
-    let desired = JSVector.subGetNew(target.loc, this.loc);
-    desired.normalize();
-    desired.multiply(this.maxSpeed);
-    let steer = JSVector.subGetNew(desired, this.vel);
-    steer.limit(this.maxForce);
-    this.vel = desired;
-  }
-
-  applyForce(force) {
-    this.acc.add(force);
-  }
-
-  eat(foodEaten) {
-    if (foodEaten.statBlock.nourishment > 0) {
-      foodEaten.statBlock.nourishment--;
-      foodEaten.size = foodEaten.size * (foodEaten.statBlock.nourishment / 100);
-    }
-  }
 
   getRandomColor() {
     //  List of hex color values for movers
@@ -337,3 +184,4 @@ class AdrainCreature5 extends Creature {
   }
 
 }
+
