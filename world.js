@@ -142,11 +142,12 @@ class World {
   loadEntities(numEntities, ctx, w, h) {
     // malcolm food 3
     for (let i = 0; i < 20; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let dx = Math.random() * 3 - 2;
+      let dy = Math.random() * 3 - 2;
       let vel = new JSVector(dx, dy);
       this.foods.food3.push(new MMFood3(loc, vel, 20, this));
     }
@@ -300,11 +301,12 @@ class World {
       }
     }
 
-    for (let i = f.food3.length - 1; i >= 0; i--) {}
-    f.food3[i].run();
-    if (f.food3[i].statBlock.nourishment <= 0) {
-      //cuts the food from the array if it is dead
-      f.food3.splice(i, 1);
+    for (let i = f.food3.length - 1; i >= 0; i--) {
+      f.food3[i].run();
+      if (f.food3[i].statBlock.nourishment <= 0) {
+        //cuts the food from the array if it is dead
+        f.food3.splice(i, 1);
+      }
     }
     for (let i = f.food4.length - 1; i >= 0; i--) {}
 
