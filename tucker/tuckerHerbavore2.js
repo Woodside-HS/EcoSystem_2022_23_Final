@@ -17,7 +17,7 @@ class tuckerHerbavore2 extends Creature {
         }
         this.stuck = 0;
         this.cooldown = 0;
-        this.hungy = false;
+        this.hungy = 0;
         this.predatorsLocation = new JSVector(0, 0);
         this.statusBlock.lifeSpan = Math.random() * 3000 + 500
         // this.statusBlock = { this is just for reference for me
@@ -55,16 +55,16 @@ class tuckerHerbavore2 extends Creature {
             if (this.dataBlock.age >= this.dataBlock.lifeSpan) {
                 this.dataBlock.isDead = true;
             }
-            if (this.hungy && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
+            if (this.hungy >3  && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
                 this.dataBlock.nourishment--;
-                this.hungy = false;
-            } else if (!this.hungy) {//this if statement is confirmed to work
-                this.hungy = true;
+                this.hungy = 0;
+            } else {//this if statement is confirmed to work
+                this.hungy++;
             }
             if (this.dataBlock.lifeSpan <= this.dataBlock.age || this.dataBlock.health <= 0 || this.dataBlock.nourishment <= 0) {
                 this.dataBlock.isDead = true;//murderizer
             }
-            if (this.dataBlock.nourishment >= 200 && this.dataBlock.age >= 100) {
+            if (this.dataBlock.nourishment >= 120 && this.dataBlock.age >= 50) {
                 this.statusBlock.searchFood = false;
                 this.statusBlock.searchMate = true;
             } else {
@@ -107,9 +107,12 @@ class tuckerHerbavore2 extends Creature {
                         let dy = Math.random() * 4 - 2
                         let currentNumOffspring = Math.floor(Math.random() * this.dataBlock.numOffspring)
                         for (let i = 0; i < currentNumOffspring; i++) {
-                            world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                            if(!world.creatures.herb2.length>=1000){//there is an issue where my creature quickly spirals out of control with it quickly reaching 10000s of creatures, this should help
+                                world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
+                            }
                         }
                         this.statusBlock.nourishment -= 50;
+                        world.creatures.herb2[i].statusBlock.nourishment -= 50;
                     }
                 }
             }
@@ -126,6 +129,7 @@ class tuckerHerbavore2 extends Creature {
                 if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
                     //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
                     world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
@@ -134,7 +138,7 @@ class tuckerHerbavore2 extends Creature {
                         item: null
                     }
                 } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
-                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;//confirmed to work
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();//confirmed to work
                 }
             }//end of existence if statement
 
@@ -212,13 +216,6 @@ class tuckerHerbavore2 extends Creature {
                     }//end of PS length if statement
                 }//end of sightSq if statement
             }//end of main for loop
-            this.stuck++;
-            if (this.stuck > 100) {
-                this.vel.x = Math.random() * 1 - 0.5;
-                this.vel.y = Math.random() * 1 - 0.5;
-                this.stuck = 0;//the creature tends to get stuck near particle systems so hopefully this will "unstick them" every once and a while
-                this.cooldown = 0;
-            }
         }//end of run if statement
     }
     sprint(predLoc) {//predator will activate this it will send its current location to this creature every frame 
@@ -233,16 +230,16 @@ class tuckerHerbavore2 extends Creature {
         let loc = predLoc.copy();
         let dist = this.loc.distanceSquared(loc);
         let jmp = new JSVector(0, 0);
-        if (dist < 100) {//10 pixels away
-            jmp = JSVector.subGetNew(loc);
+        if (dist < 50) {//10 pixels away
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.2);
             this.acc.add(jmp);
-        } else if (dist < 2500) {//50 pixels away
-            jmp = JSVector.subGetNew(loc);
+        } else if (dist < 1250) {//50 pixels away
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
-        } else if (dist < 10000) {//100 pixels away
-            jmp = JSVector.subGetNew(loc);
+        } else if (dist < 5000) {//100 pixels away
+            jmp = JSVector.subGetNew(this.loc,loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
         }
