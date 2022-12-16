@@ -3,8 +3,8 @@ class AdrianCreature5V2 extends Creature {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
     this.loc = loc; // creature location
-    this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
-    this.vel.limit(2);
+    this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1);
+    this.vel.limit(0.5);
     this.ctx = wrld.ctxMain; //ctx
     this.clr = this.getRandomColor(); // creature get random color
     this.tempclr = this.clr; // reference color used as constant
@@ -109,6 +109,7 @@ class AdrianCreature5V2 extends Creature {
 
 
   update() { // gets called in the interaction func
+    this.vel.limit(0.5);
     this.loc.add(this.vel);//moves the head
     for (let i = 0; i < this.segments.length; i++) {
         if (i == 0) {
@@ -123,6 +124,7 @@ class AdrianCreature5V2 extends Creature {
             this.segments[i].add(acc);
         }
     }
+    
   }
 
   checkEdges() { // make sure its not outside of world bounds
@@ -142,11 +144,17 @@ class AdrianCreature5V2 extends Creature {
 
   render() { // render stuff 
     let ctx = this.ctx;
-    for (let i = 0; i < this.segments.length; i++) {
+    ctx.beginPath();
+    ctx.arc(this.loc.x, this.loc.y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.closePath();
+    for (let i = 1; i < this.segments.length; i++) {
       ctx.beginPath();
       ctx.arc(this.segments[i].x, this.segments[i].y, 5, 0, 2 * Math.PI);
       ctx.fillStyle = "blue";
       ctx.fill();
+      ctx.closePath();
     }
   }
 
