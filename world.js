@@ -186,17 +186,25 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      //c.pred1.push(new Creature(loc, vel, 12, this));
+      //c.pred2.push(new Creature(loc, vel, 3, this));
     }
-
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
+    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      //c.pred2.push(new Creature(loc, vel, 3, this));
+      c.pred2.push(new tPred2(loc, vel, 3, this));
+    }
+    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      c.pred3.push(new tPred3(loc, vel, 3, this));
     }
     for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
@@ -385,7 +393,7 @@ class World {
     }
 
     for (let i = c.pred2.length - 1; i >= 0; i--) {
-      //c.pred2[i].run();
+      c.pred2[i].run();
       if (c.pred2[i].dataBlock.isDead) {
         c.pred2.splice(i, 1);
       }
