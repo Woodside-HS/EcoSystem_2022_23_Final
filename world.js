@@ -148,18 +148,6 @@ class World {
 
         //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
 
-
-    //SB Alpha Pred
-    for (let i = 0; i < 5; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2
-      let vel = new JSVector(dx, dy);
-      c.pred1.push(new SBAlpha(loc, vel, 3, this));
-    }
-
     // Malcolm food 1
     for (let i = 0; i < 50; i++) {
       let x =
@@ -176,6 +164,17 @@ class World {
 
     let c = this.creatures;
     let f = this.foods;
+
+     //SB Alpha Pred
+     for (let i = 0; i < 5; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      c.pred1.push(new SBAlpha(loc, vel, 3, this));
+    }
 
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
