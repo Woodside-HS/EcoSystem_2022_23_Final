@@ -23,17 +23,20 @@ class MSFood1 extends Food {
             this.statBlock.nourishment = 100;
             this.clr = "red"
             this.clr2 = "green"
+            this.clr3 = "yellow"
         }
         if(this.statBlock.health <= .1){
             this.statBlock.nourishment = 50;
             this.clr = "rgb(86,57,14)"
             this.clr2 = "darkgreen"
+            this.clr3 = "black"
         }
 
         if(this.statBlock.health <= .03){
             this.statBlock.nourishment = 25;
             this.clr = "black"
             this.clr2 = "rgb(86,57,14)"
+            this.clr3 = "black"
         }
 
         if(this.statBlock.health <= 0){
@@ -75,50 +78,50 @@ class MSFood1 extends Food {
        this.ctx.closePath();
 
        this.ctx.beginPath();
-       this.ctx.ellipse(this.loc.x-5,this.loc.y+5,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.ellipse(this.loc.x-6,this.loc.y+5,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
 
        this.ctx.beginPath();
-       this.ctx.ellipse(this.loc.x+5,this.loc.y+5,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.ellipse(this.loc.x+6,this.loc.y+5,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
 
        this.ctx.beginPath();
        this.ctx.ellipse(this.loc.x,this.loc.y+3,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
 
        this.ctx.beginPath();
-       this.ctx.ellipse(this.loc.x+2,this.loc.y+8,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.ellipse(this.loc.x+3,this.loc.y+8,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
 
        this.ctx.beginPath();
-       this.ctx.ellipse(this.loc.x-2,this.loc.y+8,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.ellipse(this.loc.x-3,this.loc.y+8,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
 
 
        this.ctx.beginPath();
-       this.ctx.ellipse(this.loc.x,this.loc.y+11,1,1,0,0,Math.PI*2);
-       this.ctx.strokeStyle = "yellow";
-       this.ctx.fillStyle = "yellow"
+       this.ctx.ellipse(this.loc.x,this.loc.y+12,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = this.clr3;
+       this.ctx.fillStyle = this.clr3
        this.ctx.fill();
        this.ctx.stroke();
        this.ctx.closePath();
