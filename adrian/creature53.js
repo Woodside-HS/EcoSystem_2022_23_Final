@@ -160,15 +160,56 @@ class AdrianWilsonCreature53 extends Creature {
       ctx.restore();
     }
 
-    seek(target) {
-      // A vector pointing from the location to the target
-      let desired = JSVector.subGetNew(target.loc, this.loc);
-      desired.normalize();
-      desired.multiply(this.maxSpeed);
-      let steer = JSVector.subGetNew(desired, this.vel);
-      steer.limit(this.maxForce);
-      return steer;
+    searchForFood() { //search for food
+      let closestFoodinRange = this.findClosestFood();
+
+      if (closestFoodinRange != null) {
+        let dist = this.loc.distance(closestFoodinRange.loc);
+        if (closestFoodinRange.size == null) {
+          this.seek(closestFoodinRange);
+          if (dist < 200 && dist >= closestFoodinRange.rad + this.rad) {
+            this.seek(closestFoodinRange);
+            this.eating = false;
+          }
+          else if (dist * 2 < closestFoodinRange.rad + this.rad) {
+            this.eat(closestFoodinRange);
+            this.eating = true;
+          }
+        }
+        else {
+          if (dist < 200 && dist * 2 >= closestFoodinRange.size + this.size) {
+            this.seek(closestFoodinRange);
+            this.eating = false;
+          }
+          else if (dist * 2 < closestFoodinRange.size + this.size) {
+            this.eat(closestFoodinRange);
+            this.eating = true;
+          }
+        }
+      }
+  }
+
+  findClosestFood() { // locate closest food
+    let foodsdistances = [];
+    for (let food = 0; food < world.foods.food3.length; food++) {
+      let dist = this.loc.distance(world.foods.food3[food].loc);
+      foodsdistances.push(dist);
     }
+
+    let lowestDistance = Math.min(...foodsdistances);
+    let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
+    let closestFood = world.foods.food3[lowestDistanceIndex];
+    return closestFood;
+  }
+
+  seek(target) { // chase anything it needs too
+    let desired = JSVector.subGetNew(target.loc, this.loc);
+    desired.normalize();
+    desired.multiply(this.maxSpeed);
+    let steer = JSVector.subGetNew(desired, this.vel);
+    steer.limit(this.maxForce);
+    this.vel = desired;
+  }
 
     getRandomColor() {
         //  List of hex color values for movers
