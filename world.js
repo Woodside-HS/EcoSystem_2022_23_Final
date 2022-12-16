@@ -240,7 +240,7 @@ class World {
       let vel = new JSVector(dx, dy);
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
     }
-      for(let i = 0; i < 100; i++){
+      for(let i = 0; i < 100; i++){ //evan hervivore purple circle
         let x = Math.random() * this.dims.width - (this.dims.width / 2);
         let y = Math.random() * this.dims.height - (this.dims.height / 2);
         let loc = new JSVector(x, y);
