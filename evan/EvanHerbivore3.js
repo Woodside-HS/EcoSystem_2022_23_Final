@@ -20,7 +20,7 @@ class EvanHerbivore3 extends Creature {
       this.stamina = getRandomInt(250, 3000); // how long they don't sleep for
       this.nourishmentDecInterval = getRandomInt(3, 7); // how fast nourishment decreases
       this.nourishmentFrameCounter = 0; // keep track of nourishment dec
-      this.maxAge = getRandomInt(400, 3000); // age
+      this.maxAge = getRandomInt(400, 3000); 
       this.searchingForFood = true;
       this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
       this.mateTime = 0; // mating tick
