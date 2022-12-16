@@ -130,6 +130,12 @@ class World {
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     }//michael's particle system
 
+    for (let i = 0; i < 25; i++) {
+      let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      this.creatures.herb2.push(new MSHerbivore2(loc, vel, 10, this));
+    }//michael's herbivore2
+
   //++++++++++++++++++++++++++++  load entities
     for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
