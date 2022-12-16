@@ -168,14 +168,15 @@ class World {
     let c = this.creatures;
     let f = this.foods;
 
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
+     //SB Alpha Pred
+     for (let i = 0; i < 12; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      c.pred1.push(new Creature(loc, vel, 12, this));
+      c.pred1.push(new SBAlpha(loc, vel, 3, this));
     }
 
     for (let i = 0; i < numEntities; i++) {
@@ -185,7 +186,26 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      c.pred2.push(new Creature(loc, vel, 3, this));
+      //c.pred1.push(new Creature(loc, vel, 12, this));
+    }
+
+    for (let i = 0; i < numEntities; i++) {
+      let x = Math.random() * this.cnvMain.width;
+      let y = Math.random() * this.cnvMain.height;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      //c.pred2.push(new Creature(loc, vel, 3, this));
+    }
+    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      c.pred3.push(new tPred3(loc, vel, 3, this));
     }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Herbavour 1 - 3
@@ -358,7 +378,7 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      //c.pred1[i].run();
+      c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
       }
@@ -370,7 +390,12 @@ class World {
         c.pred2.splice(i, 1);
       }
     }
-    for (let i = 0; i < c.pred3.length; i++) {}
+    for (let i = c.pred3.length-1; i >= 0 ; i--) {
+      c.pred3[i].run();
+      if (c.pred3[i].dataBlock.isDead) {
+        c.pred3.splice(i, 1);
+      }
+    }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
       //c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
@@ -379,8 +404,7 @@ class World {
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
-      c.herb2[i].run();
-
+        c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
       }
