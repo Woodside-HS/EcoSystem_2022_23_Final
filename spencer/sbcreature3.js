@@ -208,7 +208,6 @@ class SBCreature3 extends Creature {
         this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
         this.segments = [];
         this.segLength = 10;
-        console.log(this.dataBlock.health);
         this.loadSegments();
         this.acc = new JSVector(0,0);
         this.counter = 0;
@@ -219,7 +218,6 @@ class SBCreature3 extends Creature {
         this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
         this.dataBlock.age = 0;
         this.clr = "lime";
-        console.log(this.dataBlock.health);
     }
     
 }

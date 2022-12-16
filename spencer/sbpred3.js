@@ -1,3 +1,13 @@
+//Quick notes: this creature eats ONLY SNAKES as it becomes overwhelmed if it eats other types of creatures. 
+//In other words, it won't visibly kill anything else, so I settled for snakes.
+//It creates a unique kill process for its victims. It turns them white and then causes them to spasm
+//Final note. There initially was an eat fucntion, but because I wanted them to not stop when in contact with their prey
+//I decided to simply put that code in the attack function. The eat code is commented out and can be reapplied
+//About the rendering: this creature has orbitals and a weird streak going through it because of a tactically ignored closePath
+//Functions: run, render, update, bounce, preyDeath, search, attack, revive
+
+
+
 class SBPred3 extends Creature { 
     constructor(loc, vel, sz, wrld){
         super(loc, vel, sz, wrld);
@@ -8,8 +18,8 @@ class SBPred3 extends Creature {
         this.orbs = [];
         let start = 0;
         this.counter = 0;
-        this.dataBlock.maxSprintSpeed = 3;
-        this.dataBlock.maxSpeed = 2;
+        this.dataBlock.maxSprintSpeed = 4;
+        this.dataBlock.maxSpeed = 3;
         this.preyRender = [false, 0];
         this.acc = new JSVector(0, 0);
         let n = Math.random()*2+6;
@@ -46,10 +56,10 @@ class SBPred3 extends Creature {
     this.loc.add(this.vel);
     this.vel.add(this.acc);
     this.vel.limit(this.dataBlock.maxSpeed);
-    if(this.statusBlock.eating){
-      this.eating();
-    }
-    else{
+    // if(this.statusBlock.eating){ //found eating unneccesary since I wanted them to constantly be moving.
+    //   this.eating();
+    // }
+    // else{
       if(this.statusBlock.attack){
         this.attack();
       }
@@ -60,39 +70,31 @@ class SBPred3 extends Creature {
       if(this.counter%100 == 0){
         this.dataBlock.health--;
         }
-        this.counter++; //repetition of counter here could be an issue. Test later
-    }
-    if(this.preyRender[0]){ // possibly not working
-      if(this.preyRender[1]%30 != 0){
-       // this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
-        this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
-        this.ctx.fillStyle = "red"; 
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.preyRender[1]++;
+      this.counter++; 
+      if(this.dataBlock.health<2){
+        this.revive();
+      }
+    if(this.preyRender[0]){
+      if(this.preyRender[1]%60 !== 0){
+        this.preyDeath();
       }
       else{
-        this.preyRender[1] == 0
-        this.preyRender[0] == false;
+        this.preyRender[1] = 0;
+        this.preyRender[0] = false;
+        this.food.dataBlock.health = 1;
+        this.food.dataBlock.nourishment = 1;
       }
     }
   }
 
   bounce(){ //fix corners
-    if(this.loc.y < world.dims.top +30  || this.loc.y > world.dims.bottom -30 ){
-      this.vel.y = -this.vel.y;
-    }
-    else if(this.loc.x < this.world.dims.left +30 || this.loc.x > this.world.dims.right -30){
-      this.vel.x = -this.vel.x;
-    }
-    if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){
-      this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+    if(this.loc.y < world.dims.top +15  || this.loc.y > world.dims.bottom -15 ){
+      this.acc = JSVector.subGetNew(new JSVector(Math.random()*2000-1000, Math.random()*1500-750), this.loc);
       this.acc.normalize();
       this.acc.multiply(0.5);
     }
-    else if(this.loc.x < this.world.dims.left +10 || this.loc.x > this.world.dims.right -10){
-      this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+    else if(this.loc.x < this.world.dims.left +15 || this.loc.x > this.world.dims.right -15){
+      this.acc = JSVector.subGetNew(new JSVector(Math.random()*2000-1000, Math.random()*1500-750), this.loc);
       this.acc.normalize();
       this.acc.multiply(0.5);
     }
@@ -100,30 +102,51 @@ class SBPred3 extends Creature {
   }
 
 
-  eating(){ 
-    this.preyDeath();
-    this.statusBlock.eating = false;
-    this.statusBlock.search = true;
-    this.dataBlock.health +=this.food.dataBlock.nourishment/10;
-    this.food.dataBlock.health = 5;
-    this.food.dataBlock.nourishment = 5;
-    this.preyDeath();
-  }
+  // eating(){  Since I didn't want it to stay put while eating, I think the eating function was better put in the attack function
+  //   this.food.vel.multiply(0);
+  //   this.food.acc.multiply(0);
+  //   this.preyDeath();
+  //   this.statusBlock.eating = false;
+  //   this.statusBlock.search = true;
+  //   this.dataBlock.health +=this.food.dataBlock.nourishment/10;
+  //   this.food.dataBlock.health = 3;
+  //   this.food.dataBlock.nourishment = 3;
+  //   this.preyRender[0] = true;
+  // }
 
   preyDeath(){ //need to rewrite to figure out render issue of blood and vibrating velocity
-    this.food.clr = "black";
-    this.preyRender[0] = true;
+    this.food.clr = "white";
     this.food.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
-    //following lines might cause error
-    // this.ctx.arc(this.food.loc.x+Math.random()*20-10, this.food.loc.y+Math.random()*20-10, 2, 0, 2*Math.PI); 
-    // this.ctx.fillStyle = "red"; 
-    // this.ctx.stroke();
-    // this.ctx.fill();
-    // this.ctx.closePath();
+    this.preyRender[1]++;
   }
 
-  selfDeath(){
-
+  revive(){
+    let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
+    let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
+    this.loc = new JSVector(x, y);
+    this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+    this.acc = new JSVector(0,0);
+    this.counter = 0;
+    this.clrlist = ['#065535','#fdd800', '#0b7a85', '#00A36C', '#8b324d', '#c39797', '#9e58c7'];
+    this.clr = this.clrlist[Math.floor(Math.random()*this.clrlist.length)];
+    this.dataBlock.health = 100;
+    this.dataBlock.isDead = false;
+    this.dataBlock.nourishment = 100;
+    this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
+    this.dataBlock.age = 0;
+    this.orbs = [];
+    let start = 0;
+    this.dataBlock.maxSprintSpeed = 4;
+    this.dataBlock.maxSpeed = 3;
+    this.preyRender = [false, 0];
+    let n2 = Math.random()*2+6;
+    for(let i = 0; i<n2; i++){
+        this.orbs[i] = new OrbiterSB(7, start, this.loc, this.ctx, this.clrlist.indexOf(this.clr)); // start vector at planet and end at position
+  //diameter, angle, orbit radius, planet location (takes in JSVector)
+    start+= (Math.PI*2)/(n2);
+    }
+    
+    
   }
 
   runAway(){
@@ -131,16 +154,17 @@ class SBPred3 extends Creature {
   }
 
   search(){
-    let check = this.world.creatures.herb2;
-    for(let i = 0; i<check.length; i++){
-        if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>16 && !check[i].isDead){
-            this.food = check[i];
-            this.statusBlock.searchFood = false;
-            this.statusBlock.attack = true;
-        }
-     }
+    //let check = this.world.creatures.herb2;
+    //for(let i = 0; i<check.length; i++){
+        //if(this.loc.distance(check[i].loc)<200 && this.loc.distance(check[i].loc)>16 && !check[i].isDead){
+           // this.food = check[i];
+            //this.statusBlock.searchFood = false;
+            //this.statusBlock.attack = true;
+        //}
+    // }
      let check2 = this.world.creatures.herb3;
      for(let i = 0; i<check2.length; i++){
+      if(check2[i].constructor.name == SBCreature3);
          if(this.loc.distance(check2[i].loc)<200 && this.loc.distance(check2[i].loc)>16 && !check2[i].isDead){
              this.food = check2[i];
              this.statusBlock.searchFood = false;
@@ -151,11 +175,18 @@ class SBPred3 extends Creature {
 
 
   attack(){
-    if(this.food.loc.distance(this.loc)<30){
+    if(this.food.loc.distance(this.loc)<60){
       this.food.vel.multiply(0);
       this.food.acc.multiply(0);
-      this.statusBlock.eating = true;
+      this.food.vel.multiply(0);
+      this.food.acc.multiply(0);
+      this.preyDeath();
       this.statusBlock.attack = false;
+      this.statusBlock.search = true;
+      this.dataBlock.health +=this.food.dataBlock.nourishment/10;
+      this.food.dataBlock.health = 3;
+      this.food.dataBlock.nourishment = 3;
+      this.preyRender[0] = true;
     }
     else if(this.food.loc.distance(this.loc)<200){
       this.acc = JSVector.subGetNew(this.food.loc, this.loc);
