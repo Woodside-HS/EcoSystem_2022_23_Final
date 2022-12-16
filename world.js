@@ -115,11 +115,7 @@ class World {
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS"; // frames per second
     this.ctxMain.fillText(fps, 20, this.cnvMain.height - 105);
-    this.ctxMain.fillText("Rows = " + this.numRows, 20, this.cnvMain.height - 130);
-    this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
     let numEnts = 0;
-    this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
-    this.ctxMain.fillText("Tucker's Creatures = " + this.creatures.herb2.length,20,this.cnvMain.height-65);
 
     for (let i = 0; i < this.foods.length; i++) {
       //  All food and creatures
