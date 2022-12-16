@@ -173,10 +173,6 @@ class World {
       let vel = new JSVector(Math.random()*4-2,Math.random()*4-2);
       c.herb1.push(new MSHerbivore1(loc, vel, 15,this));
     }
-
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
      //SB Alpha Pred
      for (let i = 0; i < 12; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
@@ -491,5 +487,6 @@ class World {
 
     }
   }
+
 } //++++++++++++++++++++++++++++++  end world constructor
 

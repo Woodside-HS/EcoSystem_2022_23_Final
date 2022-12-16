@@ -4,6 +4,7 @@ class MSHerbivore1 extends Creature {
         super(loc, vel, sz, wrld)
         this.loc = new JSVector(loc.x,loc.y);
         this.vel = new JSVector(vel.x,vel.y);
+        this.acc = new JSVector(0,0);
         this.size = sz;
     }
     //  methods
@@ -14,7 +15,17 @@ class MSHerbivore1 extends Creature {
     }
 
     update() {
-        this.loc.add(this.vel)
+        let food1 = world.foods.food1;
+        for(let i = 0;i<food1.length;i++){
+            if(this.loc.distance(food1[i].loc)<100)
+            this.acc = JSVector.subGetNew(food1[i].loc, this.loc);
+            this.acc.normalize();
+            this.acc.multiply(.5);
+            this.vel.limit(2);
+            this.vel.add(this.acc);
+            this.loc.add(this.vel);
+        }
+        
     }
 
     render() {
