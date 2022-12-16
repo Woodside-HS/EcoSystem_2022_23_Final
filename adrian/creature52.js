@@ -3,8 +3,8 @@ class AdrianCreature5V2 extends Creature {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
     this.loc = loc; // creature location
-    this.acc = new JSVector(0, 0); // creature acceleration
-    this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1) // creature velocity
+    this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+    this.vel.limit(2);
     this.ctx = wrld.ctxMain; //ctx
     this.clr = this.getRandomColor(); // creature get random color
     this.tempclr = this.clr; // reference color used as constant
@@ -40,16 +40,16 @@ class AdrianCreature5V2 extends Creature {
   }
 
   loadSegments() {
-    for (let i = 0; i < this.numSegs; i++) {
+    for (let i = 0; i < 4; i++) {
       this.segments[i] = new JSVector(this.loc.x, this.loc.y);
       if (i == 0) {
-        this.segments[i].sub(this.vel);
+          this.segments[i].sub(this.vel);
       } else {
-        let currSeg = new JSVector(0, 0);
-        currSeg = JSVector.subGetNew(this.segments[i - 1], this.vel);
-        this.segments[i].sub(currSeg);
+          let timotheeChalamet = new JSVector(0,0);
+          timotheeChalamet = JSVector.subGetNew(this.segments[i-1],this.vel);
+          this.segments[i].sub(timotheeChalamet);
       }
-    }
+  }
   }
 
   interaction(c) { // everything goes down here
@@ -123,18 +123,19 @@ class AdrianCreature5V2 extends Creature {
 
 
   update() { // gets called in the interaction func
-    this.loc.add(this.vel);
+    this.loc.add(this.vel);//moves the head
     for (let i = 0; i < this.segments.length; i++) {
-      if (i == 0) {
-        let acceleration = JSVector.subGetNew(this.loc, this.segments[i]);
-        acceleration.normalize();
-        acceleration.multiply(this.vel.getMagnitude());
-        this.segments[i].add(acceleration);
-      } else {
-        let acceleration = JSVector.subGetNew(this.segments[i - 1], this.segments[i]);
-        acceleration.normalize();
-        this.segments[i].add(acceleration);
-      }
+        if (i == 0) {
+            let acc = JSVector.subGetNew(this.loc, this.segments[i]);
+            acc.normalize();
+            acc.multiply(this.vel.getMagnitude());
+            this.segments[i].add(acc);
+            //need to be able to add more veloicty so that it maintiaings the distance
+        } else {
+            let acc = JSVector.subGetNew(this.segments[i - 1], this.segments[i]);
+            acc.normalize();
+            this.segments[i].add(acc);
+        }
     }
   }
 
