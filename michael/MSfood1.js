@@ -73,6 +73,55 @@ class MSFood1 extends Food {
        //this.ctx.lineWidth = 3;
         this.ctx.stroke();
        this.ctx.closePath();
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x-5,this.loc.y+5,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x+5,this.loc.y+5,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x,this.loc.y+3,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x+2,this.loc.y+8,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x-2,this.loc.y+8,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
+
+
+       this.ctx.beginPath();
+       this.ctx.ellipse(this.loc.x,this.loc.y+11,1,1,0,0,Math.PI*2);
+       this.ctx.strokeStyle = "yellow";
+       this.ctx.fillStyle = "yellow"
+       this.ctx.fill();
+       this.ctx.stroke();
+       this.ctx.closePath();
     }
 
     
