@@ -71,6 +71,44 @@ class Creature5 extends Creature {
         ctx.restore();
     }
 
+    searchForFood() { //search for food
+        let closestFoodinRange = this.findClosestFood();
+        try {
+          let closestFoodParticleinRange = this.findClosestFoodParticle();
+          if (closestFoodinRange > closestFoodParticleinRange) {
+            closestFoodinRange = closestFoodParticleinRange;
+          }
+        }
+        catch {
+        }
+  
+        if (closestFoodinRange != null) {
+          let dist = this.loc.distance(closestFoodinRange.loc);
+          if (closestFoodinRange.size == null) {
+            this.seek(closestFoodinRange);
+            if (dist < 200 && dist >= closestFoodinRange.rad + this.rad) {
+              this.seek(closestFoodinRange);
+              this.eating = false;
+            }
+            else if (dist * 2 < closestFoodinRange.rad + this.rad) {
+              this.eat(closestFoodinRange);
+              this.eating = true;
+            }
+          }
+          else {
+            if (dist < 200 && dist * 2 >= closestFoodinRange.size + this.size) {
+              this.seek(closestFoodinRange);
+              this.eating = false;
+            }
+            else if (dist * 2 < closestFoodinRange.size + this.size) {
+              this.eat(closestFoodinRange);
+              this.eating = true;
+            }
+          }
+        }
+    }
+
+
     getRandomColor() {
         //  List of hex color values for movers
         let colors = [
