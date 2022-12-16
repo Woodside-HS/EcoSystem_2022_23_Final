@@ -444,7 +444,7 @@ class World {
 
     for (let i = f.food2.length - 1; i >= 0; i--) {
       f.food2[i].run();
-      if (f.food2[i].statBlock.nourishment <= 0) {
+      if (f.food2[i].statBlock.nourishment <= 0 || f.food2[i].statBlock.health <= 0) {
         //cuts the food from the array if it is dead
         f.food2.splice(i, 1);
       }
