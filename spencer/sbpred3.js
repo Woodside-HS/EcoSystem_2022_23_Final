@@ -30,7 +30,7 @@ class SBPred3 extends Creature {
         }
   }
   
-  run(){ //change color to red when in attack mode
+  run(){ //change color to red when in attack mode 
     this.render();
     this.update();
     for(let i = 0; i<this.orbs.length; i++){
