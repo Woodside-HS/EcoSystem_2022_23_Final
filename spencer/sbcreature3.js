@@ -81,7 +81,7 @@ class SBCreature3 extends Creature {
         if(this.dataBlock.health  == 10){ //color near death
             this.clr = "red";
          }
-        else if(this.dataBlock.health >10){ //color when alive 
+        else if(this.dataBlock.health >10){ //color when alive
         this.clr = "lime";
         }
         this.ctx.save();
@@ -128,7 +128,7 @@ class SBCreature3 extends Creature {
       else if(this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30){
         this.vel.x = -this.vel.x;
       }
-      if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){ //added because of error in predator branch
+      if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){
         this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
         this.acc.normalize();
         this.acc.multiply(0.5);
@@ -138,7 +138,6 @@ class SBCreature3 extends Creature {
         this.acc.normalize();
         this.acc.multiply(0.5);
       }
-
 
     }
 
@@ -185,9 +184,7 @@ class SBCreature3 extends Creature {
         if(this.food.statBlock.health <2 || this.food.statBlock.nourishment <2 || this.food.loc.distance(this.loc)>20){
             this.statusBlock.eating = false;
             this.statusBlock.search = true;
-            this.food = 0;
         }
-        else{
         this.food.statBlock.health--;
         if(this.counter%50){
             this.dataBlock.health++;
@@ -202,7 +199,6 @@ class SBCreature3 extends Creature {
             this.size++;
             
         }
-     }
     }
 
     revive(){ //spawns the creature as a new creature after death
@@ -212,7 +208,6 @@ class SBCreature3 extends Creature {
         this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
         this.segments = [];
         this.segLength = 10;
-        console.log(this.dataBlock.health);
         this.loadSegments();
         this.acc = new JSVector(0,0);
         this.counter = 0;
@@ -223,7 +218,6 @@ class SBCreature3 extends Creature {
         this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
         this.dataBlock.age = 0;
         this.clr = "lime";
-        console.log(this.dataBlock.health);
     }
     
 }
