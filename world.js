@@ -143,10 +143,22 @@ class World {
   loadEntities(numEntities, ctx, w, h) {
     //++++++++++++++++++++++++++++  load entities
 
-        //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
-        
+    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
+    // Malcolm food 1
+    for (let i = 0; i < 50; i++) {
+      let x =
+        Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.food1.push(new MMFood1(loc, vel, 20, this));
+    } 
     //loads spencers triangle
     // }//++++++++++++++++++++++++++++  load entities
+
+    
 
     let c = this.creatures;
     let f = this.foods;
@@ -225,7 +237,6 @@ class World {
         );
       }
 
-
     //Spencer Herb3
     for (let i = 0; i < numEntities / 2; i++) {
       c.herb3.push(
@@ -240,6 +251,14 @@ class World {
         )
       );
     }
+
+    //adrains flocking creatures
+    for (let i = 0; i < 500; i++) {
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.creatures.herb3.push(new AdrianWilsonCreature53(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }//adrains flocking creatures
 
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Food 1 - 6
@@ -350,7 +369,10 @@ class World {
       }
     } //tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
-      c.herb3[i].run();
+        c.herb3[i].run(c.herb3);
+        if (c.herb3[i].dataBlock.isDead) {
+          c.herb3.splice(i, 1);
+        }
     }
 
     for (let i = 0; i < c.flocks.length; i++) {}
