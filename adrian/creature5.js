@@ -12,6 +12,7 @@ class Creature5 extends Creature {
         this.size = 5;
         this.sizeFactor = 1;
         this.rotation = 0;
+        this.eating = false;
     }
     //  methods
     run() {
@@ -73,14 +74,6 @@ class Creature5 extends Creature {
 
     searchForFood() { //search for food
         let closestFoodinRange = this.findClosestFood();
-        try {
-          let closestFoodParticleinRange = this.findClosestFoodParticle();
-          if (closestFoodinRange > closestFoodParticleinRange) {
-            closestFoodinRange = closestFoodParticleinRange;
-          }
-        }
-        catch {
-        }
   
         if (closestFoodinRange != null) {
           let dist = this.loc.distance(closestFoodinRange.loc);
