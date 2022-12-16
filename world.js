@@ -224,11 +224,11 @@ class World {
       c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this));
     } //tucker's herbavore
 
-    for (let i = 0; i < numEntities; i++) {
+    for (let i = 0; i < 25; i++) {
       let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
       this.creatures.herb2.push(new MSHerbivore2(loc, vel, 10, this));
-    }//michael's herbivore2 Turtles
+    }//michael's herbivore2
  
 
       //Spencer Herb3
