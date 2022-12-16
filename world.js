@@ -1,4 +1,3 @@
-//All creatures and food items are added to entities array
 class World {
   //  Commit 1: 221109
   constructor() {
@@ -31,6 +30,9 @@ class World {
         this.grid[row][col] = new Cell(this, this.ctxMain, row, col);
       }
     }
+
+    this.entities = [];
+    this.foodItems = [];
 
     this.creatures = {
       pred1: [],
@@ -109,7 +111,7 @@ class World {
     this.ctxMain.stroke();
     this.ctxMain.restore();
 
-    // // performance  show framerate
+    // framerate
     this.ctxMain.font = "20px  bold";
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS";  // frames per second
@@ -230,7 +232,7 @@ class World {
     } //tucker's herbavore
 
   
-//tucker's herbavore 2
+  //tucker's herbavore 2
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -288,6 +290,36 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
+      this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
+    }
+    //  Evans Food4
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.foods.food4.push(new Food4Plant(loc, vel, 7, this))
+    }
+    //  Evans Food4 Particle System
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this))
+    }
+
+    for(let i = 0; i < 200; i++){      
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);      
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this));
     } //  Adrain Food2Grass
 
@@ -301,11 +333,17 @@ class World {
       f.food3.push(new Food6(loc, vel, 5, this));
     } //  Tucker heart Food
 
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Particle Systems 1-3
+     //michael's particle system 1
+     for (let i = 0; i < 25; i++) {
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+      this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
+    } //michael's particle system
   }
-
-
-
-
 
   runCreatures() {
     let c = this.creatures;
@@ -347,6 +385,8 @@ class World {
           c.herb3.splice(i, 1);
         }
     }
+
+    for (let i = 0; i < c.flocks.length; i++) {}
   }
 
   runFood() {
@@ -370,10 +410,7 @@ class World {
         f.food3.splice(i, 1);
       }
     }
-
-    for (let i = f.food4.length - 1; i >= 0; i--) {
-
-    }
+    for (let i = f.food4.length - 1; i >= 0; i--) {}
 
     for (let i = f.food5.length - 1; i >= 0; i--) {
 
@@ -407,6 +444,4 @@ class World {
 
     }
   }
-
-
-}//++++++++++++++++++++++++++++++  end world constructor
+} //++++++++++++++++++++++++++++++  end world constructor
