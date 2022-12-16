@@ -2,10 +2,9 @@ class MSFood1 extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
+        this.loc = loc;
         this.statBlock.health = Math.random()*1+.05;
-        this.clr = "red"
-        this.clr2 = "green"
-        this.isDead = false;
+        
 
         
     
@@ -18,20 +17,37 @@ class MSFood1 extends Food {
     }
 
     update() {
+        //this.loc.add(this.vel);
         this.statBlock.health = this.statBlock.health-.0001;
+        if(this.statBlock.health >.1){
+            this.statBlock.nourishment = 100;
+            this.clr = "red"
+            this.clr2 = "green"
+        }
         if(this.statBlock.health <= .1){
+            this.statBlock.nourishment = 50;
             this.clr = "rgb(86,57,14)"
             this.clr2 = "darkgreen"
         }
 
         if(this.statBlock.health <= .03){
+            this.statBlock.nourishment = 25;
             this.clr = "black"
             this.clr2 = "rgb(86,57,14)"
         }
 
         if(this.statBlock.health <= 0){
-            this.isDead = true;
+            this.statBlock.nourishment = 0;
+            this.isDead();
         }
+    }
+
+    isDead(){
+        let x = Math.random()*(world.dims.right-world.dims.left)+world.dims.left; 
+        let y = Math.random()*(world.dims.bottom-world.dims.top)+world.dims.top;
+        this.loc = new JSVector(x,y);
+        this.statBlock.health = Math.random()*1+.05;
+        this.statBlock.nourishment = 100;
     }
 
     render() {
