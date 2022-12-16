@@ -1,140 +1,185 @@
 class EvanHerbivore3 extends Creature {
     constructor(loc, vel, sz, wrld) {
-       super(loc, vel, sz, wrld)
-       //mover properties
-       this.loc = loc;
-       
-       this.vel = vel;
-       this.acc = new JSVector(0, 0);
-       this.clr = this.getRandomColor();
-       this.size = sz;
-       this.maxSpeed = .1;
-       this.ctx = wrld.ctxMain;
-       this.wWidth = wrld.dims.width;
-       this.wHeight = wrld.dims.height;
-       this.foodObj = null;
- 
-       this.statusBlock = {
-          searchFood:true,
-          searchMate:true,
-          eating:false,
-          sprint:false,
-          sleeping:false,
-          attack:false,
-          deathProc:false  
-       };
- 
-       this.dataBlock = {//  status block 
-          health: 100,
-          isDead: false,
-          nourishment: 100,
-          //lifeSpan:30000,//  miliseconds
-          age:0,
-          numOffspring:3,
-          maxSpeed: 1,
-          maxSprintSpeed: 1,
-          scentValue: 100,
-          sightValue: 100,
-          weight:10,
-       };
+      super(loc, vel, sz, wrld);
+      this.loc = loc; // creature location
+      this.acc = new JSVector(0, 0); // creature acceleration
+      this.vel = new JSVector(Math.random() * 2 - 1, Math.random() * 2 - 1) // creature velocity
+      this.ctx = wrld.ctxMain; //ctx
+      this.clr = this.getRandomColor(); // creature get random color
+      this.tempclr = this.clr; // reference color used as constant
+      this.rad = 10; // radius references for everything made in this creature
+      this.size = 5; // size references for everything made in this creature
+      this.sizeFactor = 1; // size factor
+      this.rotation = 0; // init rotaiton
+      this.maxSpeed = 2; // max speed
+      this.desiredSep = 25; // how far they are gonna be from each other
+      this.maxSpeed = 2; // max speed
+      this.maxForce = 1; // max force
+      this.movement = 0; // how much they have moved
+      this.sleepTime = getRandomInt(250, 500); // how long they sleep for
+      this.stamina = getRandomInt(250, 3000); // how long they don't sleep for
+      this.nourishmentDecInterval = getRandomInt(3, 7); // how fast nourishment decreases
+      this.nourishmentFrameCounter = 0; // keep track of nourishment dec
+      this.maxAge = getRandomInt(400, 3000); // age
+      this.searchingForFood = true;
+      this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
+      this.mateTime = 0; // mating tick
     }//++++++++++++++++++++++++++++++++ end creature constructor
  
     //++++++++++++++++++++++++++++++++ creature methods
-    run() {
+    run(c) {
        
-       this.update();
-       this.checkEdges();
-       this.render();
-       this.searchingFood();   
+      this.checkEdges();
+      this.creatureInteraction(c);
+      this.render();  
     }
-    update() {
-       this.vel.add(this.acc);
-       this.vel.limit(this.maxSpeed);
-       this.loc.add(this.vel);
-    }
-    checkEdges() {
-       if (this.loc.x >= world.dims.width / 2 || this.loc.x <= -world.dims.width / 2) {
-          this.vel.x *= -1;
-       }
-       if (this.loc.y >= world.dims.height / 2 || this.loc.y < -world.dims.height / 2) {
-          this.vel.y *= -1;
-       }
-    }
-    render() {
-       //  render balls in world
-       let ctx = this.ctx;
-       ctx.beginPath();
-       ctx.fillStyle = this.clr;
-       ctx.arc(this.loc.x, this.loc.y, 20, 0, 2 * Math.PI, false);
-       ctx.fill();
-       
-    }
-    searchingFood(){
-      
-      for(let i = 0; i<world.foods.food2.length; i++){
-         let d = this.loc.distanceSquared(world.foods.food2[i].loc);
-         if(d < 100){
-            let seek = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
-            seek.setMagnitude(0.05);
-            this.acc.add(seek);
-            if(this.loc.distanceSquared(world.foods.food2[i].loc) < 400){
-               this.vel.setMagnitude(0);
-                    this.acc.setMagnitude(0);
-                    this.statusBlock.searchFood = false;
-                    this.statusBlock.eating = true;
-                    this.foodObj = i;
-            }
-         }
-
-      }
+    
+    creatureInteraction(c) { 
+      if (!this.isDead && !this.eating) { 
+          this.clr = this.tempclr;
+          this.sleeping = false;
+          this.age++;
+          this.movement++;
+          if (this.searchingForFood) {
+            this.searchForFood(); //search for food
+          }
+          this.loseNourishment();
+          this.checkHealth();
+          //this.searchMate();
+          this.update();
         
-    }
-    eatFood(){
-      let i = this.foodObj;
-        this.dataBlock.nourishment++;//already know that we are consuming because eating must be true bc the stuff that is happening
-        
-        if (world.foods.food2[i]) {//makes sure the food item still exists before you render it
-            if (world.foods.food2[i].statBlock.nourishment <= 2) {
-                //this needs to go before the others so that it checks this forst
-                //hopefully this should fix it -- It did not -- Wait it did
-                world.foods.food2[i].statBlock.nourishment--;
-                this.statusBlock.eating = false;
-                this.statusBlock.searchFood = true;
-                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
-                this.foodEat = null;
-            } else if (world.foods.food2[i].statBlock.nourishment > 0) {//sometimes it just doens't exist - I think its cause of some splicng error
-                world.foods.food2[i].statBlock.nourishment--;
-            } else {
-                this.statusBlock.eating = false;
-                this.statusBlock.searchFood = true;
-                this.foodEat = null;
-                this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
-            }// I need some way to restart movement after eating something
-        } else {//should be checking to make sure that it goes back to check eat wont ever be run because it new thing is created
-            this.statusBlock.eating = false;
-            this.statusBlock.searchFood = true;
-            this.vel = new JSVector(Math.random() - 0.5, Math.random() - 0.5)
+      } else if (!this.isDead && this.eating) { // happens if eating
+        this.clr = this.tempclr;
+        this.age++;
+        this.movement++;
+        if (this.searchingForFood) {
+          this.searchForFood();
         }
-
-        //Particle System Foor Checker
-        if (this.PSfoodEat.pSys != null) {
-         if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment) {
-             if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
-                 world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
-                 this.statusBlock.eating = false;
-                 this.statusBlock.searchFood = true;
-                 this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
-                 this.PSfoodEat = {
-                     pSys: null,
-                     item: null
-                 }
-             } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
-                 world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;//confirmed to work
-             }
-         }
-
-     }
+        this.loseNourishment();
+        this.checkHealth(c);
+        this.update();
+      }
+      
     }
+  
+
+
+
+    loseNourishment() { 
+      this.nourishmentFrameCounter++;
+      if (this.nourishmentFrameCounter > this.nourishmentDecInterval) {
+        this.nourishmentFrameCounter = 0;
+        this.nourishment--;
+      }
+    }
+
+    checkHealth(v) { // checks nourishment and speed changes based on nourishment
+      if (this.nourishment < 15) {
+        this.maxSpeed = 0.5;
+        this.health -= 2;
+      } else if (this.nourishment < 30) {
+        this.maxSpeed = 1;
+        this.health--;
+      } else {
+        this.maxSpeed = 2;
+      }
+      if (this.health < 0 || this.age > this.maxAge) {
+        this.isDead = true;
+      }
+  
+    }
+
+    update() { 
+      this.rotation++;
+      this.vel.add(this.acc);
+      this.vel.limit(1);
+      this.loc.add(this.vel);
+    }
+
+    render() { // render stuff 
+      let ctx = this.ctx;
+      ctx.beginPath();
+      ctx.fillStyle = this.clr;
+      ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
+      ctx.fill();
+    }
+
+
+    searchForFood() { //search for food
+      if (this.searchingForFood) {
+        let closestFoodinRange = this.findClosestFood();
+  
+        if (closestFoodinRange != null) {
+          let dist = this.loc.distance(closestFoodinRange.loc);
+          if (closestFoodinRange.size == null) {
+            this.seek(closestFoodinRange);
+            if (dist < 200 && dist >= closestFoodinRange.rad + this.rad) {
+              this.seek(closestFoodinRange);
+              this.eating = false;
+            }
+            else if (dist * 2 < closestFoodinRange.rad + this.rad) {
+              this.eat(closestFoodinRange);
+              this.eating = true;
+            }
+          }
+          else {
+            if (dist < 200 && dist * 2 >= closestFoodinRange.size + this.size) {
+              this.seek(closestFoodinRange);
+              this.eating = false;
+            }
+            else if (dist * 2 < closestFoodinRange.size + this.size) {
+              this.eat(closestFoodinRange);
+              this.eating = true;
+            }
+          }
+        }
+      }
+    }
+
+
+    findClosestFood() { // locate closest food
+      let foodsdistances = [];
+      for (let food = 0; food < world.foods.food2.length; food++) {
+        let dist = this.loc.distance(world.foods.food2[food].loc);
+        foodsdistances.push(dist);
+      }
+  
+      let lowestDistance = Math.min(...foodsdistances);
+      let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
+      let closestFood = world.foods.food2[lowestDistanceIndex];
+      return closestFood;
+  
+    }
+
+    seek(target) { // chase anything it needs too
+      let desired = JSVector.subGetNew(target.loc, this.loc);
+      desired.normalize();
+      desired.multiply(this.maxSpeed);
+      let steer = JSVector.subGetNew(desired, this.vel);
+      steer.limit(this.maxForce);
+      this.vel = desired;
+    }
+  
+   //  applyForce(force) {
+   //    this.acc.add(force);
+   //  }
+  
+    eat(foodEaten) {
+      if (foodEaten.statBlock.nourishment > 0) {
+        foodEaten.statBlock.nourishment--;
+        foodEaten.size = foodEaten.size * (foodEaten.statBlock.nourishment / 100);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
  
     getRandomColor() {
        //  List of hex color values for movers
