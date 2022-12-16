@@ -141,25 +141,22 @@ class World {
 
   //Load mover array
   loadEntities(numEntities, ctx, w, h) {
-
-   
-
     //++++++++++++++++++++++++++++  load entities
 
-        //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
-
+    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
 
     // Malcolm food 1
     for (let i = 0; i < 50; i++) {
       let x =
         Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
-      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let y =
+        Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
       this.foods.food1.push(new MMFood1(loc, vel, 20, this));
-    } 
+    }
     //loads spencers triangle
     // }//++++++++++++++++++++++++++++  load entities
 
@@ -200,6 +197,17 @@ class World {
       ); //  Added to creatures object
     } //adrains creatures
 
+    //Malcolms herb2
+    for (let i = 0; i < 4; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.creatures.herb2.push(new MMHerb2(loc, vel, 10, this));
+    }
+
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -212,8 +220,7 @@ class World {
       );
     } //tucker's herbavore
 
-  
-//tucker's herbavore 2
+    //tucker's herbavore 2
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -221,25 +228,10 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this));
+      c.herb2.push(
+        new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this)
+      );
     } //tucker's herbavore
- 
-
-      //Spencer Herb3
-      for (let i = 0; i < numEntities / 2; i++) {
-        c.herb3.push(
-          new SBCreature3(
-            new JSVector(
-              Math.random() * this.dims.width + this.dims.left,
-              Math.random() * this.dims.height + this.dims.top
-            ),
-            new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2),
-            30,
-            this
-          )
-        );
-      }
-
 
     //Spencer Herb3
     for (let i = 0; i < numEntities / 2; i++) {
@@ -256,9 +248,22 @@ class World {
       );
     }
 
+    //Spencer Herb3
+    for (let i = 0; i < numEntities / 2; i++) {
+      c.herb3.push(
+        new SBCreature3(
+          new JSVector(
+            Math.random() * this.dims.width + this.dims.left,
+            Math.random() * this.dims.height + this.dims.top
+          ),
+          new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2),
+          30,
+          this
+        )
+      );
+    }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Food 1 - 6
-
 
     for (let i = 0; i < numEntities; i++) {
       this.foods.food2.push(
@@ -303,9 +308,9 @@ class World {
       f.food3.push(new Food6(loc, vel, 5, this));
     } //  Tucker heart Food
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Particle Systems 1-3
-     //michael's particle system 1
-     for (let i = 0; i < 25; i++) {
+    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Particle Systems 1-3
+    //michael's particle system 1
+    for (let i = 0; i < 25; i++) {
       let loc = new JSVector(
         Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
         Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
