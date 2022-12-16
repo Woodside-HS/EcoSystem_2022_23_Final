@@ -12,6 +12,7 @@ class SBAlpha extends Creature {
         this.beings = [];
         this.dataBlock.health = 100-Math.random()*30;
         this.world = wrld;
+        this.victims = [];
     }
     
     run() {
@@ -28,6 +29,7 @@ class SBAlpha extends Creature {
     update() { 
         this.vel.add(this.acc);
         this.loc.add(this.vel);
+        this.vel.limit(2);
         for(let i = 0; i<this.beings.length; i++){
             if(this.beings[i].loc.distance(this.loc)>this.rad){
                 this.beings.splice(i, 1);
@@ -52,6 +54,14 @@ class SBAlpha extends Creature {
                 this.beings.push(new SBAlphaParticles(nloc, nvel, this.ctx));
             }
         }
+        for(let i = this.victims.length -1; i>=0; i--){
+            this.victims[i].dataBlock.health-=0.5;
+            this.victims[i].dataBlock.nourishment-=0.5;
+            this.victims[i].clr = "rgb(255, 0, 127)";
+            if(this.victims[i].dataBlock.health<2 || this.victims[i].dataBlock.nourishment<2){
+                this.victims.splice(i, 1);
+            }
+        }
    
     }
     
@@ -62,26 +72,71 @@ class SBAlpha extends Creature {
     else if(this.loc.x < this.world.dims.left  + this.rad || this.loc.x > this.world.dims.right - this.rad){
         this.vel.x = -this.vel.x;
       }
+    if(this.loc.y < world.dims.top || this.loc.y > world.dims.bottom || this.loc.x < this.world.dims.left || this.loc.x > this.world.dims.right){
+        let temp = JSVector.subGetNew(new JSVector(0, 0), this.loc);
+        temp.setMagnitude(this.rad);
+        this.loc.add(temp);
+
+    }
 
     }
 
     search(){
-        let check = this.world.creatures.pred2;
+
+        let check = this.world.creatures.herb3;
         for(let i = 0; i<check.length; i++){
-            if(this.loc.distance(check[i].loc)<this.rad && !check[i].isDead){
-                this.dataBlock.life += check.dataBlock.life/10;
-                check[i].dataBlock.life-=10; //potentially change death per turn
-                check[i].dataBlock.nourishment-=10;
-                check[i].clr = "rgb(255, 0, 127)";
+            if(this.loc.distance(check[i].loc)<300){
+                this.acc = JSVector.subGetNew(check[i].loc, this.loc);
+                this.acc.normalize();
+                this.acc.multiply(0.5);
+            }
+            if(this.loc.distance(check[i].loc)<100 && !check[i].isDead){
+                this.dataBlock.health += check[i].dataBlock.health/10;
+                if(this.maxBeings<300 && this.maxRad<150){
+                    this.maxBeings+=10;
+                    this.rad+=5;
+                }
+                check[i].vel.multiply(0);
+                check[i].acc = new JSVector(0, 0); //in case there is for some reason scalar acceleration
+                this.victims.push(check[i]);
             }
         }
+
+        check = this.world.creatures.pred2;
+        for(let i = 0; i<check.length; i++){
+            if(this.loc.distance(check[i].loc)<300){
+                this.acc = JSVector.subGetNew(check[i].loc, this.loc);
+                this.acc.normalize();
+                this.acc.multiply(0.5);
+            }
+            if(this.loc.distance(check[i].loc)<100 && !check[i].isDead){
+                this.dataBlock.health += check[i].dataBlock.health/10;
+                if(this.maxBeings<300 && this.maxRad<150){
+                    this.maxBeings+=10;
+                    this.rad+=5;
+                }
+                check[i].vel.multiply(0);
+                check[i].acc = new JSVector(0, 0); //in case there is for some reason scalar acceleration
+                this.victims.push(check[i]);
+            }
+        }
+
         check = this.world.creatures.pred3;
         for(let i = 0; i<check.length; i++){
-            if(this.loc.distance(check[i].loc)<this.rad && !check[i].isDead){
-                this.dataBlock.life += check.dataBlock.life/10;
-                check[i].dataBlock.life-=50; //potentially change death per turn
-                check[i].dataBlock.nourishment-=50;
-                check[i].clr = "rgb(255, 0, 127)";
+            if(this.loc.distance(check[i].loc)<300){
+                this.acc = JSVector.subGetNew(check[i].loc, this.loc);
+                this.acc.normalize();
+                this.acc.multiply(0.5);
+            }
+            if(this.loc.distance(check[i].loc)<100 && !check[i].isDead){
+                this.dataBlock.health += check[i].dataBlock.health/10;
+                if(this.maxBeings<300 && this.maxRad<150){
+                    this.maxBeings+=10;
+                    this.rad+=5;
+                }
+                check[i].vel.multiply(0);
+                check[i].acc = new JSVector(0, 0); //in case there is for some reason scalar acceleration
+                this.victims.push(check[i]);
             }
         }
     }
