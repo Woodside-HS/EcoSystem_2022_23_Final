@@ -1,4 +1,3 @@
-//All creatures and food items are added to entities array
 class World {
   //  Commit 1: 221109
   constructor() {
@@ -31,6 +30,9 @@ class World {
         this.grid[row][col] = new Cell(this, this.ctxMain, row, col);
       }
     }
+
+    this.entities = [];
+    this.foodItems = [];
 
     this.creatures = {
       pred1: [],
@@ -110,7 +112,7 @@ class World {
     this.ctxMain.stroke();
     this.ctxMain.restore();
 
-    // // performance  show framerate
+    // framerate
     this.ctxMain.font = "20px  bold";
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS"; // frames per second
@@ -222,7 +224,7 @@ class World {
     } //tucker's herbavore
 
   
-//tucker's herbavore 2
+  //tucker's herbavore 2
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -306,6 +308,36 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
+      this.foods.food2.push(new Food2Grass(loc, vel, 7, this))
+    }
+    //  Evans Food4
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.foods.food4.push(new Food4Plant(loc, vel, 7, this))
+    }
+    //  Evans Food4 Particle System
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this))
+    }
+
+    for(let i = 0; i < 200; i++){      
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);      
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this));
     } //  Adrain Food2Grass
 
@@ -329,8 +361,8 @@ class World {
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     } //michael's particle system
+  
   }
-
   runCreatures() {
     let c = this.creatures;
 
@@ -373,7 +405,10 @@ class World {
         }
     }
 
-    for (let i = 0; i < c.flocks.length; i++) {}
+    for (let i = 0; i < c.flocks.length; i++) {
+
+    }
+  
   }
 
   runFood() {
@@ -406,15 +441,24 @@ class World {
         f.food3.splice(i, 1);
       }
     }
-    for (let i = f.food4.length - 1; i >= 0; i--) {}
+    for (let i = f.food4.length - 1; i >= 0; i--) {
 
-    for (let i = f.food5.length - 1; i >= 0; i--) {}
+    }
 
-    for (let i = f.food6.length - 1; i >= 0; i--) {}
+    for (let i = f.food4.length - 1; i >= 0; i--) {
+      f.food4[i].run();
+      if (f.food4[i].statBlock.nourishment <= 0) {
+        f.food4.splice(i, 1);
+      }
+    }
 
-    for (let i = f.food5.length - 1; i >= 0; i--) {}
+    for (let i = f.food5.length - 1; i >= 0; i--) {
 
-    for (let i = f.food6.length - 1; i >= 0; i--) {}
+    }
+
+    for (let i = f.food6.length - 1; i >= 0; i--) {
+
+    }
 
     for (let i = f.pSys1.length - 1; i >= 0; i--) {
       f.pSys1[i].run();
@@ -424,12 +468,21 @@ class World {
       f.pSys2[i].run();
     }
 
-    for (let i = f.pSys3.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys3.length - 1; i >= 0; i--) {
 
-    for (let i = f.pSys4.length - 1; i >= 0; i--) {}
+    }
 
-    for (let i = f.pSys5.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys4.length - 1; i >= 0; i--) {
 
-    for (let i = f.pSys6.length - 1; i >= 0; i--) {}
+    }
+
+    for (let i = f.pSys5.length - 1; i >= 0; i--) {
+
+    }
+
+    for (let i = f.pSys6.length - 1; i >= 0; i--) {
+
+    }
   }
 } //++++++++++++++++++++++++++++++  end world constructor
+
