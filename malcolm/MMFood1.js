@@ -9,7 +9,8 @@ class MMFood1 extends Food {
     this.ctxMain = wrld.ctxMain;
     this.isDead = false;
     this.count = 0;
-    this.tickRate = Math.random() * (150 - 50) + 50; //the tickrate of health decay
+    this.tickRate = Math.random() * (50 - 20) + 20; //the tickrate of health decay
+    // this.tickRate = 1;
     this.clr = "pink";
     this.angle = Math.random() * (60 - 0);
 
