@@ -26,7 +26,6 @@ class SBCreature3 extends Creature {
             this.segments.push(vec); //potential error
             ploc = new JSVector(vec.x, vec.y);
         }
-    
     }
     
     run() {
