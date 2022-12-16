@@ -13,28 +13,28 @@ class Creature extends Entity {
       this.wHeight = wrld.dims.height;
 
       this.statusBlock = {
-         searchFood:true,
-         searchMate:true,
-         eating:false,
-         sprint:false,
-         sleeping:false,
-         attack:false,
-         deathProc:false
-         
+         searchFood: true,
+         searchMate: true,
+         eating: false,
+         sprint: false,
+         sleeping: false,
+         attack: false,
+         deathProc: false
+
       };
 
       this.dataBlock = {//  status block 
          health: 100,
          isDead: false,
          nourishment: 100,
-         lifeSpan:Math.random()*3000,//  miliseconds
-         age:0,
-         numOffspring:3,
+         lifeSpan: Math.random() * 3000,//  miliseconds
+         age: 0,
+         numOffspring: 3,
          maxSpeed: 1,
          maxSprintSpeed: 1,
          scentValue: 100,
          sightValue: 100,
-         weight:10,
+         weight: 10,
       };
    }//++++++++++++++++++++++++++++++++ end creature constructor
 
@@ -45,7 +45,7 @@ class Creature extends Entity {
       this.render();
    }
    update() {
-      if(this.dataBlock.lifeSpan-- <= 0){
+      if (this.dataBlock.lifeSpan-- <= 0) {
          this.dataBlock.isDead = true;
       }
       this.vel.add(this.acc);

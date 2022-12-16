@@ -1,4 +1,4 @@
-class Creature5 extends Creature {
+class AdrainCreature5 extends Creature {
   // properties
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
@@ -9,7 +9,7 @@ class Creature5 extends Creature {
     this.clr = this.getRandomColor(); // creature get random color
     this.tempclr = this.clr; // reference color used as constant
     this.rad = 10; // radius references for everything made in this creature
-    this.wWidth = wrld.dims.width; 
+    this.wWidth = wrld.dims.width;
     this.wHeight = wrld.dims.height;
     this.size = 5; // size references for everything made in this creature
     this.sizeFactor = 1; // size factor
@@ -82,13 +82,13 @@ class Creature5 extends Creature {
   }
 
   searchMate() { // search for a mate
-    if (this.age > this.maxAge/3){ // make its at least above a third through its life before mating
-      if (this.statusBlock.searchMate){
+    if (this.age > this.maxAge / 3) { // make its at least above a third through its life before mating
+      if (this.statusBlock.searchMate) {
         world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, world));
         this.statusBlock.searchMate = false;
       } else {
         this.mateTime++;
-        if (this.mateTime > this.mateInterval){
+        if (this.mateTime > this.mateInterval) {
           this.statusBlock.searchMate = true;
           this.mateTime = 0;
         }
@@ -224,15 +224,15 @@ class Creature5 extends Creature {
   searchForFood() { //search for food
     if (this.searchingForFood) {
       let closestFoodinRange = this.findClosestFood();
-      try{
+      try {
         let closestFoodParticleinRange = this.findClosestFoodParticle();
         if (closestFoodinRange > closestFoodParticleinRange) {
           closestFoodinRange = closestFoodParticleinRange;
         }
       }
-      catch{
+      catch {
       }
-      
+
       if (closestFoodinRange != null) {
         let dist = this.loc.distance(closestFoodinRange.loc);
         if (closestFoodinRange.size == null) {
@@ -271,7 +271,7 @@ class Creature5 extends Creature {
     let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
     let closestFood = world.foods.food2[lowestDistanceIndex];
     return closestFood;
-    
+
   }
 
   findClosestFoodParticle() { // locate clocest food particle in a system
@@ -282,7 +282,7 @@ class Creature5 extends Creature {
         let dist = this.loc.distance(world.foods.pSys2[foodSys].foodList[food].loc);
         let prevdist = this.loc.distance(world.foods.pSys2[foodSys - 1].foodList[food - 1].loc);
         if (dist < prevdist) {
-          lowestParticleDist =  world.foods.pSys2[foodSys].foodList[food];
+          lowestParticleDist = world.foods.pSys2[foodSys].foodList[food];
         }
       }
       lowestParticleDistances.push(lowestParticleDist);
