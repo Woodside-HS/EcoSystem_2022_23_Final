@@ -153,7 +153,7 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      c.pred1.push(new Creature(loc, vel, 12, this));
+      //c.pred1.push(new Creature(loc, vel, 12, this));
     }
 
     for (let i = 0; i < numEntities; i++) {
@@ -163,8 +163,20 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      c.pred2.push(new Creature(loc, vel, 3, this));
+      //c.pred2.push(new Creature(loc, vel, 3, this));
     }
+
+    //SB Alpha Pred
+    for (let i = 0; i < 3; i++) {
+      let x = Math.random() * this.dims.width - this.dims.width / 2;
+      let y = Math.random() * this.dims.height - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      c.pred1.push(new SBAlpha(loc, vel, 3, this));
+    }
+
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -228,7 +240,7 @@ class World {
     let c = this.creatures;
 
     for (let i = c.pred1.length - 1; i >= 0; i--) {
-      //c.pred1[i].run();
+      c.pred1[i].run();
       if (c.pred1[i].dataBlock.isDead) {
         c.pred1.splice(i, 1);
       }
