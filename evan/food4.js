@@ -1,4 +1,4 @@
-class Food4 extends Entity {
+class Food4Plant extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
@@ -29,6 +29,15 @@ class Food4 extends Entity {
         //  attack:false,
         //  deathProc:false
         // };
+        this.deathMultiplier = this.life/this.initlife;
+        this.initSize = sz;
+        this.size = sz;
+        this.initSize = this.sz;
+      
+        
+        this.alive = true;
+        this.statBlock = {
+        };
     }
 
     run() {
