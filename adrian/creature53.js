@@ -40,6 +40,8 @@ class AdrianWilsonCreature53 extends Creature {
         flockForce.add(sep);
         //flockForce.add(seek);
         this.acc.add(flockForce);
+
+        this.searchForFood();
     }
 
     applyForce(force) {
@@ -162,7 +164,6 @@ class AdrianWilsonCreature53 extends Creature {
 
     searchForFood() { //search for food
       let closestFoodinRange = this.findClosestFood();
-
       if (closestFoodinRange != null) {
         let dist = this.loc.distance(closestFoodinRange.loc);
         if (closestFoodinRange.size == null) {
@@ -203,6 +204,7 @@ class AdrianWilsonCreature53 extends Creature {
   }
 
   seek(target) { // chase anything it needs too
+    console.log("hi");
     let desired = JSVector.subGetNew(target.loc, this.loc);
     desired.normalize();
     desired.multiply(this.maxSpeed);
