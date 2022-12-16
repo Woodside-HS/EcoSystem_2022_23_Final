@@ -226,6 +226,19 @@ class World {
       ); //  Added to creatures object
     } //adrains creatures
 
+     //Malcolm herb2 spining squer 
+     for(let i = 0; i < 20; i++) {
+      let loc = new JSVector(
+        Math.random() * this.dims.width - this.dims.width / 2,
+        Math.random() * this.dims.height - this.dims.height / 2
+        )
+        let vel = new JSVector(
+          Math.random() * 4 - 2,
+          Math.random() * 4 - 2
+        )
+        c.herb2.push(new MMHerb2(loc, vel, 15, this))
+    }
+
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -237,6 +250,7 @@ class World {
         new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this)
       );
     } //tucker's herbavore
+
 
     //tucker's herbavore 2
     for (let i = 0; i < numEntities; i++) {
@@ -359,7 +373,7 @@ class World {
     } //  Adrain Food2Grass
 
     //Malcolm food2 blob
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 20; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
