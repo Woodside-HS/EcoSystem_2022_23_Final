@@ -23,6 +23,9 @@ class Food extends Entity {
     }
 
     update() {
+
+
+        
     }
 
     render() {

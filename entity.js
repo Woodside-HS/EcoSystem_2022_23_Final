@@ -1,8 +1,8 @@
 class Entity {
   constructor(loc, vel, sz, wrld) {
     //mover properties
-    this.loc = loc;
-    this.vel = vel;
+    this.loc = new JSVector(0, 0);
+    this.vel = new JSVector(0, 0);
     this.acc = new JSVector(0, 0);
     this.clr = this.getRandomColor();
     this.size = sz;

@@ -18,7 +18,7 @@ class tFood2 {
     }
     
     update() {
-        if(this.foodList.length<10){//limits the foodList to only 10
+        if(this.foodList.length<10){
             if (this.spawnNew > this.spawnNewMax) {
                 let velX = Math.random() * 1 - 0.5;
                 let velY = Math.random() * 1 - 0.5;
@@ -27,11 +27,11 @@ class tFood2 {
                 this.spawnNew = 0;//resets the span new integer so a new cherry is spawned every 10 frames as of now
             }
         }
+        
         this.spawnNew++;
         for (let i = this.foodList.length-1; i > 0; i--) {
             this.foodList[i].run();
             if (this.foodList[i].isDead == true) {//cuts out any dead particles
-                console.log("should splice");
                 this.foodList.splice(i, 1);
             }
         }

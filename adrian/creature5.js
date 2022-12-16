@@ -12,6 +12,7 @@ class Creature5 extends Creature {
         this.size = 5;
         this.sizeFactor = 1;
         this.rotation = 0;
+        this.eating = false;
     }
     //  methods
     run() {
@@ -71,6 +72,7 @@ class Creature5 extends Creature {
         ctx.restore();
     }
 
+
     getRandomColor() {
         //  List of hex color values for movers
         let colors = [
@@ -86,3 +88,4 @@ class Creature5 extends Creature {
     }
 
 }
+

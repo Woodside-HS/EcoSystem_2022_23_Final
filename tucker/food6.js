@@ -1,4 +1,4 @@
-class Food6 extends Food {
+class Food6 extends Food {//this is tucker's food
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
@@ -7,15 +7,22 @@ class Food6 extends Food {
         this.rad = sz;
         this.ctx = wrld.ctxMain;
         this.clr = this.getRandomColor();
-        this.fullyEaten = false
+        this.isDead = false;
     }
     //  methods
     run() {
         this.update();
         this.render();
         this.bounce();
-        if (this.statBlock.nurishment <= 0) {//Fruits dont have lifespan so once they have been fully eaten they commit dead
-            this.fullyEaten = true;
+        if (this.statBlock.nurishment <= 0 || this.statBlock.health <= 0) {//Fruits dont have lifespan so once they have been fully eaten they commit dead
+            this.isDead = true;
+            let x = Math.random() * this.dims.width - this.dims.width / 2;
+            let y = Math.random() * this.dims.height - this.dims.height / 2;
+            let loc = new JSVector(x, y);
+            let dx = Math.random() * 4 - 2;
+            let dy = Math.random() * 4 - 2;
+            let vel = new JSVector(dx, dy);
+            world.foods.food3.push(loc, vel, 5, world)
         }
     }
 
