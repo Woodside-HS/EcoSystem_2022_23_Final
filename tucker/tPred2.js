@@ -1,18 +1,23 @@
 class tPred2 extends Creature {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld);
+        this.id = "tPred2";
         this.rot = 0;
         this.foodDirect = 0;
         this.no = false
         this.dataBlock.sightValue = 100;
         this.foodId = {
-            creatTp : -1,
-            creatId : -1
+            creatTp : -1,//this is the type of the creature that it is eating
+            creatId : -1//this is the ID of the creature being eaten
         }
     }
     run() {
+        if (this.dataBlock.nourishment <= 0 || this.dataBlock.health <= 0 || this.dataBlock.age >= this.dataBlock.lifeSpan) {
+            this.dataBlock.isDead = true;
+        }
         this.render();
         this.runChecks();
+        this.checkEdges();
         this.update();
     }
     runChecks(){
@@ -36,31 +41,86 @@ class tPred2 extends Creature {
         }
     }
     searchMate(){
+        let pred = world.creatures.pred3
+        for(let i = 0; i<pred.length;i++){
+            if(this.id == pred[i].id && this != pred[i]){
 
+            }
+        }
     }
     searchFood(){
         let food1 = world.creatures.pred3;
         let food2 = world.creatures.herb1;
         for(let i = 0; i <food1.length;i++){
-            let siteSq = this.statusBlock.sightValue*this.statusBlock.sightValue;
-            if(this.loc.distanceSquared(food1[i].loc)<siteSq && food[i]){
-                console.log("skrg");
-                let mv = JSVector.subGetNew(food[i].loc,this.loc)
-                this.foodDirect = mv.getDirection();
-                mv.setMagnitude(0.05);
-                this.acc.add(mv);
-            }
-        }
+            let siteSq = this.dataBlock.sightValue*this.dataBlock.sightValue;
+            if(food1[i]){
+                if(this.loc.distanceSquared(food1[i].loc)<siteSq && food1[i] && this != food1[i]){
+                    let mv = JSVector.subGetNew(food1[i].loc,this.loc)
+                    this.foodDirect = mv.getDirection();
+                    mv.limit(0.05);
+                    this.acc.add(mv);
+                }
+                if(this.loc.distanceSquared(food1[i].loc)<100){
+                    this.foodId.creatTp = 0;//0 is predator 3, 1 is herbavore 1
+                    this.foodId.creatId = i;
+                    this.statusBlock.eating = true;
+                    this.eat();
+                }
+            }//end of food 1 existance if statement
+        }//end of food1 for loop
+        for(let i = 0; i <food2.length;i++){
+            let siteSq = this.dataBlock.sightValue*this.dataBlock.sightValue;
+            if(food2[i]){
+                if(this.loc.distanceSquared(food2[i].loc)<siteSq && food2[i] && this != food2[i]){
+                    let mv = JSVector.subGetNew(food2[i].loc,this.loc)
+                    this.foodDirect = mv.getDirection();
+                    mv.limit(0.05);
+                    this.acc.add(mv);
+                }
+                if(this.loc.distanceSquared(food2[i].loc)<100){
+                    this.foodId.creatTp = 0;//0 is predator 3, 1 is herbavore 1
+                    this.foodId.creatId = i;
+                    this.statusBlock.eating = true;
+                    this.eat();
+                }
+            }//end of food 1 existance if statement
+        }//end of food1 for loop
     }
     eat(){
+        //set up variables for this thing
+        this.dataBlock.nourishment += 50;
+        let food1 = world.creatures.pred3;
+        let food2 = world.creatures.herb1;
+        let i = this.foodId.creatId;//using this cause I like i
 
+        if(food1[i] && this.foodId.foodId == 0){
+            food1[i].statusBlock.health -= 50;
+            this.vel = new JSVector(0,0);
+            if(food1[i].statusBlock.health <= 10 ||food1[i].isDead ){
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = false;
+                this.foodId.creatTp = -1;
+                this.foodId.creatId = -1;
+                this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+            }
+        } else if (food2[i] && this.foodId.creatId == 1) {
+            food2[i].statusBlock.health -= 50;
+            this.vel = new JSVector(0,0);
+            if(food2[i].statusBlock.health <= 10 || food2[i].isDead){
+                this.statusBlock.eating = false;
+                this.statusBlock.searchFood = false;
+                this.foodId.creatTP = -1;
+                this.foodId.creatId = -1;
+                this.vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+            }
+        }//end of existance if statement 
     }
     update(){
         //deals with the rotation of the wings 
         if(this.vel.getMagnitude()<=0.5){
-            this.rot+=0.05;
+            this.rot+=0.025;
         } else {
-            this.rot+=0.1;
+            this.rot+=0.05;
         }
         if(this.rot>=1.1){
             this.rot=0;
@@ -69,13 +129,11 @@ class tPred2 extends Creature {
         this.vel.add(this.acc)
         this.vel.limit(this.dataBlock.maxSpeed);
         this.loc.add(this.vel)
+        this.acc = new JSVector(0,0);
     }
     render() {
-        //if(){ Need to make it so that when outside of viewing area it disappears but that seems snnoying to make
-
-        //}
+        //imma be honest I dont know how half of this works but it does
         let ctx = world.ctxMain;
-        //translate doesnt work so I us this instead
         let smlSz = this.size / 2;
         let x = this.loc.x;
         let y = this.loc.y;
@@ -104,68 +162,69 @@ class tPred2 extends Creature {
         ctx.fill();
         //right wing I want these bois to rotate but thats for later
         ctx.save();
-        ctx.translate(x, y);
-        x = 0;
-        y = 0;
         ctx.rotate(this.rot);
         ctx.beginPath();
         ctx.fillStyle = "red";
-        ctx.moveTo(x + this.size, y - this.size);
+        ctx.moveTo(x + this.size, y - this.size);//top of the wing
         ctx.lineTo(x + this.size * 3, y - this.size - smlSz);
         ctx.arc(x + this.size * 3, y, this.size * 1.5, 6 * Math.PI / 4, 0);//DONT TOUNC (IT GONNA DIE)
         ctx.lineTo(x + this.size * 4, y + smlSz);
         ctx.lineTo(x + this.size * 3.5, y);
-        ctx.lineTo(x + this.size * 3, y + smlSz);
+        ctx.lineTo(x + this.size * 3, y + smlSz);//pokey at the bottom of the wing
         ctx.lineTo(x + this.size * 2.5, y);
         ctx.lineTo(x + this.size * 2, y + smlSz);
         ctx.closePath();
         ctx.stroke();
         ctx.fill();
         ctx.restore();
-        //x = this.loc.x;
-        //y = this.loc.y;
         //left wing
-        ctx.translate(x,y);
-        x = 0;
-        y = 0;
+        ctx.save();
         ctx.rotate(-this.rot);
         ctx.beginPath();
         ctx.fillStyle = "red";
-        ctx.moveTo(x - this.size, y - this.size);
+        ctx.moveTo(x - this.size, y - this.size);//top of the wing
         ctx.lineTo(x - this.size * 3, y - this.size - smlSz);
         ctx.arc(x - this.size * 3, y, this.size * 1.5, Math.PI, 6 * Math.PI / 4);//DONT TOUNC (IT GONNA DIE)
-        ctx.lineTo(x - this.size * 4.5, y);
+        ctx.lineTo(x - this.size * 4.5, y);//this has to be here for some reason
         ctx.lineTo(x - this.size * 4, y + smlSz);
         ctx.lineTo(x - this.size * 3.5, y);
-        ctx.lineTo(x - this.size * 3, y + smlSz);
+        ctx.lineTo(x - this.size * 3, y + smlSz);//these bits are the pokey bits at the bottom of the wing
         ctx.lineTo(x - this.size * 2.5, y);
         ctx.lineTo(x - this.size * 2, y + smlSz);
         ctx.closePath();
         ctx.stroke();
-        ctx.fillStyle = "red";
         ctx.fill();
         ctx.restore();
-        //x = this.loc.x;
-        //y = this.loc.y;
         //head
-        ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = "#560000";//dark red for head but for some reason it overlaps
-        
-        ctx.translate(this.loc.x,this.loc.y-(this.size + smlSz));
-        ctx.rotate(this.foodDirect);
-        //ctx.rotate();//head rotation, to look directly at nearest creature tbd
-        ctx.moveTo(0,0);
-        ctx.lineTo(-smlSz/4,0);
-        ctx.lineTo(-2*smlSz/4,smlSz);//tip of horn
-        ctx.lineTo(-3*smlSz/4,0);
-        ctx.lineTo(-2*smlSz/4,-this.size);
-        ctx.lineTo(2*smlSz/4,-this.size);
-        ctx.lineTo(3*smlSz/4,0);
-        ctx.lineTo(2*smlSz/4,smlSz);//tip of horn 2
-        ctx.lineTo(smlSz/4,0)
+        ctx.fillStyle = "#560000";
+        ctx.rotate(this.vel.foodDirect - Math.PI/2);
+        let xy =  -(this.size + smlSz)
+        ctx.moveTo(0,xy);
+        ctx.lineTo(-smlSz/4,xy);
+        ctx.lineTo(-2*smlSz/4,xy+smlSz);//tip of horn
+        ctx.lineTo(-3*smlSz/4,xy);
+        ctx.lineTo(-2*smlSz/4,xy-this.size);
+        ctx.lineTo(2*smlSz/4,xy-this.size);
+        ctx.lineTo(3*smlSz/4,xy);
+        ctx.lineTo(2*smlSz/4,xy+smlSz);//tip of horn 2
+        ctx.lineTo(smlSz/4,xy)
         ctx.closePath();
         ctx.fill();
         ctx.restore();
+    }
+    checkEdges() {
+        if (this.loc.x > world.dims.right) {
+            this.vel.x = -this.vel.x;
+        }
+        if (this.loc.x < world.dims.left) {
+            this.vel.x = -this.vel.x;
+        }
+        if (this.loc.y > world.dims.bottom) {
+            this.vel.y = -this.vel.y;
+        }
+        if (this.loc.y < world.dims.top) {
+            this.vel.y = -this.vel.y;
+        }
     }
 }

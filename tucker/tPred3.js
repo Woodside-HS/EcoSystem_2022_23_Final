@@ -126,6 +126,7 @@ class tPred3 extends Creature {
             this.dataBlock.nourishment += 25;
             let i = this.foodId.id;//works until here
             if (world.creatures.herb2[i] && i != null && this.foodId.or) {
+                this.vel = new JSVector(0,0);
                 if (world.creatures.herb2[i].dataBlock.isDead != true) {
                     if (this.loc.distanceSquared(world.creatures.herb2[i].loc) >= 100) {//this checks to make sure that the creature hasnt "escaped"
                         this.statusBlock.eating = false;
@@ -147,6 +148,7 @@ class tPred3 extends Creature {
                     this.new = 0;
                 }
             } else if (world.creatures.herb3[i] && i != null && !this.foodId.or) {
+                this.vel = new JSVector(0,0);
                 if (world.creatures.herb3[i].dataBlock.isDead != true) {
                     if (this.loc.distanceSquared(world.creatures.herb3[i].loc) >= 100) {//this checks to make sure that the creature hasnt "escaped"
                         this.statusBlock.eating = false;
@@ -173,11 +175,11 @@ class tPred3 extends Creature {
     searchMate() {
         for (let i = 0; i < world.creatures.pred3.length; i++) {
             let siteSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
-            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= siteSq && world.creatures.pred3[i].statusBlock.searchMate) {
+            if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= siteSq && world.creatures.pred3[i].statusBlock.searchMate && world.creatures.pred3 ) {
                 //checks that mate is in range and looking for baby
                 let mate = world.creatures.pred3[i];
                 let mte = JSVector.subGetNew(mate.loc, this.loc);
-                mte.setMagnitude(0.05);
+                mte.limit(0.05);
                 this.acc.add(mte);
             }
             if (this.loc.distanceSquared(world.creatures.pred3[i].loc) <= 100 && this.cooldown >= 50 && world.creatures.pred3.length <100) {
