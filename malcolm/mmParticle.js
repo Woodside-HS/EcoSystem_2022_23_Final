@@ -23,6 +23,7 @@ class MMParticle extends Food {
 
     this.count = 0;
     this.isDead = false;
+    this.angle = 0
   }
   run() {
     this.render();
@@ -30,18 +31,40 @@ class MMParticle extends Food {
     this.checkEdges();
   }
   render() {
+    this.angle += 0.01 
     this.ctxMain.save();
     this.ctxMain.beginPath();
     this.ctxMain.translate(this.loc.x, this.loc.y);
-    this.ctxMain.fillText(this.statBlock.health, -10, -20);
-    // this.ctxMain.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI, false);
-    this.ctxMain.moveTo(0, 0);
-    this.ctxMain.lineTo(20, 20);
-    this.ctxMain.lineTo(-20, 20);
-    this.ctxMain.fillStyle = "red";
-    this.ctxMain.strokeStyle = "black";
-    this.ctxMain.closePath();
+    this.ctxMain.fillText(this.statBlock.health, -10, -20); // shows health 
+    this.ctxMain.arc(0, 0, this.size, 0, 2 * Math.PI, false); // circle 
+    this.ctxMain.rotate(this.angle)
+    
+    this.ctxMain.moveTo(0, -15); // top spike
+    this.ctxMain.lineTo(5, -10)
+    this.ctxMain.lineTo(-5, -10)
+    this.ctxMain.closePath() // closes the line path
 
+    this.ctxMain.moveTo(-15, 0)// left spike
+    this.ctxMain.lineTo(-10, -5)
+    this.ctxMain.lineTo(-10, 5)
+    this.ctxMain.closePath()
+
+    this.ctxMain.moveTo(0, 15); // bottom spike
+    this.ctxMain.lineTo(-5, 10)
+    this.ctxMain.lineTo(5, 10)
+    this.ctxMain.closePath() 
+
+    this.ctxMain.moveTo(15, 0)// right spike
+    this.ctxMain.lineTo(10, 5)
+    this.ctxMain.lineTo(10, -5)
+    this.ctxMain.closePath() 
+
+
+
+
+
+    this.ctxMain.fillStyle = "blue";
+    this.ctxMain.strokeStyle = "black";
     this.ctxMain.fill();
     this.ctxMain.stroke();
     this.ctxMain.restore();
