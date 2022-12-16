@@ -389,6 +389,16 @@ class World {
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     } //michael's particle system
+
+    //Malcolms PS1 spinning spike ball
+    for(let i = 0; i < 1; i++) {
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      f.pSys1.push(new MMParticle(loc, vel, 5, this))
+    }
   }
   runCreatures() {
     let c = this.creatures;
