@@ -187,6 +187,24 @@ class World {
       let vel = new JSVector(dx, dy);
       //c.pred2.push(new Creature(loc, vel, 3, this));
     }
+    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      c.pred2.push(new tPred2(loc, vel, 3, this));
+    }
+    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      c.pred3.push(new tPred3(loc, vel, 3, this));
+    }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Herbavour 1 - 3
 
