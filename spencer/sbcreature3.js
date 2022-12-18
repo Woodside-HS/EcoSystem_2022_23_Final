@@ -26,7 +26,6 @@ class SBCreature3 extends Creature {
             this.segments.push(vec); //potential error
             ploc = new JSVector(vec.x, vec.y);
         }
-    
     }
     
     run() {
@@ -128,6 +127,16 @@ class SBCreature3 extends Creature {
       else if(this.loc.x < this.world.dims.left  + 30 || this.loc.x > this.world.dims.right - 30){
         this.vel.x = -this.vel.x;
       }
+      if(this.loc.y < world.dims.top +10  || this.loc.y > world.dims.bottom -10 ){
+        this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+        this.acc.normalize();
+        this.acc.multiply(0.5);
+      }
+      else if(this.loc.x < this.world.dims.left +10 || this.loc.x > this.world.dims.right -10){
+        this.acc = JSVector.subGetNew(new JSVector(Math.random()*400-200, Math.random()*400-200), this.loc);
+        this.acc.normalize();
+        this.acc.multiply(0.5);
+      }
 
     }
 
@@ -171,7 +180,7 @@ class SBCreature3 extends Creature {
 
     eating(){ //if isEating is on, it stands still and eats
         //lets plant know its being eaten
-        if(this.food.statBlock.health <5){
+        if(this.food.statBlock.health <2 || this.food.statBlock.nourishment <2 || this.food.loc.distance(this.loc)>20){
             this.statusBlock.eating = false;
             this.statusBlock.search = true;
         }
@@ -181,7 +190,7 @@ class SBCreature3 extends Creature {
         }
         this.food.statBlock.nourishment--;
         this.counter++;
-        if(this.counter%500 == 0){ //adds another segment if it eats enough
+        if(this.counter%500 == 0 && this.statusBlock.eating && this.food.loc.distance(this.loc)<10){ //adds another segment if it eats enough
             let vel2 = new JSVector(this.vel.x, this.vel.y);
             vel2.setMagnitude(this.segLength);
             let vec = JSVector.subGetNew(this.segments[this.segments.length-1], vel2);
@@ -198,7 +207,6 @@ class SBCreature3 extends Creature {
         this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
         this.segments = [];
         this.segLength = 10;
-        console.log(this.dataBlock.health);
         this.loadSegments();
         this.acc = new JSVector(0,0);
         this.counter = 0;
@@ -209,7 +217,6 @@ class SBCreature3 extends Creature {
         this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
         this.dataBlock.age = 0;
         this.clr = "lime";
-        console.log(this.dataBlock.health);
     }
     
 }
