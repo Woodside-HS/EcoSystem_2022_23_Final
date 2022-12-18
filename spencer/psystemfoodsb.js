@@ -3,11 +3,18 @@ class PSystemFoodSB {
     constructor(start, death, ctx, sz) { 
     this.loc = new JSVector(start.x + Math.random()*500-250, start.y + Math.random()*500-250);
     this.sz = sz; 
-    this.life = Math.random()*30*death+30;
     this.isDead = false;
     this.ctx = ctx;
     this.clr = ["#F500A2", "rgb(10, 61, 38)"];
     this.dying = false;
+    this.statBlock = {//  properties 
+      health: 100,
+      nourishment: 100,
+      lifeSpan:30000,
+      opacity:1.0,
+      foodPts:100
+    };
+    this.statBlock.health = Math.random()*30*death+30;
   }
   
   run() {
@@ -17,11 +24,11 @@ class PSystemFoodSB {
   }
   
   update() {
-    if(this.life<=1){
+    if(this.statBlock.health<=1){
       this.isDead = true;
     }
     else{
-    this.life--;
+    this.statBlock.health--;
     }
   }
   
