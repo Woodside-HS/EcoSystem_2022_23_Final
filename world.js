@@ -235,7 +235,7 @@ class World {
     } //adrains creatures
     //tucker's herbavore
     //Malcolm mmHerb1 &&&&&&&&&&&&
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < numEntities; i++) {
       let loc = new JSVector(
         Math.random() * this.dims.width - this.dims.width / 2,
         Math.random() * this.dims.height - this.dims.height / 2
