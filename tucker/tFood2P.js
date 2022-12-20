@@ -12,25 +12,25 @@ class tFood2P {
         this.statBlock = {//  properties 
             health: 100,
             nourishment: 100,
-            lifeSpan: 30000,
+            lifeSpan: Math.random()*1000+500,
             opacity: 1.0,
             foodPts: 100
         };
     }
     run() {
-        if (this.statBlock.nourishment <= 1) {
+        if (this.statBlock.nourishment <= 1 || this.statBlock.health <=1 || this.statBlock.lifeSpan < 0) {
             this.isDead = true;
         }//have to check if lifespan is up or if nurishment is left over
         this.update();
         this.render();
         this.checkDist();
     }
+    beinEat(){
+        this.statBlock.nourishment--;
+    }
     update() {
         this.loc.add(this.vel)
         this.statBlock.lifeSpan--;
-        if (this.statBlock.lifeSpan < 0) {
-            this.isDead = true;
-        }//have to check if lifespan is up or if nurishment is left over
     }
     render() {
         let ctx = this.ctx;
