@@ -188,27 +188,6 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred1.push(new SBAlpha(loc, vel, 3, this));
     }
-
-    // for (let i = 0; i < numEntities; i++) {
-    //   let x = Math.random() * this.cnvMain.width;
-    //   let y = Math.random() * this.cnvMain.height;
-    //   let loc = new JSVector(x, y);
-    //   let dx = Math.random() * 4 - 2;
-    //   let dy = Math.random() * 4 - 2
-    //   let vel = new JSVector(dx, dy);
-    //   c.herb3.push(new Creature(loc, vel, 12, this));
-    // }
-
-    for (let i = 0; i < numEntities; i++) {
-      let x = Math.random() * this.cnvMain.width;
-      let y = Math.random() * this.cnvMain.height;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      //c.pred2.push(new Creature(loc, vel, 3, this));
-    }
-    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
     //Tucker's Predator 2 (Bird) 
     for (let i = 0; i < numEntities / 2; i++) {
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
@@ -332,25 +311,27 @@ class World {
       f.pSys2.push(new tFood2(loc, vel, 7, this));
     } 
     //  Evans Food4
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
-    }
-    //  Evans Food4 Particle System
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this));
-    }
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2;
+    //   let vel = new JSVector(dx, dy);
+    //   this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
+    // }
+    
+
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2;
+    //   let vel = new JSVector(dx, dy);
+    //   this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
+    // }
+    
     //  Adrain Food2Grass
     for (let i = 0; i < 200; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
@@ -413,7 +394,6 @@ class World {
       this.foods.pSys2.push(new SBPSystem(loc, new JSVector(0,0), 8, this, 225));
     }
   }
-}
   
   
   runCreatures() {

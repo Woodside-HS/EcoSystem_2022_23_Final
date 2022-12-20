@@ -45,7 +45,7 @@ class EvanHerbivore3 extends Creature {
           }
           this.loseNourishment();
           this.checkHealth();
-          //this.searchMate();
+          this.searchMate();
           this.update();
         
       } else if (!this.isDead && this.eating) { // happens if eating
@@ -87,6 +87,21 @@ class EvanHerbivore3 extends Creature {
         this.isDead = true;
       }
   
+    }
+
+    searchMate() { // search for a mate
+      if (this.age > this.maxAge / 3) { // make its at least above a third through its life before mating
+        if (this.statusBlock.searchMate) {
+          world.creatures.herb1.push(new Creature5(this.loc, new JSVector(0, 0), 6, world));
+          this.statusBlock.searchMate = false;
+        } else {
+          this.mateTime++;
+          if (this.mateTime > this.mateInterval) {
+            this.statusBlock.searchMate = true;
+            this.mateTime = 0;
+          }
+        }
+      }
     }
 
     update() { 
