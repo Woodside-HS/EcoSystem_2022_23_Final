@@ -1,8 +1,8 @@
 class MMHerb1 extends Creature {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
-    // this.loc = loc;
-    this.loc = new JSVector(Math.random() * 100 - 50 + 50, Math.random() * 100 - 50 + 50);
+    this.loc = loc;
+    // this.loc = new JSVector(Math.random() * 100 - 50 + 50, Math.random() * 100 - 50 + 50);
     this.vel = vel;
     this.size = sz;
     this.world = wrld;
