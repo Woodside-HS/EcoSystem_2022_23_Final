@@ -94,6 +94,10 @@ class World {
     this.runCreatures();
     this.runFood();
 
+    // for (let i = 0; i < this.foods.food2.length; i++) {
+    //   this.foods.food2[i].run();
+    // }
+    
     this.ctxMain.restore();
 
     // // translate cnvMain according to the location of the canvas in the world
@@ -211,6 +215,17 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred3.push(new tPred3(loc, vel, 3, this));
     }
+    
+      //  Spencer Predator 3
+      for (let i = 0; i < 50; i++) {
+        let x = Math.random() * this.dims.width - (this.dims.width / 2);
+        let y = Math.random() * this.dims.height - (this.dims.height / 2);
+        let loc = new JSVector(x, y);
+        let dx = Math.random() * 4 - 2;
+        let dy = Math.random() * 4 - 2
+        let vel = new JSVector(dx, dy);
+        this.creatures.pred3.push(new SBPred3(loc, vel, 30, this))
+      }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Herbavour 1 - 3
 
@@ -419,9 +434,10 @@ class World {
       if (c.pred3[i].dataBlock.isDead) {
         c.pred3.splice(i, 1);
       }
+
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      //c.herb1[i].run();
+      c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
