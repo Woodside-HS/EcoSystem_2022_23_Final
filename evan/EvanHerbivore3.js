@@ -24,6 +24,15 @@ class EvanHerbivore3 extends Creature {
       this.searchingForFood = true;
       this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
       this.mateTime = 0; // mating tick
+      this.statBlock = {
+        searchFood:true,
+        searchMate:true,
+        eating:false,
+        sprint:false,
+        sleeping:false,
+        attack:false,
+        deathProc:false
+       };
     }//++++++++++++++++++++++++++++++++ end creature constructor
  
     //++++++++++++++++++++++++++++++++ creature methods
