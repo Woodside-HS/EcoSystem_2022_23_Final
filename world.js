@@ -305,6 +305,19 @@ class World {
       let vel = new JSVector(dx, dy);
       f.pSys2.push(new tFood2(loc, vel, 7, this));
     } 
+
+     // malcolm food 3
+     for (let i = 0; i < 20; i++) {
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let dx = Math.random() * 3 - 2;
+      let dy = Math.random() * 3 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.food3.push(new MMFood3(loc, vel, 20, this));
+    }
+    
     //  Evans Food4
     for (let i = 0; i < 50; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
