@@ -18,17 +18,17 @@ class Food4Plant extends Food {
         this.initSize = this.sz;
         this.health = 1000;
       
-        beingEaten = false;
+        let beingEaten = false;
         this.alive = true;
-        // this.statBlock = {
-        //  searchFood:true,
-        //  searchMate:true,
-        //  eating:false,
-        //  sprint:false,
-        //  sleeping:false,
-        //  attack:false,
-        //  deathProc:false
-        // };
+        this.statBlock = {
+         searchFood:true,
+         searchMate:true,
+         eating:false,
+         sprint:false,
+         sleeping:false,
+         attack:false,
+         deathProc:false
+        };
         this.deathMultiplier = this.life/this.initlife;
         this.initSize = sz;
         this.size = sz;

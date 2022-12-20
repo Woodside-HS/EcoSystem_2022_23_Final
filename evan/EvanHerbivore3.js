@@ -131,9 +131,18 @@ class EvanHerbivore3 extends Creature {
               this.eat(closestFoodinRange);
               this.eating = true;
             }
+
+
           }
+
+
+
         }
+
+
       }
+
+
     }
 
 
@@ -143,6 +152,8 @@ class EvanHerbivore3 extends Creature {
         let dist = this.loc.distance(world.foods.food2[food].loc);
         foodsdistances.push(dist);
       }
+      
+
   
       let lowestDistance = Math.min(...foodsdistances);
       let lowestDistanceIndex = foodsdistances.indexOf(lowestDistance);
@@ -159,6 +170,9 @@ class EvanHerbivore3 extends Creature {
       steer.limit(this.maxForce);
       this.vel = desired;
     }
+
+
+    
   
    //  applyForce(force) {
    //    this.acc.add(force);

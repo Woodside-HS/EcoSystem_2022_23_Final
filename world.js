@@ -360,25 +360,16 @@ class World {
       this.foods.food2.push(new Food2Grass(loc, vel, 7, this));
     }
     //  Evans Food4
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
-    }
-    //  Evans Food4 Particle System
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this));
-    }
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2;
+    //   let vel = new JSVector(dx, dy);
+    //   this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
+    // }
+    
 
     for (let i = 0; i < 200; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
@@ -428,9 +419,9 @@ class World {
       let y = Math.random() * this.dims.height - (this.dims.height / 2);
       let loc = new JSVector(x, y);
       let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2
+      let dy = Math.random() * 4 - 2;
       let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this))
+      this.foods.pSys2.push(new NewFoodPS(loc, vel, 7, this))
     }
   }
   

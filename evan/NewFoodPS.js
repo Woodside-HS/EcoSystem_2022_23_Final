@@ -1,4 +1,4 @@
-class Food4PlantPS extends Food {
+class NewFoodPS extends Food {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
@@ -8,8 +8,17 @@ class Food4PlantPS extends Food {
         this.world = wrld;
         this.rad =  15;
         this.clr = this.getTrueRandomColor();
-        this.particles = [];
+        this.foodList = [];
         this.loadParticles(5);
+         this.statBlock = {
+         searchFood:true,
+         searchMate:true,
+         eating:false,
+         sprint:false,
+         sleeping:false,
+         attack:false,
+         deathProc:false
+        };
     }
     //  methods
     run() {
@@ -17,18 +26,18 @@ class Food4PlantPS extends Food {
     }
 
     update() {
-        for (let i = this.particles.length - 1; i > 0; i--) {
-            this.particles[i].run();
-            if(!this.particles[i].alive) {
-              this.particles.splice(i, 1);
-              this.particles.push(new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx))
+        for (let i = this.foodList.length - 1; i > 0; i--) {
+            this.foodList[i].run();
+            if(!this.foodList[i].alive) {
+              this.foodList.splice(i, 1);
+              this.foodList.push(new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx))
             }
         }
     }
 
     loadParticles(n) {
         for(let i = 0; i < n; i++) {
-            this.particles[i] = new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx);
+            this.foodList[i] = new NewFood(this.loc.x+this.randomNumber(250, -250), this.loc.y+this.randomNumber(250, -250), this.rad, this.clr, this.ctx);
         }
     }
 
