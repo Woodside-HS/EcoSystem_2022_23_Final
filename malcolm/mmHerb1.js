@@ -22,14 +22,14 @@ class MMHerb1 extends Creature {
 
   }
   update() {
-    if (this.statusBlock.health <= 0) {
-      this.statusBlock.isDead = true;
+    if (this.dataBlock.health <= 0) {
+      this.dataBlock.isDead = true;
     }
-    if (this.statusBlock.health > 100) {
-      this.statusBlock.health = 100;
+    if (this.dataBlock.health > 100) {
+      this.dataBlock.health = 100;
     }
     if (this.count++ >= this.tickRate) {
-      this.statusBlock.health--;
+      this.dataBlock.health--;
       this.count = 0;
     }
     this.loc.add(this.vel);
@@ -55,12 +55,13 @@ class MMHerb1 extends Creature {
     }
   }
   render() {
-    this.angle += 0.01
+    this.angle += 0.5
     this.ctxMain.save();
     this.ctxMain.translate(this.loc.x, this.loc.y);
+    this.ctxMain.fillText(this.dataBlock.health, -10, -20);
     this.ctxMain.rotate(this.angle)
-    this.ctxMain.moveTo(-10, -10);
-    this.ctxMain.lineTo(0, 0);
+    this.ctxMain.moveTo(-5, 0);
+    this.ctxMain.lineTo(5, 0);
     this.ctxMain.fillStyle = "black";
     this.ctxMain.strokeStyle = "white";
     this.ctxMain.stroke();
@@ -79,7 +80,7 @@ class MMHerb1 extends Creature {
         this.vel.limit(2);
         if (dist > 10) {
           this.vel = new JSVector(0, 0);
-          this.statusBlock.health += food1.statusBlock.health;
+          this.dataBlock.health += food1.statusBlock.health;
           food1.statusBlock.health = 0;
           this.vel.x = this.vX;
           this.vel.y = this.vY;
