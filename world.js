@@ -310,6 +310,19 @@ class World {
       let vel = new JSVector(dx, dy);
       f.pSys2.push(new tFood2(loc, vel, 7, this));
     } 
+
+     // malcolm food 3
+     for (let i = 0; i < 20; i++) {
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let dx = Math.random() * 3 - 2;
+      let dy = Math.random() * 3 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.food3.push(new MMFood3(loc, vel, 20, this));
+    }
+    
     //  Evans Food4
     // for (let i = 0; i < 50; i++) {
     //   let x = Math.random() * this.dims.width - this.dims.width / 2;
@@ -385,13 +398,36 @@ class World {
       let vel = new JSVector(dx, dy);
       this.foods.pSys2.push(new NewFoodPS(loc, vel, 7, this))
     }
+    //Malcolms PS1 spinning spike ball
+    for(let i = 0; i < 1; i++) {
+      let loc = new JSVector(
+        Math.random() * (this.dims.right - this.dims.left) + this.dims.left,
+        Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top
+      );
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      f.pSys1.push(new MMParticle(loc, vel, 5, this))
+    }
     
     //SB PSystem
     for(let i = 0; i<3; i++){
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
       this.foods.pSys2.push(new SBPSystem(loc, new JSVector(0,0), 8, this, 225));
+    }
+    //Adrians Particle System
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      f.pSys2.push(new FoodParticleSystem2BigBalls(loc, vel, 1, this));
+      
     }
   }
   
