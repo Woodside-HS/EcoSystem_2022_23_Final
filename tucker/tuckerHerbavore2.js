@@ -55,7 +55,7 @@ class tuckerHerbavore2 extends Creature {
             if (this.dataBlock.age >= this.dataBlock.lifeSpan) {
                 this.dataBlock.isDead = true;
             }
-            if (this.hungy >3  && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
+            if (this.hungy > 3 && !this.statusBlock.eating) {//I am making it so that nourishment only decreaces every other so that it can actually gain nourishment
                 this.dataBlock.nourishment--;
                 this.hungy = 0;
             } else {//this if statement is confirmed to work
@@ -107,7 +107,7 @@ class tuckerHerbavore2 extends Creature {
                         let dy = Math.random() * 4 - 2
                         let currentNumOffspring = Math.floor(Math.random() * this.dataBlock.numOffspring)
                         for (let i = 0; i < currentNumOffspring; i++) {
-                            if(!world.creatures.herb2.length>=1000){//there is an issue where my creature quickly spirals out of control with it quickly reaching 10000s of creatures, this should help
+                            if (!world.creatures.herb2.length >= 1000) {//there is an issue where my creature quickly spirals out of control with it quickly reaching 10000s of creatures, this should help
                                 world.creatures.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, world));
                             }
                         }
@@ -129,7 +129,6 @@ class tuckerHerbavore2 extends Creature {
                 if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment <= 1) {
                     //this makes no sense so: it looks for the specific particle system in the array of particle systems, then goes to the specific particle within the particle array in that particle system and then finds the nourishment god I hate this
                     world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
-                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();
                     this.statusBlock.eating = false;
                     this.statusBlock.searchFood = true;
                     this.vel = new JSVector(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
@@ -137,8 +136,8 @@ class tuckerHerbavore2 extends Creature {
                         pSys: null,
                         item: null
                     }
-                } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
-                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].beinEat();//confirmed to work
+                } else if (world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item] && world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment > 1) {
+                    world.foods.pSys2[this.PSfoodEat.pSys].foodList[this.PSfoodEat.item].statBlock.nourishment--;
                 }
             }//end of existence if statement
 
@@ -170,18 +169,21 @@ class tuckerHerbavore2 extends Creature {
         //normal foods below
         for (let i = 0; i < world.foods.food3.length; i++) {//only gos thru food3 rn should be pretty easily be able to modify to work with particle sytstems
             let sightSq = this.dataBlock.sightValue * this.dataBlock.sightValue;
-            if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
-                let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
-                jmp.setMagnitude(0.05);
-                this.acc.add(jmp);
-                if (this.loc.distanceSquared(world.foods.food2[i].loc) < 400) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
-                    this.vel.setMagnitude(0);
-                    this.acc.setMagnitude(0);
-                    this.statusBlock.searchFood = false;
-                    this.statusBlock.eating = true;
-                    this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
+            if (world.foods.food2[i]) {//makes sure that the food item exists, probably addds like 30 years to runtime but idc
+                if (this.loc.distanceSquared(world.foods.food2[i].loc) < sightSq) {//checks that food is within the "sight value range"
+                    let jmp = JSVector.subGetNew(world.foods.food2[i].loc, this.loc);
+                    jmp.setMagnitude(0.05);
+                    this.acc.add(jmp);
+                    if (this.loc.distanceSquared(world.foods.food2[i].loc) < 400) {//if the frog is close enough, then it will kill its velocity and end the search food and instead start eating
+                        this.vel.setMagnitude(0);
+                        this.acc.setMagnitude(0);
+                        this.statusBlock.searchFood = false;
+                        this.statusBlock.eating = true;
+                        this.foodEat = i;//sets foodEat to the # of the food variable to consume nourishment from
+                    }
                 }
             }
+
         }
         //particle system below
         //IMPORTANT REMEMNBER THAT THIS IS A THING
@@ -231,15 +233,15 @@ class tuckerHerbavore2 extends Creature {
         let dist = this.loc.distanceSquared(loc);
         let jmp = new JSVector(0, 0);
         if (dist < 50) {//10 pixels away
-            jmp = JSVector.subGetNew(this.loc,loc);
+            jmp = JSVector.subGetNew(this.loc, loc);
             jmp.setMagnitude(0.2);
             this.acc.add(jmp);
         } else if (dist < 1250) {//50 pixels away
-            jmp = JSVector.subGetNew(this.loc,loc);
+            jmp = JSVector.subGetNew(this.loc, loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
         } else if (dist < 5000) {//100 pixels away
-            jmp = JSVector.subGetNew(this.loc,loc);
+            jmp = JSVector.subGetNew(this.loc, loc);
             jmp.setMagnitude(0.1);
             this.acc.add(jmp);
         }
