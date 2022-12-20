@@ -22,6 +22,7 @@ class SBPred3 extends Creature {
         this.dataBlock.maxSpeed = 3;
         this.preyRender = [false, 0];
         this.acc = new JSVector(0, 0);
+        this.dataBlock.isDead = false;
         let n = Math.random()*2+6;
         for(let i = 0; i<n; i++){
             this.orbs[i] = new OrbiterSB(7, start, this.loc, this.ctx, this.clrlist.indexOf(this.clr)); // start vector at planet and end at position
@@ -121,36 +122,12 @@ class SBPred3 extends Creature {
   }
 
   revive(){
+    this.dataBlock.isDead = true;
     let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
     let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
-    this.loc = new JSVector(x, y);
-    this.vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
-    this.acc = new JSVector(0,0);
-    this.counter = 0;
-    this.clrlist = ['#065535','#fdd800', '#0b7a85', '#00A36C', '#8b324d', '#c39797', '#9e58c7'];
-    this.clr = this.clrlist[Math.floor(Math.random()*this.clrlist.length)];
-    this.dataBlock.health = 100;
-    this.dataBlock.isDead = false;
-    this.dataBlock.nourishment = 100;
-    this.dataBlock.lifeSpan = Math.random()*3000;//  miliseconds
-    this.dataBlock.age = 0;
-    this.orbs = [];
-    let start = 0;
-    this.dataBlock.maxSprintSpeed = 4;
-    this.dataBlock.maxSpeed = 3;
-    this.preyRender = [false, 0];
-    let n2 = Math.random()*2+6;
-    for(let i = 0; i<n2; i++){
-        this.orbs[i] = new OrbiterSB(7, start, this.loc, this.ctx, this.clrlist.indexOf(this.clr)); // start vector at planet and end at position
-  //diameter, angle, orbit radius, planet location (takes in JSVector)
-    start+= (Math.PI*2)/(n2);
-    }
-    
-    
-  }
-
-  runAway(){
-
+    let loc = new JSVector(x, y);
+    let vel = new JSVector(Math.random()*4-2, Math.random()*4-2);
+    this.world.creatures.pred3.push(new SBPred3(loc, vel, this.size, this.wrld));
   }
 
   search(){
