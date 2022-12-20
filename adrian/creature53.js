@@ -35,7 +35,7 @@ class AdrianWilsonCreature53 extends Creature {
 
     //  methods
     run(v) {
-        this.interaction(v);
+        this.interaction(world.creatures.herb3);
         this.update();
         this.render();
         this.checkEdges();
