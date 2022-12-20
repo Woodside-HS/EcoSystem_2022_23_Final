@@ -27,7 +27,7 @@ class AdrianCreature5V2 extends Creature {
     this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
     this.mateTime = 0; // mating tick
 
-    this.numSegs = 3;
+    this.numSegs = 10;
     this.segLength = 10;
     this.segments = [];
     this.loadSegments();
@@ -35,21 +35,19 @@ class AdrianCreature5V2 extends Creature {
   //  methods
   run(c) {
     this.checkEdges(); // check edges
-    this.interaction(c); // update func
+    this.interaction(world.creatures.herb3); // update func
     this.render(); // render
   }
 
   loadSegments() {
-    for (let i = 0; i < 4; i++) {
-      this.segments[i] = new JSVector(this.loc.x, this.loc.y);
-      if (i == 0) {
-          this.segments[i].sub(this.vel);
-      } else {
-          let temp = new JSVector(0,0);
-          temp = JSVector.subGetNew(this.segments[i-1],this.vel);
-          this.segments[i].sub(temp);
-      }
-  }
+    let ploc = new JSVector(this.loc.x, this.loc.y);
+    for(let i = 0; i<this.numSegs; i++){
+        let vel2 = new JSVector(this.vel.x, this.vel.y);
+        vel2.setMagnitude(this.segLength);
+        let vec = JSVector.subGetNew(ploc, vel2);
+        this.segments.push(vec); //potential error
+        ploc = new JSVector(vec.x, vec.y);
+    }
   }
 
   interaction(c) { // everything goes down here
@@ -109,22 +107,24 @@ class AdrianCreature5V2 extends Creature {
 
 
   update() { // gets called in the interaction func
-    this.vel.limit(0.5);
+    this.vel.limit(1);
     this.loc.add(this.vel);//moves the head
-    for (let i = 0; i < this.segments.length; i++) {
-        if (i == 0) {
-            let acc = JSVector.subGetNew(this.loc, this.segments[i]);
-            acc.normalize();
-            acc.multiply(this.vel.getMagnitude());
-            this.segments[i].add(acc);
-            //need to be able to add more veloicty so that it maintiaings the distance
-        } else {
-            let acc = JSVector.subGetNew(this.segments[i - 1], this.segments[i]);
-            acc.normalize();
-            this.segments[i].add(acc);
+    let temp;
+    let ploc = new JSVector(this.loc.x, this.loc.y);
+    let dis;
+    for(let i = 0; i<this.segments.length; i++){
+        temp= new JSVector(this.segments[i].x, this.segments[i].y);
+        temp = JSVector.subGetNew(temp, ploc);
+        temp.limit(this.vel.getMagnitude());
+        temp.multiply(-1);
+        this.segments[i].add(temp);
+        dis = this.segments[i].distance(ploc);
+        if(dis<this.segLength){
+            temp.setMagnitude(this.segLength-dis);
+            this.segments[i].sub(temp); 
         }
+        ploc = this.segments[i];
     }
-    
   }
 
   checkEdges() { // make sure its not outside of world bounds
@@ -145,14 +145,17 @@ class AdrianCreature5V2 extends Creature {
   render() { // render stuff 
     let ctx = this.ctx;
     ctx.beginPath();
-    ctx.arc(this.loc.x, this.loc.y, 10, 0, 2 * Math.PI);
+    ctx.arc(this.loc.x, this.loc.y, 3, 0, 2 * Math.PI);
     ctx.fillStyle = "black";
     ctx.fill();
     ctx.closePath();
     for (let i = 1; i < this.segments.length; i++) {
       ctx.beginPath();
       ctx.arc(this.segments[i].x, this.segments[i].y, 5, 0, 2 * Math.PI);
+      ctx.moveTo(this.segments[i].x, this.segments[i].y);
+      ctx.lineTo(this.loc.x, this.loc.y);
       ctx.fillStyle = "blue";
+      ctx.stroke();
       ctx.fill();
       ctx.closePath();
     }
