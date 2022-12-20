@@ -164,8 +164,8 @@ class World {
     let c = this.creatures;
     let f = this.foods;
 
-     //SB Alpha Pred
-     for (let i = 0; i < 12; i++) {
+    //SB Alpha Pred
+    for (let i = 0; i < 12; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
@@ -184,7 +184,7 @@ class World {
       let vel = new JSVector(dx, dy);
       //c.pred2.push(new Creature(loc, vel, 3, this));
     }
-    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+    for (let i = 0; i < numEntities / 2; i++) {//TUCKER PREDATOR 3 (spinny guy) 
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
@@ -193,7 +193,7 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred2.push(new tPred2(loc, vel, 3, this));
     }
-    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+    for (let i = 0; i < numEntities / 2; i++) {//TUCKER PREDATOR 3 (spinny guy) 
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
@@ -202,7 +202,7 @@ class World {
       let vel = new JSVector(dx, dy);
       c.pred3.push(new tPred3(loc, vel, 3, this));
     }
-    for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
+    for (let i = 0; i < numEntities / 2; i++) {//TUCKER PREDATOR 3 (spinny guy) 
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
@@ -406,21 +406,21 @@ class World {
         c.pred2.splice(i, 1);
       }
     }
-    for (let i = c.pred3.length-1; i >= 0 ; i--) {
+    for (let i = c.pred3.length - 1; i >= 0; i--) {
       c.pred3[i].run();
       if (c.pred3[i].dataBlock.isDead) {
         c.pred3.splice(i, 1);
       }
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      //c.herb1[i].run();
+      c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
     }
 
     for (let i = 0; i < c.herb2.length; i++) {
-        c.herb2[i].run();
+      c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
         c.herb2.splice(i, 1);
       }
@@ -432,7 +432,7 @@ class World {
       }
     }
 
-    for (let i = 0; i < c.flocks.length; i++) {}
+    for (let i = 0; i < c.flocks.length; i++) { }
   }
 
   runFood() {
@@ -465,7 +465,7 @@ class World {
         f.food3.splice(i, 1);
       }
     }
-    for (let i = f.food4.length - 1; i >= 0; i--) {}
+    for (let i = f.food4.length - 1; i >= 0; i--) { }
 
     for (let i = f.food4.length - 1; i >= 0; i--) {
       f.food4[i].run();
@@ -474,9 +474,9 @@ class World {
       }
     }
 
-    for (let i = f.food5.length - 1; i >= 0; i--) {}
+    for (let i = f.food5.length - 1; i >= 0; i--) { }
 
-    for (let i = f.food6.length - 1; i >= 0; i--) {}
+    for (let i = f.food6.length - 1; i >= 0; i--) { }
 
     for (let i = f.pSys1.length - 1; i >= 0; i--) {
       f.pSys1[i].run();
@@ -486,12 +486,12 @@ class World {
       f.pSys2[i].run();
     }
 
-    for (let i = f.pSys3.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys3.length - 1; i >= 0; i--) { }
 
-    for (let i = f.pSys4.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys4.length - 1; i >= 0; i--) { }
 
-    for (let i = f.pSys5.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys5.length - 1; i >= 0; i--) { }
 
-    for (let i = f.pSys6.length - 1; i >= 0; i--) {}
+    for (let i = f.pSys6.length - 1; i >= 0; i--) { }
   }
 } //++++++++++++++++++++++++++++++  end world constructor
