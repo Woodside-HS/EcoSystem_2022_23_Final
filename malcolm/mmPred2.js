@@ -1,8 +1,8 @@
 class MMPred2 extends Creature {
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld) 
-        // this.loc = loc
-        this.loc = new JSVector(200, 200)
+        this.loc = loc
+        // this.loc = new JSVector(200, 200)
         this.vel = vel
         this.size = sz
         this.world = wrld
