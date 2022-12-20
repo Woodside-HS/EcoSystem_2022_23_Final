@@ -1,13 +1,14 @@
-class MPSFood1{
+class MPSFood1 extends Food{
     // properties
-    constructor(loc, rad, ctx) {
+    constructor(loc, vel,sz, wrld, ctx) {
+        super(loc,vel,sz,wrld)
         this.loc = new JSVector(loc.x + Math.random()*100-50,loc.y+Math.random()*100-50);
         this.vel = new JSVector(Math.random()*.1-.05,Math.random()*.1-.05);
         this.acc = new JSVector(0, .05);
         this.ctx = ctx;
         this.death = Math.random()*1;
         this.isDead = false;
-        this.rad = rad;
+        this.rad = sz;
     }
     //  methods
     run() {

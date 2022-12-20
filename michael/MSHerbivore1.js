@@ -2,10 +2,9 @@ class MSHerbivore1 extends Creature {
     // properties
     constructor(loc, vel, sz, wrld) {
         super(loc, vel, sz, wrld)
-        this.loc = new JSVector(loc.x,loc.y);
-        this.vel = new JSVector(vel.x,vel.y);
         this.acc = new JSVector(0,0);
         this.size = sz;
+        this.dataBlock.health = 100;
     }
     //  methods
     run() {

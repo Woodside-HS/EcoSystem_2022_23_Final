@@ -1,13 +1,12 @@
 class MParticleSystem1 extends Food{
     constructor(loc,vel,sz,wrld) {   
         super(loc,vel,sz,wrld)  
-        this.rad = 15;
         this.particles = [];
         this.count = 1000;
     }
 
     addParticle(){
-        this.particles.push(new MPSFood1(this.loc,this.rad,this.ctx));
+        this.particles.push(new MPSFood1(this.loc,this.vel,this.sz,this.wrld,this.ctx));
     }
 
     run(){
