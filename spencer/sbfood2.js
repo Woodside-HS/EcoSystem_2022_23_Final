@@ -16,7 +16,7 @@ class SBFood2 extends Food {  //
     }
 
     update() {
-        if(this.statBlock.health <= 1){//added nourishment so that tucker's code works too
+        if(this.statBlock.health <= 2){//added nourishment so that tucker's code works too
             let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
             let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
             this.loc = new JSVector(x, y);
@@ -26,7 +26,7 @@ class SBFood2 extends Food {  //
             this.statBlock.opacity = 1.0;
             this.statBlock.foodPts = 100;
             
-        } else if(this.statBlock.nourishment <= 1 ){
+        } else if(this.statBlock.nourishment <= 2 ){
             let x = Math.random()*(world.dims.width-400)+world.dims.left+50;
             let y = Math.random()*(world.dims.height-400)+world.dims.top+50;
             this.loc = new JSVector(x, y);

@@ -86,3 +86,4 @@ class Creature5 extends Creature {
   }
 
 }
+
