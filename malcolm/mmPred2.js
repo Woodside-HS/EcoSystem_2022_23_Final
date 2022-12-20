@@ -89,6 +89,10 @@ class MMPred2 extends Creature {
 
     }
     checkEdges() {
-
+        let dims = this.world.dims;
+        if (this.loc.x > dims.right) this.vel.x = -this.vel.x;
+        if (this.loc.x < dims.left) this.vel.x = -this.vel.x;
+        if (this.loc.y > dims.bottom) this.vel.y = -this.vel.y;
+        if (this.loc.y < dims.top) this.vel.y = -this.vel.y;
     }
 }
