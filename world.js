@@ -225,10 +225,10 @@ class World {
     } //adrains creatures
     //tucker's herbavore
      //Malcolm herb2 spining squer 
-     for(let i = 0; i < 20; i++) {
+     for(let i = 0; i < 10; i++) {
       let loc = new JSVector(
-        Math.random() * this.dims.width - this.dims.width / 2,
-        Math.random() * this.dims.height - this.dims.height / 2
+        Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10),
+        Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10)
         )
         let vel = new JSVector(
           Math.random() * 4 - 2,

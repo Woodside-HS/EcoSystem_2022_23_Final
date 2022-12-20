@@ -3,8 +3,8 @@ class MMHerb2 extends Creature {
     super(loc, vel, sz, wrld);
     // this.loc = loc;
     this.loc = new JSVector(
-      Math.random() * (500 - 100) + 100,
-      Math.random() * (500 - 100) + 100
+      Math.random() * (1000 - 1) + 1,
+      Math.random() * (1000 - 1) + 1
     );
     this.vX = Math.random() * (0.5 - -0.5) + -0.5;
     this.vY = Math.random() * (0.5 - -0.5) + -0.5;
@@ -87,34 +87,34 @@ class MMHerb2 extends Creature {
       }
     } // end of food2
 
-    for (let i = 0; i < world.foods.pSys1.length; i++) {
-      let pS1 = world.foods.pSys1[i].particles;
-      // if (mmPS1 > 1) {
-      for (let j = 0; j < pS1.length; j++) {
-        let particle = pS1[j];
-        let dist = this.loc.distance(particle.loc);
-        if (dist < desiredDist) {
-          let diff = JSVector.subGetNew(particle.loc, this.loc);
-          diff.normalize();
-          this.vel.add(diff);
-          this.vel.limit(2);
-          this.clr = "red";
-          if (dist < 10) {
-            particle.vel = new JSVector(0, 0);
-            this.vel = new JSVector(0, 0);
-            // this.vel.multiply(0.1);
-            this.dataBlock.health =
-              this.dataBlock.health + particle.statBlock.health;
-            particle.statBlock.health = 0;
-            this.vel.x = this.vX;
-            this.vel.y = this.vY;
-          }
-        } else {
-          this.clr = "green";
-        }
-      }
-      // }
-    }
+    // for (let i = 0; i < world.foods.pSys1.length; i++) {
+    //   let pS1 = world.foods.pSys1[i].mmParticles;
+    //   // if (mmPS1 > 1) {
+    //   for (let j = 0; j < pS1.length; j++) {
+    //     let particle = pS1[j];
+    //     let dist = this.loc.distance(particle.loc);
+    //     if (dist < desiredDist) {
+    //       let diff = JSVector.subGetNew(particle.loc, this.loc);
+    //       diff.normalize();
+    //       this.vel.add(diff);
+    //       this.vel.limit(2);
+    //       this.clr = "red";
+    //       if (dist < 10) {
+    //         particle.vel = new JSVector(0, 0);
+    //         this.vel = new JSVector(0, 0);
+    //         // this.vel.multiply(0.1);
+    //         this.dataBlock.health =
+    //           this.dataBlock.health + particle.statBlock.health;
+    //         particle.statBlock.health = 0;
+    //         this.vel.x = this.vX;
+    //         this.vel.y = this.vY;
+    //       }
+    //     } else {
+    //       this.clr = "green";
+    //     }
+    //   }
+    //   // }
+    // }
   }
   checkEdges() {
     let dims = this.world.dims;
