@@ -12,6 +12,23 @@ class Food4Plant extends Food {
         this.deathdisplacementinit = this.deathdisplacement;
         this.life = Math.floor(this.randomNumber(2500, 10000));
         this.initlife = this.life;
+        this.deathMultiplier = 1;
+        this.initSize = sz;
+        this.size = sz;
+        this.initSize = this.sz;
+        this.health = 1000;
+      
+        let beingEaten = false;
+        this.alive = true;
+        this.statBlock = {
+         searchFood:true,
+         searchMate:true,
+         eating:false,
+         sprint:false,
+         sleeping:false,
+         attack:false,
+         deathProc:false
+        };
         this.deathMultiplier = this.life/this.initlife;
         this.initSize = sz;
         this.size = sz;
@@ -31,34 +48,26 @@ class Food4Plant extends Food {
     
 
     update(){
-        if(this.deathdisplacement >= 0) {
-            this.deathdisplacement--;
-        } else {
-            this.life--;
-        }
-        
-        this.sz = this.sz * ((this.life + this.deathdisplacementinit)/this.initlife);
-        if (this.sz > this.initsz) {
-            this.sz = this.initSize;
-        }
-
-
-        // for (let i = 0; i<foodItems.length; i++) {
-        //     //this.foodItems[i].run();
-        //     if(!this.foodItems[i].alive) {
-        //       this.foodItems.splice(i, 1);
-        //       this.foodItems[i].push(new Food4(loc,new JSVector(0, 0), 6,this));
-        //     }
-        // }
         this.checkLife();
-        this.deathMultiplier = this.life/this.initlife;
+        this.isBeingEaten();
+        for(let i = world.entities.length-1; i>0; i--){
+            if(world.entites[i].alive == false){
+                world.entites.splice(i,1);
+            }
+           
+        }
+
+
+        
     }
 
     checkLife() {
-        if (this.life <= 0) {
+        if (this.health <= 0) {
           this.alive = false;
         }
     }
+
+    
     
     render() {
         let ctx = this.ctx;
