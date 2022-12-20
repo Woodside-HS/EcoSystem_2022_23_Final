@@ -71,17 +71,17 @@ class MMHerb1 extends Creature {
   eatFood() {
     let desiredDist = 50;
     for (let i = 0; i < world.foods.food1.length; i++) {
-      let food1 = world.foods.food1[i];
-      let dist = this.loc.distance(food1.loc);
+      let food = world.foods.food1[i];
+      let dist = this.loc.distance(food.loc);
       if (dist < desiredDist) {
-        let diff = JSVector.subGetNew(food1.loc, this.loc);
+        let diff = JSVector.subGetNew(food.loc, this.loc);
         diff.normalize();
         this.vel.add(diff);
         this.vel.limit(2);
         if (dist > 10) {
           this.vel = new JSVector(0, 0);
-          this.dataBlock.health += food1.statusBlock.health;
-          food1.statusBlock.health = 0;
+          this.dataBlock.health += food.statBlock.health;
+          food.statBlock.health = 0;
           this.vel.x = this.vX;
           this.vel.y = this.vY;
         }
