@@ -13,6 +13,15 @@ class NewFood {
         this.deathdisplacement = Math.floor(this.randomNumber(25, 500));
         this.deathdisplacementinit = this.deathdisplacement;
         this.deathMultiplier = this.life/this.initlife;
+        this.statBlock = {
+         searchFood:true,
+         searchMate:true,
+         eating:false,
+         sprint:false,
+         sleeping:false,
+         attack:false,
+         deathProc:false
+        };
     }
 
     update() {
