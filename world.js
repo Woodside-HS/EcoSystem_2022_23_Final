@@ -175,6 +175,19 @@ class World {
       c.pred1.push(new SBAlpha(loc, vel, 3, this));
     }
 
+    //Malcolm Pred 2
+    for(let i = 0; i < 20; i++) {
+      let loc = new JSVector(
+      Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10),
+      Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10) 
+      )
+      let vel = new JSVector(
+        Math.random() * 4 - 2,
+        Math.random() * 4 - 2
+      )
+      c.pred2.push(new MMPred2(loc, vel, 20, this))
+    }
+
     for (let i = 0; i < numEntities; i++) {
       let x = Math.random() * this.cnvMain.width;
       let y = Math.random() * this.cnvMain.height;
