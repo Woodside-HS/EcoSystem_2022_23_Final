@@ -21,7 +21,7 @@ class FoodParticleSystem2BigBalls extends Food {
             this.foodList[i].run();
             if(!this.foodList[i].alive) {
               this.foodList.splice(i, 1);
-              this.foodList.push(new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx    ))
+              this.foodList.push(new Food5Particle(this.loc.x, this.loc.y, this.rad, this.clr, this.ctx));
             }
         }
     }
