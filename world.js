@@ -189,6 +189,7 @@ class World {
       let loc = new JSVector(Math.random()*(this.dims.right-this.dims.left)+this.dims.left, Math.random()*(this.dims.bottom-this.dims.top)+this.dims.top)
       let vel = new JSVector(Math.random() * .5 - .25,Math.random() * .5 - .25)
       this.foods.food1.push(new MSFood1(loc, vel,10,this))
+    }
       
     for(let i = 0; i< numEntities/2;i++){//TUCKER PREDATOR 3 (spinny guy) 
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
@@ -403,7 +404,6 @@ class World {
       let loc = new JSVector(x, y);
       this.foods.pSys2.push(new SBPSystem(loc, new JSVector(0,0), 8, this, 225));
     }
-  }
 }
   runCreatures() {
     let c = this.creatures;
