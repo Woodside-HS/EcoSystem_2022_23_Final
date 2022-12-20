@@ -4,17 +4,43 @@ class MSHerbivore1 extends Creature {
         super(loc, vel, sz, wrld)
         this.acc = new JSVector(0,0);
         this.size = sz;
-        this.dataBlock.health = 100;
+        this.dataBlock.health = Math.random()*100;
     }
     //  methods
     run() {
         this.update();
         this.render();
         this.checkEdges();
+        this.test();
     }
 
     update() {
+        this.vel.add(this.acc);
+        this.vel.limit(2);
         this.loc.add(this.vel);
+        this.dataBlock.health = this.dataBlock.health - .1;
+        if(this.dataBlock.health <= 0){
+            let x = Math.random()*(world.dims.right-world.dims.left)+world.dims.left; 
+            let y = Math.random()*(world.dims.bottom-world.dims.top)+world.dims.top;
+            this.loc = new JSVector(x,y);
+            this.dataBlock.health = 100;
+        }
+    }
+
+    test(){
+        for(let i = 0;i<world.foods.food1.length;i++){
+            if(this.dataBlock.health > 50){
+            if(this.loc.distance(world.foods.food1[i].loc)<100){
+                this.acc = JSVector.subGetNew(world.foods.food1[i].loc, this.loc);
+                this.acc.normalize();
+                this.acc.multiply(0.05);
+            }
+            if(this.loc.distance(world.foods.food1[i].loc)<10){
+                console.log("gain")
+                this.dataBlock.health = this.dataBlock.health + .01;
+            }
+             }
+        }
     }
 
     render() {
