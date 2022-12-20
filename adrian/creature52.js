@@ -27,7 +27,7 @@ class AdrianCreature5V2 extends Creature {
     this.mateInterval = getRandomInt(1000, 5000); // how long between mating sessions
     this.mateTime = 0; // mating tick
 
-    this.numSegs = 10;
+    this.numSegs = 3;
     this.segLength = 10;
     this.segments = [];
     this.loadSegments();

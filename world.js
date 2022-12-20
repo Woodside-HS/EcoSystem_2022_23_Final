@@ -155,7 +155,7 @@ class World {
     }//loads spencers triangle
 
     // }//++++++++++++++++++++++++++++  load entities
-    for (let i = 0; i < numEntities/3; i++) {
+    for (let i = 0; i < 10; i++) {
       let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
@@ -274,7 +274,7 @@ class World {
     }
 
     //adrains flocking creatures
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 30; i++) {
       let x =
         Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y =
