@@ -88,6 +88,15 @@ class World {
     this.ctxMain.save();
     //  move the main canvas inside of the world
     this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
+    for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+      this.entities[i].run();
+      
+    }
+  
+    
+    // for (let i = 0; i < this.entities.length; i++) {//  All food and creatures
+    //   this.entities[i].run();
+    // }
     //  draw all of the cells
     //run all of the entities
 
@@ -102,7 +111,8 @@ class World {
 
     // // translate cnvMain according to the location of the canvas in the world
     this.ctxMain.save();
-    this.ctxMain.translate(this.cnvMainLoc.x * -1, this.cnvMainLoc.y * -1);
+
+    this.ctxMain.translate(this.cnvMainLoc.x * (-1), this.cnvMainLoc.y * (-1));
     //bounds of the world in cnvMain
     this.ctxMain.strokeStyle = "rgba(0, 140, 240, 1)";
     this.ctxMain.beginPath();
@@ -114,6 +124,7 @@ class World {
       this.dims.height
     );
     this.ctxMain.stroke();
+
     this.ctxMain.restore();
 
     // framerate
@@ -144,8 +155,7 @@ class World {
       this.foods[i].run();
     }
   }
-
-  //Load mover array
+  
   loadEntities(numEntities, ctx, w, h) {
     //++++++++++++++++++++++++++++  load entities
 
@@ -258,10 +268,22 @@ class World {
       let y =
         Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
       let loc = new JSVector(x, y);
-      this.creatures.herb3.push(
-        new AdrianWilsonCreature53(loc, new JSVector(0, 0), 6, this)
-      ); //  Added to creatures object
-    } //adrains flocking creatures
+      this.creatures.herb3.push(new AdrianWilsonCreature53(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }//adrains flocking creatures
+
+    
+
+
+
+    for(let i = 0; i < 100; i++){ //evan hervivore purple circle
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2
+      let vel = new JSVector(dx, dy);
+      this.creatures.herb3.push(new EvanHerbivore3(loc, vel, 20, this));
+    }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Food 1 - 6
     //spencer food 2(blue and white lil thing)
@@ -302,25 +324,27 @@ class World {
     }
     
     //  Evans Food4
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
-    }
-    //  Evans Food4 Particle System
-    for (let i = 0; i < 50; i++) {
-      let x = Math.random() * this.dims.width - this.dims.width / 2;
-      let y = Math.random() * this.dims.height - this.dims.height / 2;
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food4.push(new Food4PlantPS(loc, vel, 7, this));
-    }
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2;
+    //   let vel = new JSVector(dx, dy);
+    //   this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
+    // }
+    
+
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2;
+    //   let vel = new JSVector(dx, dy);
+    //   this.foods.food4.push(new Food4Plant(loc, vel, 7, this));
+    // }
+    
     //  Adrain Food2Grass
     for (let i = 0; i < 200; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
@@ -364,6 +388,16 @@ class World {
       this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
     } //michael's particle system
 
+    //  Evans Food4 Particle System
+    for (let i = 0; i< 50; i++){
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      this.foods.pSys2.push(new NewFoodPS(loc, vel, 7, this))
+    }
     //Malcolms PS1 spinning spike ball
     for(let i = 0; i < 1; i++) {
       let loc = new JSVector(
@@ -396,6 +430,8 @@ class World {
       
     }
   }
+  
+  
   runCreatures() {
     let c = this.creatures;
 
@@ -441,6 +477,8 @@ class World {
 
     for (let i = 0; i < c.flocks.length; i++) { }
   }
+  
+  
 
   runFood() {
     for(let i = 0; i<this.foods.pSys2.length; i++){
@@ -505,3 +543,5 @@ class World {
     for (let i = f.pSys6.length - 1; i >= 0; i--) { }
   }
 } //++++++++++++++++++++++++++++++  end world constructor
+
+
