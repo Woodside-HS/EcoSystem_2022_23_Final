@@ -55,31 +55,6 @@ class Creature5 extends Creature {
         this.checkHealth();
         this.searchMate();
         this.update();
-        //this.render();
-        this.checkEdges();
-    }
-
-    interaction() {
-        
-    }
-
-    update() {
-        this.rotation++;
-        this.loc.add(this.vel);
-    }
-
-    checkEdges() {
-        if(this.loc.x<world.dims.left){
-          this.vel.x = -this.vel.x;
-        }
-        if(this.loc.x>world.dims.right){
-          this.vel.x = -this.vel.x;
-        }
-        if(this.loc.y>world.dims.top){
-          this.vel.y = -this.vel.y;
-        }
-        if(this.loc.y<world.dims.bottom){
-          this.vel.y = -this.vel.y;
       }
       else { // if movement has overgone stamina it will get to tired and need to regen so here it sleeps it becomes grey when sleeping
         this.sleeping = true;
