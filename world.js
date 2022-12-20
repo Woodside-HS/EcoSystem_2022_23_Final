@@ -366,7 +366,21 @@ class World {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
       let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
       this.foods.pSys2.push(new SBPSystem(loc, new JSVector(0,0), 8, this, 225));
+    }
+    //Adrians Particle System
+    for (let i = 0; i < 50; i++) {
+      let x = Math.random() * this.dims.width - (this.dims.width / 2);
+      let y = Math.random() * this.dims.height - (this.dims.height / 2);
+      let loc = new JSVector(x, y);
+      let dx = Math.random() * 4 - 2;
+      let dy = Math.random() * 4 - 2;
+      let vel = new JSVector(dx, dy);
+      f.pSys2.push(new FoodParticleSystem2BigBalls(loc, vel, 1, this));
+      
     }
   }
   runCreatures() {
