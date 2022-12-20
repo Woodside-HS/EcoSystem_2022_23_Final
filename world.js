@@ -234,6 +234,16 @@ class World {
       ); //  Added to creatures object
     } //adrains creatures
     //tucker's herbavore
+    //Malcolm mmHerb1 &&&&&&&&&&&&
+    for (let i = 0; i < numEntities; i++) {
+      let loc = new JSVector(
+        Math.random() * this.dims.width - this.dims.width / 2,
+        Math.random() * this.dims.height - this.dims.height / 2
+      );
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+      this.creatures.herb1.push(new MMHerb1(loc, vel, 10, this));
+    } //&&&&&&&&&&&&&&
+
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
