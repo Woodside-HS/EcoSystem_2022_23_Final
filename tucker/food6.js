@@ -22,7 +22,7 @@ class Food6 extends Food {//this is tucker's food
             let dx = Math.random() * 4 - 2;
             let dy = Math.random() * 4 - 2;
             let vel = new JSVector(dx, dy);
-            world.foods.food3.push(loc, vel, 5, world)
+            world.foods.food3.push(new Food6(loc, vel, 5, world))
         }
     }
 
