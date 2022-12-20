@@ -189,7 +189,7 @@ class World {
       c.pred1.push(new SBAlpha(loc, vel, 3, this));
     }
     //Malcolm Pred 2
-    for(let i = 0; i < 20; i++) {
+    for(let i = 0; i < 10; i++) {
       let loc = new JSVector(
       Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10),
       Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10) 

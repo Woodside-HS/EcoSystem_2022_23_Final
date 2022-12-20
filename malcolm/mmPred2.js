@@ -33,12 +33,14 @@ class MMPred2 extends Creature {
         this.loc.add(this.vel)
     }
     render() {
-    this.angle += 0.5
+    // this.angle += 0.5
     this.ctxMain.save();
     this.ctxMain.translate(this.loc.x, this.loc.y);
     this.ctxMain.fillText(this.dataBlock.health, -10, -20);
-    this.ctxMain.moveTo(0, 0)
-    this.ctxMain.lineTo(100, 0)
+    this.ctxMain.moveTo(0, -10)
+    this.ctxMain.lineTo( 10, 0)
+    this.ctxMain.lineTo(0, 10)
+    this.ctxMain.lineTo(-10, 0)
     this.ctxMain.fillStyle = "black";
     this.ctxMain.strokeStyle = "white";
     this.ctxMain.stroke();
@@ -47,6 +49,43 @@ class MMPred2 extends Creature {
 
     }
     eat() {
+        let desiredDist = 50;
+        for (let i = 0; i < world.creatures.pred3.length; i++) {
+          let pred3 = world.creatures.pred3[i];
+          let dist = this.loc.distance(pred3.loc);
+          if (dist < desiredDist) {
+            let diff = JSVector.subGetNew(pred3.loc, this.loc);
+            diff.normalize();
+            this.vel.add(diff);
+            this.vel.limit(2);
+            if (dist > 10) {
+              this.vel = new JSVector(0, 0);
+              this.dataBlock.health += pred3.dataBlock.health;
+              pred3.dataBlock.health = 0;
+              this.vel.x = this.vX;
+              this.vel.y = this.vY;
+            }
+          }
+        }
+
+        for (let i = 0; i < world.creatures.herb1.length; i++) {
+          let herb1 = world.creatures.herb1[i];
+          let dist = this.loc.distance(herb1.loc);
+          if (dist < desiredDist) {
+            let diff = JSVector.subGetNew(herb1.loc, this.loc);
+            diff.normalize();
+            this.vel.add(diff);
+            this.vel.limit(2);
+            if (dist > 10) {
+              this.vel = new JSVector(0, 0);
+              this.dataBlock.health += herb1.dataBlock.health;
+              herb1.dataBlock.health = 0;
+              this.vel.x = this.vX;
+              this.vel.y = this.vY;
+            }
+          }
+        }
+        
 
     }
     checkEdges() {
