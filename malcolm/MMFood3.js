@@ -2,6 +2,7 @@ class MMFood3 extends Food {
   constructor(loc, vel, sz, wrld) {
     super(loc, vel, sz, wrld);
     this.loc = loc;
+    // this.loc = new JSVector(200, 200)
     this.vel = vel;
     this.size = sz;
     this.world = wrld;
@@ -48,6 +49,8 @@ class MMFood3 extends Food {
     this.ctxMain.lineTo(-8, 15);
     this.ctxMain.moveTo(-15, 8);
     this.ctxMain.lineTo(-15, -8); //$$
+    this.ctxMain.fillStyle = "black";
+    this.ctxMain.strokeStyle = "black";
     this.ctxMain.stroke();
     this.ctxMain.fill();
     this.ctxMain.restore();
