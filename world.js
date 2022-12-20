@@ -314,7 +314,7 @@ class World {
     for (let i = 0; i < numEntities; i++) {
       let loc = new JSVector(Math.random() * (this.dims.right - this.dims.left) + this.dims.left, Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top);
       let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
-      this.foods.food1.push(new MParticleSystem1(loc, vel, 10, this));
+      this.foods.food1.push(new MSFood1(loc, vel, 10, this));
     }
 
     for (let i = 0; i < numEntities; i++) {

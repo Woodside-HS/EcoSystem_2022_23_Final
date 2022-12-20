@@ -4,10 +4,6 @@ class MSFood1 extends Food {
         super(loc, vel, sz, wrld)
         this.loc = loc;
         this.statBlock.health = Math.random()*1+.05;
-        
-
-        
-    
     }
 
     //  methods
