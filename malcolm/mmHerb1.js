@@ -46,7 +46,7 @@ class MMHerb1 extends Creature {
       let food1 = world.foods.food1[i];
       let dist = this.loc.distance(food1.loc);
       if (dist < desiredDist) {
-        let diff = JSVector.subGetNew(food1.loc, thisloc);
+        let diff = JSVector.subGetNew(food1.loc, this.loc);
         diff.normalize();
         this.vel.add(diff);
         this.vel.limit(2);

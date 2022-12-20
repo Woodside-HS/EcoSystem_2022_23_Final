@@ -226,6 +226,16 @@ class World {
       ); //  Added to creatures object
     } //adrains creatures
 
+    //Malcolm mmHerb1 &&&&&&&&&&&&
+    for (let i = 0; i < 10; i++) {
+      let loc = new JSVector(
+        Math.random() * this.dims.width - this.dims.width / 2,
+        Math.random() * this.dims.height - this.dims.height / 2
+      );
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2);
+      this.creatures.herb1.push(new MMHerb1(loc, vel, 10, this));
+    } //&&&&&&&&&&&&&&
+
     for (let i = 0; i < 150; i++) {
       let x = Math.random() * this.dims.width - this.dims.width / 2;
       let y = Math.random() * this.dims.height - this.dims.height / 2;
@@ -413,7 +423,7 @@ class World {
       }
     }
     for (let i = c.herb1.length - 1; i >= 0; i--) {
-      //c.herb1[i].run();
+      c.herb1[i].run();
       if (c.herb1[i].dataBlock.isDead) {
         c.herb1.splice(i, 1);
       }
