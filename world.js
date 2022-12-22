@@ -12,6 +12,7 @@ class World {
       width: 4000,
       height: 3000,
     };
+    this.backgroundMusic = new Audio("resources/sounds/mario.mp3");
     this.showGrid = true;
     this.numRows = 90;
     this.numCols = 120;
@@ -79,6 +80,7 @@ class World {
   }
 
   run() {
+    this.backgroundMusic.play();
     // performance
     this.framecount++;
     // run the world in animation
