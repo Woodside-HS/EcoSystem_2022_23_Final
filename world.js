@@ -62,12 +62,7 @@ class World {
 
     // performance -- change the number of entities to see the effect on framerate
     this.numEntities = 50;
-    this.loadEntities(
-      this.numEntities,
-      this.ctxMain,
-      this.dims.width,
-      this.dims.height
-    );
+    this.loadEntities(this.numEntities, this.ctxMain, this.dims.width, this.dims.height);
     // performance
     this.framerate = 60;
     this.framecount = 0;
@@ -134,48 +129,40 @@ class World {
     this.ctxMain.fillStyle = "orange";
     let fps = this.framerate + " FPS"; // frames per second
     this.ctxMain.fillText(fps, 20, this.cnvMain.height - 105);
-    // this.ctxMain.fillText(
-    //   "Rows = " + this.numRows,
-    //   20,
-    //   this.cnvMain.height - 130
-    // );
-    // this.ctxMain.fillText(
-    //   "Cols = " + this.numCols,
-    //   20,
-    //   this.cnvMain.height - 155
-    // );
-    // let numEnts = 0;
-    // this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
-    // this.ctxMain.fillText(
-    //   "Tucker's Creatures = " + this.creatures.herb2.length,
-    //   20,
-    //   this.cnvMain.height - 65
-    // );
+    this.ctxMain.fillText("Rows = " + this.numRows, 20, this.cnvMain.height - 130);
+    this.ctxMain.fillText("Cols = " + this.numCols, 20, this.cnvMain.height - 155);
+    let numEnts = 0;
+    this.ctxMain.fillText("Ents = " + numEnts, 20, this.cnvMain.height - 85);
+    this.ctxMain.fillText("Tucker's Creatures = " + this.creatures.herb2.length, 20, this.cnvMain.height - 65);
 
     for (let i = 0; i < this.foods.length; i++) {
       //  All food and creatures
       this.foods[i].run();
     }
+
+
+
   }
   
   loadEntities(numEntities, ctx, w, h) {
-    //++++++++++++++++++++++++++++  load entities
+    for (let i = 0; i < 25; i++) {
+      let loc = new JSVector(Math.random() * (this.dims.right - this.dims.left) + this.dims.left, Math.random() * (this.dims.bottom - this.dims.top) + this.dims.top);
+      let vel = new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2)
+      this.foods.pSys1.push(new MParticleSystem1(loc, vel, 10, this));
+    }//michael's particle system
 
-    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Predetor 1 - 3
-    // Malcolm food 1
-    for (let i = 0; i < 50; i++) {
-      let x =
-        Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
-      let y =
-        Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
-      let loc = new JSVector(x, y);
-      let dx = Math.random() * 4 - 2;
-      let dy = Math.random() * 4 - 2;
-      let vel = new JSVector(dx, dy);
-      this.foods.food1.push(new MMFood1(loc, vel, 20, this));
-    }
-    //loads spencers triangle
+    //++++++++++++++++++++++++++++  load entities
+    for (let i = 0; i < numEntities; i++) {
+      this.foods.food2.push(new SBFood2(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(0, 0), 8, this))
+    }//loads spencers triangle
+
     // }//++++++++++++++++++++++++++++  load entities
+    for (let i = 0; i < numEntities/2; i++) {
+      let x = Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
+      let y = Math.random() * (this.dims.height - 20) - (this.dims.height / 2 - 10);
+      let loc = new JSVector(x, y);
+      this.creatures.herb3.push(new AdrianCreature5V2(loc, new JSVector(0, 0), 6, this));//  Added to creatures object
+    }//adrains creatures CRAZY BUG IDK WHY BUT ITS A FEATURE
 
     let c = this.creatures;
     let f = this.foods;
@@ -188,7 +175,21 @@ class World {
       let dx = Math.random() * 4 - 2;
       let dy = Math.random() * 4 - 2
       let vel = new JSVector(dx, dy);
-      c.pred1.push(new SBAlpha(loc, vel, 3, this));
+      c.herb2.push(new tuckerHerbavore2(new JSVector(x, y), new JSVector(dx, dy), 5, this,));
+    }//tucker's herbavore
+    // for (let i = 0; i < numEntities; i++) {
+    //   let x = Math.random() * this.dims.width - this.dims.width / 2;
+    //   let y = Math.random() * this.dims.height - this.dims.height / 2;
+    //   let loc = new JSVector(x, y);
+    //   let dx = Math.random() * 4 - 2;
+    //   let dy = Math.random() * 4 - 2
+    //   let vel = new JSVector(dx, dy);
+    //   f.food2.push(new Food(loc, vel, 5, this));
+    // }
+
+    //Spencer Herb3
+    for (let i = 0; i < numEntities / 2; i++) {
+      c.herb3.push(new SBCreature3(new JSVector(Math.random() * this.dims.width + this.dims.left, Math.random() * this.dims.height + this.dims.top), new JSVector(Math.random() * 4 - 2, Math.random() * 4 - 2), 30, this));
     }
     //Tucker's Predator 2 (Bird) 
     for (let i = 0; i < numEntities / 2; i++) {
@@ -223,6 +224,7 @@ class World {
       }
 
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Herbavour 1 - 3
+
 
     //Adrian Herb 1
     for (let i = 0; i < numEntities; i++) {
@@ -274,7 +276,7 @@ class World {
     }
 
     //adrains flocking creatures
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < numEntities/2; i++) {
       let x =
         Math.random() * (this.dims.width - 20) - (this.dims.width / 2 - 10);
       let y =
@@ -474,6 +476,7 @@ class World {
       }
     }
 
+
     for (let i = 0; i < c.herb2.length; i++) {
       c.herb2[i].run();
       if (c.herb2[i].dataBlock.isDead) {
@@ -481,10 +484,8 @@ class World {
       }
     } //tuckers creature
     for (let i = 0; i < c.herb3.length; i++) {
-      c.herb3[i].run(c.herb3);
-      if (c.herb3[i].dataBlock.isDead) {
-        c.herb3.splice(i, 1);
-      }
+      c.herb3[i].run();
+
     }
 
     for (let i = 0; i < c.flocks.length; i++) { }
