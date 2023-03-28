@@ -17,7 +17,7 @@ class MMHerb1 extends Creature {
     this.update();
     this.render();
     this.eatFood();
-    // this.mate();
+    this.mate();
     this.checkEdges();
 
   }
@@ -118,5 +118,11 @@ class MMHerb1 extends Creature {
       }
     }
   }
-  checkEdges() {}
+  checkEdges() {
+    let dims = this.world.dims;
+    if (this.loc.x > dims.right) this.vel.x = -this.vel.x;
+    if (this.loc.x < dims.left) this.vel.x = -this.vel.x;
+    if (this.loc.y > dims.bottom) this.vel.y = -this.vel.y;
+    if (this.loc.y < dims.top) this.vel.y = -this.vel.y;
+  }
 }
